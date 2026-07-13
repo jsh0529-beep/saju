@@ -123,6 +123,8 @@ footer{text-align:center;font-size:.72rem;color:#5A5C68;margin-top:50px;line-hei
   <h2>간명 신청</h2>
   <label>성함</label>
   <input type="text" id="name" placeholder="홍길동">
+  <label>간명서 받으실 이메일</label>
+  <input type="text" id="email" placeholder="example@naver.com">
   <div class="row">
     <div>
       <label>성별</label>
@@ -216,6 +218,7 @@ footer{text-align:center;font-size:.72rem;color:#5A5C68;margin-top:50px;line-hei
   </div>
   <div id="preview"></div>
   <button class="btn" id="docBtn" style="display:none">DOC 파일 내려받기</button>
+  <button class="btn ghost" id="sendBtn" style="display:none">고객 이메일로 간명서 발송</button>
   <p class="note">달 문양을 다섯 번 누르면 이 작성실이 열리고 닫힙니다. API 키는 이 기기에만 저장됩니다.</p>
 </section>
 
@@ -281,6 +284,8 @@ if(location.hash==='#admin'){$('admin').style.display='block';openAdminRestore()
 function calcSaju(){
   const name=$('name').value.trim();
   if(!name){toast('성함을 입력해 주세요');return null;}
+  const email=$('email').value.trim();
+  if(!email||!email.includes('@')){toast('간명서 받으실 이메일을 입력해 주세요');return null;}
   if(!$('bdate').value){toast('생년월일을 입력해 주세요');return null;}
   const [y,m,d]=$('bdate').value.split('-').map(Number);
   const timeUnknown=$('noTime').checked;
@@ -334,7 +339,7 @@ function calcSaju(){
   // 올해 세운 (입춘 기준)
   const nowGz=Solar.fromDate(new Date()).getLunar().getYearInGanZhiByLiChun();
   return {
-    name, gender, timeUnknown, corrected, lunarText,
+    name, email, gender, timeUnknown, corrected, lunarText,
     birthInput:`${calType==='solar'?'양력':'음력'} ${$('bdate').value}${timeUnknown?' (시간 모름)':' '+$('btime').value}`,
     solarBirth:`양력 ${y}년 ${m}월 ${d}일${timeUnknown?'':' '+String($('btime').value)}`,
     pillars, elements:cnt, dayMaster:{gan:dayGan, ko:GAN_KO[dayGan], el:GAN_EL[dayGan], yy:GAN_YY[dayGan]?'양':'음'},
@@ -382,7 +387,7 @@ $('applyBtn').onclick=async()=>{
   if(!SERVER_URL){toast('등록 서버 준비 중입니다. 아래 [신청 내용 복사]를 이용해 주세요');return;}
   const btn=$('applyBtn'); btn.disabled=true; btn.textContent='등록 중...';
   try{
-    const r=await fetch(SERVER_URL,{method:'POST',body:JSON.stringify({name:sajuData.name,data:sajuData})});
+    const r=await fetch(SERVER_URL,{method:'POST',body:JSON.stringify({name:sajuData.name,email:sajuData.email,data:sajuData})});
     const j=await r.json();
     if(!j.ok) throw 0;
     btn.textContent='등록 완료';
@@ -399,6 +404,7 @@ $('copyApply').onclick=()=>{
   const t=
 `[월하서재 간명 신청]
 성함: ${s.name} (${s.gender})
+이메일: ${s.email}
 생일: ${s.birthInput} / ${s.solarBirth} / ${s.lunarText}
 보정: ${s.corrected?'진태양시 -30분 적용':'미적용'}
 원국: 년 ${line('year')} 월 ${line('month')} 일 ${line('day')} 시 ${line('time')}
@@ -497,6 +503,7 @@ async function generateReport(){
   $('genBtn').disabled=true; $('prog').style.display='block'; $('preview').style.display='none';
   $('prog').scrollIntoView({behavior:'smooth',block:'center'});
   $('docBtn').style.display='none'; sections=[];
+  $('sendBtn').style.display='none'; $('sendBtn').disabled=false; $('sendBtn').textContent='고객 이메일로 간명서 발송';
   try{
     for(let i=0;i<SECTIONS.length;i++){
       $('progFill').style.width=(i/SECTIONS.length*100)+'%';
@@ -506,9 +513,9 @@ async function generateReport(){
         `${dataBlock}${prev}\n\n[이번 장 지시]\n제${i+1}장 「${SECTIONS[i].t}」\n${SECTIONS[i].p}\n앞 장과 내용이 겹치지 않게 하고, 본문만 출력하세요.`);
       sections.push(txt.trim());
     }
-    $('progFill').style.width='100%'; $('progMsg').textContent='집필 완료 — 아래에서 DOC를 내려받으세요';
-    renderPreview(); $('docBtn').style.display='block';
-    if(currentAppId){markDone(currentAppId); currentAppId=null;}
+    $('progFill').style.width='100%'; $('progMsg').textContent='집필 완료 — DOC 내려받기 또는 이메일 발송을 하세요';
+    renderPreview(); $('docBtn').style.display='block'; $('sendBtn').style.display='block';
+    if(currentAppId) markDone(currentAppId);
   }catch(e){ $('progMsg').textContent='오류: '+e.message; }
   $('genBtn').disabled=false;
 }
@@ -522,8 +529,8 @@ function renderPreview(){
   $('preview').style.display='block';
 }
 
-/* ═══════════ DOC 내려받기 ═══════════ */
-$('docBtn').onclick=()=>{
+/* ═══════════ DOC 생성 ═══════════ */
+function buildDoc(){
   const s=sajuData, today=new Date();
   const dstr=`${today.getFullYear()}년 ${today.getMonth()+1}월 ${today.getDate()}일`;
   const order=s.timeUnknown?['day','month','year']:['time','day','month','year'];
@@ -578,10 +585,37 @@ ${secHtml}
 <p style="text-align:center;margin-top:60pt;letter-spacing:3pt">月下書齋 　혜윤 드림</p>
 <p class="small" style="text-align:center;margin-top:30pt">본 간명서는 전통 명리학 이론에 근거하여 작성된 참고 자료입니다.<br>중요한 결정은 여러 조언과 함께 신중히 내리시기 바랍니다.</p>
 </body></html>`;
+  const fname=`간명서_${s.name}_${today.getFullYear()}${String(today.getMonth()+1).padStart(2,'0')}${String(today.getDate()).padStart(2,'0')}.doc`;
+  return {html, fname};
+}
+$('docBtn').onclick=()=>{
+  const {html,fname}=buildDoc();
   const blob=new Blob(['\ufeff',html],{type:'application/msword;charset=utf-8'});
   const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
-  a.download=`간명서_${s.name}_${today.getFullYear()}${String(today.getMonth()+1).padStart(2,'0')}${String(today.getDate()).padStart(2,'0')}.doc`;
-  a.click(); URL.revokeObjectURL(a.href);
+  a.download=fname; a.click(); URL.revokeObjectURL(a.href);
+};
+/* ═══════════ 고객 이메일 자동 발송 ═══════════ */
+$('sendBtn').onclick=async()=>{
+  if(!sajuData){toast('간명서를 먼저 생성하세요');return;}
+  const to=sajuData.email;
+  if(!to||!to.includes('@')){toast('이 신청 건에는 이메일이 없습니다. DOC를 내려받아 직접 보내주세요');return;}
+  if(!confirm(`${sajuData.name} 님 (${to}) 에게 간명서를 발송할까요?`))return;
+  const btn=$('sendBtn'); btn.disabled=true; btn.textContent='발송 중...';
+  try{
+    const {html,fname}=buildDoc();
+    const b64=btoa(unescape(encodeURIComponent('\ufeff'+html)));
+    const r=await fetch(SERVER_URL,{method:'POST',body:JSON.stringify({
+      action:'send', key:$('adminKey').value.trim(), id:currentAppId,
+      name:sajuData.name, email:to, filename:fname, b64:b64 })});
+    const j=await r.json();
+    if(!j.ok) throw new Error(j.error||'발송 실패');
+    btn.textContent='발송 완료';
+    toast(`${sajuData.name} 님께 간명서를 발송했습니다`);
+    loadList();
+  }catch(e){
+    btn.disabled=false; btn.textContent='고객 이메일로 간명서 발송';
+    toast('발송 실패: '+e.message);
+  }
 };
 </script>
 </body>
