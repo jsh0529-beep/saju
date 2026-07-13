@@ -438,6 +438,7 @@ async function loadList(){
         <span class="st ${cls}">${st} ▸</span>
       </div>`;}).join('') : '<p class="note">아직 신청 내역이 없습니다.</p>';
     box.querySelectorAll('.app-item').forEach(el=>el.onclick=async()=>{
+      if(genRunning){toast('집필이 진행 중입니다. 완료 후 선택해 주세요');return;}
       const it=j.list.find(x=>String(x.id)===String(el.dataset.id));
       try{sajuData=typeof it.data==='string'?JSON.parse(it.data):it.data;}
       catch(e){toast('신청 데이터를 읽지 못했습니다');return;}
@@ -527,7 +528,9 @@ async function callClaude(apiKey, sys, user){
   return txt;
 }
 $('genBtn').onclick=()=>generateReport();
+let genRunning=false;
 async function generateReport(){
+  if(genRunning){toast('이미 집필 중입니다. 잠시만 기다려 주세요');return;}
   if(!sajuData){toast('먼저 만세력을 확인하거나 신청 목록에서 이름을 클릭하세요');return;}
   let key=$('apiKey').value.replace(/[^\x21-\x7E]/g,'').trim(); // 영문·숫자·기호만 허용
   $('apiKey').value=key;
@@ -542,27 +545,31 @@ async function generateReport(){
     이름:s.name, 성별:s.gender, 출생:s.solarBirth, 음력:s.lunarText, 시간모름:s.timeUnknown,
     일간:s.dayMaster, 원국:s.pillars, 오행분포:s.elements, 대운:s.daYun, 올해세운:s.thisYear,
     관심분야:s.focus, 질문:s.question },null,1)}`;
+  genRunning=true;
   $('genBtn').disabled=true; $('prog').style.display='block'; $('preview').style.display='none';
   $('prog').scrollIntoView({behavior:'smooth',block:'center'});
   $('docBtn').style.display='none'; sections=[];
   $('sendBtn').style.display='none'; $('sendBtn').disabled=false; $('sendBtn').textContent='고객 이메일로 간명서 발송';
+  const secs=[];
   try{
     for(let i=0;i<SECTIONS.length;i++){
       const sec=SECTIONS[i];
       $('progFill').style.width=(i/SECTIONS.length*100)+'%';
       $('progMsg').textContent=`${i+1}/4 — 「${sec.t}」 집필 중...`;
-      const prev=sections.length?`\n[앞 장 요약(중복 금지 참고용)]\n${sections.map((x,j)=>(SECTIONS[j]?SECTIONS[j].t:'')+': '+String(x).slice(0,200)).join('\n')}`:'';
+      const prev=secs.length?`\n[앞 장 요약(중복 금지 참고용)]\n${secs.map((x,j)=>(SECTIONS[j]?SECTIONS[j].t:'')+': '+String(x).slice(0,200)).join('\n')}`:'';
       let txt;
       try{
         txt=await callClaude(key, PERSONA,
           `${dataBlock}${prev}\n\n[이번 장 지시]\n제${i+1}장 「${sec.t}」\n${sec.p}\n앞 장과 내용이 겹치지 않게 하고, 본문만 출력하세요.`);
       }catch(err){ throw new Error(`제${i+1}장 집필 중 — ${err.message}`); }
-      sections.push(txt.trim());
+      secs.push(txt.trim());
     }
+    sections=secs;
     $('progFill').style.width='100%'; $('progMsg').textContent='집필 완료 — DOC 내려받기 또는 이메일 발송을 하세요';
     renderPreview(); $('docBtn').style.display='block'; $('sendBtn').style.display='block';
     if(currentAppId) markDone(currentAppId);
   }catch(e){ $('progMsg').textContent='오류: '+e.message; }
+  genRunning=false;
   $('genBtn').disabled=false;
 }
 function fmtSection(txt){
