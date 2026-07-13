@@ -207,7 +207,7 @@ footer{text-align:center;font-size:.72rem;color:#5A5C68;margin-top:50px;line-hei
   <input type="password" id="adminKey" placeholder="열람 키">
   <button class="btn ghost" id="listBtn" style="margin-top:14px">신청 목록 불러오기</button>
   <div id="appList"></div>
-  <p class="note">목록에서 <b>이름을 클릭하면</b> 만세력을 불러와 간명서가 자동 생성됩니다.</p>
+  <p class="note">이름 클릭 → <b>백그라운드 작성 예약</b> → 서버가 3~5분간 집필 (창을 닫아도 계속됩니다) → 다시 들어와 목록에서 <b>'작성완료' 클릭</b> → 미리보기 확인 후 이메일 발송.</p>
   <label>고객 신청문 붙여넣기 (선택 — 붙여넣고 불러오기를 누르면 위 폼이 자동 입력됩니다)</label>
   <textarea id="pasteBox" placeholder="고객이 보낸 신청 내용 전체를 붙여넣으세요"></textarea>
   <button class="btn ghost" id="loadPaste" style="margin-top:12px">신청문 불러오기</button>
@@ -429,19 +429,57 @@ async function loadList(){
     const j=await r.json();
     if(!j.ok){toast(j.error||'열람 키가 올바르지 않습니다');$('listBtn').disabled=false;return;}
     const box=$('appList');
-    box.innerHTML=j.list.length ? j.list.slice().reverse().map(it=>`
+    box.innerHTML=j.list.length ? j.list.slice().reverse().map(it=>{
+      const st=String(it.status||'');
+      const cls=st.startsWith('작성완료')||st.startsWith('발송완료')?'done':'';
+      return `
       <div class="app-item" data-id="${it.id}">
         <span><b>${it.name}</b> 님 · ${it.ts}</span>
-        <span class="st ${it.status==='대기'?'':'done'}">${it.status} ▸</span>
-      </div>`).join('') : '<p class="note">아직 신청 내역이 없습니다.</p>';
-    box.querySelectorAll('.app-item').forEach(el=>el.onclick=()=>{
+        <span class="st ${cls}">${st} ▸</span>
+      </div>`;}).join('') : '<p class="note">아직 신청 내역이 없습니다.</p>';
+    box.querySelectorAll('.app-item').forEach(el=>el.onclick=async()=>{
       const it=j.list.find(x=>String(x.id)===String(el.dataset.id));
       try{sajuData=typeof it.data==='string'?JSON.parse(it.data):it.data;}
       catch(e){toast('신청 데이터를 읽지 못했습니다');return;}
       currentAppId=it.id;
+      const st=String(it.status||'');
       renderBoard(sajuData);
-      toast(`${sajuData.name} 님 간명서 작성을 시작합니다`);
-      generateReport();
+
+      // ① 작성 완료 → 저장된 간명서 불러와 미리보기·발송
+      if(st.startsWith('작성완료')||st.startsWith('발송완료')){
+        try{
+          const r=await fetch(SERVER_URL+'?key='+encodeURIComponent($('adminKey').value.trim())+'&action=report&id='+it.id);
+          const jr=await r.json();
+          if(!jr.ok) throw new Error(jr.error||'불러오기 실패');
+          sections=JSON.parse(jr.sections||'[]');
+          if(sections.length<4){toast('저장된 간명서가 불완전합니다. 다시 예약해 주세요');return;}
+          $('prog').style.display='none';
+          renderPreview();
+          $('docBtn').style.display='block';
+          $('sendBtn').style.display='block'; $('sendBtn').disabled=false;
+          $('sendBtn').textContent='고객 이메일로 간명서 발송';
+          toast(`${sajuData.name} 님 간명서를 불러왔습니다`);
+          $('preview').scrollIntoView({behavior:'smooth'});
+        }catch(e){toast('간명서 불러오기 실패: '+e.message);}
+        return;
+      }
+      // ② 작성 중 → 진행 상황 안내
+      if(st.startsWith('작성중')){
+        toast(`백그라운드에서 집필 중입니다 (${st}). 잠시 후 목록을 다시 불러오세요`);
+        return;
+      }
+      // ③ 대기·오류 → 백그라운드 예약 또는 즉시 작성
+      if(confirm(`${sajuData.name} 님 간명서 —\n\n[확인] 백그라운드 작성 예약 (창을 닫아도 서버가 집필, 3~5분 뒤 '작성완료' 클릭해 발송)\n[취소] 지금 이 화면에서 바로 작성`)){
+        try{
+          const r=await fetch(SERVER_URL,{method:'POST',body:JSON.stringify({action:'queue',key:$('adminKey').value.trim(),id:it.id})});
+          const jr=await r.json();
+          if(!jr.ok) throw new Error(jr.error||'예약 실패');
+          toast('작성이 예약되었습니다. 3~5분 뒤 [신청 목록 불러오기]를 다시 눌러주세요');
+          loadList();
+        }catch(e){toast('예약 실패: '+e.message);}
+      }else{
+        generateReport();
+      }
     });
   }catch(e){toast('목록을 불러오지 못했습니다: '+e.message);}
   $('listBtn').disabled=false;
@@ -480,9 +518,13 @@ async function callClaude(apiKey, sys, user){
   if(apiKey){headers['x-api-key']=apiKey; headers['anthropic-version']='2023-06-01';
     headers['anthropic-dangerous-direct-browser-access']='true';}
   const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers,body:JSON.stringify(body)});
-  if(!r.ok){const e=await r.text(); throw new Error('API 오류 '+r.status+': '+e.slice(0,200));}
-  const data=await r.json();
-  return data.content.filter(c=>c.type==='text').map(c=>c.text).join('\n');
+  const raw=await r.text();
+  if(!r.ok) throw new Error('API 응답 '+r.status+': '+raw.slice(0,200));
+  let data; try{data=JSON.parse(raw);}catch(e){throw new Error('API 응답 해석 실패: '+raw.slice(0,150));}
+  if(!data||!Array.isArray(data.content)) throw new Error('API 응답 형식 이상: '+raw.slice(0,150));
+  const txt=data.content.filter(c=>c&&c.type==='text').map(c=>c.text||'').join('\n');
+  if(!txt.trim()) throw new Error('API가 빈 응답을 보냈습니다');
+  return txt;
 }
 $('genBtn').onclick=()=>generateReport();
 async function generateReport(){
@@ -506,11 +548,15 @@ async function generateReport(){
   $('sendBtn').style.display='none'; $('sendBtn').disabled=false; $('sendBtn').textContent='고객 이메일로 간명서 발송';
   try{
     for(let i=0;i<SECTIONS.length;i++){
+      const sec=SECTIONS[i];
       $('progFill').style.width=(i/SECTIONS.length*100)+'%';
-      $('progMsg').textContent=`${i+1}/4 — 「${SECTIONS[i].t}」 집필 중...`;
-      const prev=sections.length?`\n[앞 장 요약(중복 금지 참고용)]\n${sections.map((x,j)=>SECTIONS[j].t+': '+x.slice(0,200)).join('\n')}`:'';
-      const txt=await callClaude(key, PERSONA,
-        `${dataBlock}${prev}\n\n[이번 장 지시]\n제${i+1}장 「${SECTIONS[i].t}」\n${SECTIONS[i].p}\n앞 장과 내용이 겹치지 않게 하고, 본문만 출력하세요.`);
+      $('progMsg').textContent=`${i+1}/4 — 「${sec.t}」 집필 중...`;
+      const prev=sections.length?`\n[앞 장 요약(중복 금지 참고용)]\n${sections.map((x,j)=>(SECTIONS[j]?SECTIONS[j].t:'')+': '+String(x).slice(0,200)).join('\n')}`:'';
+      let txt;
+      try{
+        txt=await callClaude(key, PERSONA,
+          `${dataBlock}${prev}\n\n[이번 장 지시]\n제${i+1}장 「${sec.t}」\n${sec.p}\n앞 장과 내용이 겹치지 않게 하고, 본문만 출력하세요.`);
+      }catch(err){ throw new Error(`제${i+1}장 집필 중 — ${err.message}`); }
       sections.push(txt.trim());
     }
     $('progFill').style.width='100%'; $('progMsg').textContent='집필 완료 — DOC 내려받기 또는 이메일 발송을 하세요';
