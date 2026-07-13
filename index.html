@@ -51,6 +51,8 @@ textarea{resize:vertical;min-height:74px}
   font-family:'Song Myung',serif;letter-spacing:.3em;text-indent:.3em;border-radius:3px;cursor:pointer;margin-top:26px}
 .btn:hover{background:#D9B45F}
 .btn.ghost{background:transparent;border:1px solid var(--gold-soft);color:var(--gold)}
+.btn.kakao{background:#FEE500;color:#1B1608;text-decoration:none;text-align:center;margin-top:14px}
+.btn.kakao:hover{background:#FFD900}
 .btn:disabled{opacity:.45;cursor:default}
 .note{font-size:.8rem;color:var(--tx-dim);margin-top:10px;line-height:1.6}
 /* ── 원국판 (signature) ── */
@@ -99,6 +101,7 @@ textarea{resize:vertical;min-height:74px}
 #preview h3:first-child{margin-top:0}
 #preview p{margin-bottom:12px}
 footer{text-align:center;font-size:.72rem;color:#5A5C68;margin-top:50px;line-height:1.9}
+
 .toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:var(--gold);color:#191509;
   padding:11px 26px;border-radius:30px;font-size:.88rem;display:none;z-index:99}
 @media (max-width:520px){
@@ -184,14 +187,15 @@ footer{text-align:center;font-size:.72rem;color:#5A5C68;margin-top:50px;line-hei
     <h2>간명서 신청 안내</h2>
     <p style="text-align:center;font-size:.88rem;color:var(--tx-dim)">A4 열 장 분량의 정성 어린 간명서를 보내드립니다</p>
     <div class="amount">30,000원</div>
+    <a class="btn kakao" href="https://qr.kakaopay.com/FRC3Gi9eA" target="_blank" rel="noopener">카카오페이로 보내기</a>
     <div class="acct">
-      <span>카카오뱅크 <b>3333-01-3706013</b> 장성혁</span>
-      <button id="copyAcct">계좌 복사</button>
+      <span>계좌 이체 시 　카카오뱅크 <b>3333-01-3706013</b> 장성혁</span>
+      <button id="copyAcct">복사</button>
     </div>
     <div class="steps">
-      ① 위 계좌로 <b>신청자 성함과 같은 이름</b>으로 30,000원을 입금해 주세요<br>
-      ② 입금 후 아래 <b>[입금 완료 · 간명 신청 등록]</b>을 눌러 주세요<br>
-      ③ 입금 확인 후 <b>24시간 이내</b>, 간명서(문서 파일)를 보내드립니다
+      ① 위 <b>[카카오페이로 보내기]</b> 버튼으로 30,000원을 보내주세요 (계좌 이체도 가능)<br>
+      ② 보내신 뒤 아래 <b>[입금 완료 · 간명 신청 등록]</b>을 눌러 주세요<br>
+      ③ 확인 후 <b>24시간 이내</b>, 간명서(PDF)를 이메일로 보내드립니다
     </div>
     <button class="btn" id="applyBtn">입금 완료 · 간명 신청 등록</button>
     <button class="btn ghost" id="copyApply">등록이 안 될 때 — 신청 내용 복사</button>
@@ -207,7 +211,7 @@ footer{text-align:center;font-size:.72rem;color:#5A5C68;margin-top:50px;line-hei
   <input type="password" id="adminKey" placeholder="열람 키">
   <button class="btn ghost" id="listBtn" style="margin-top:14px">신청 목록 불러오기</button>
   <div id="appList"></div>
-  <p class="note">이름 클릭 → <b>백그라운드 작성 예약</b> → 서버가 3~5분간 집필 (창을 닫아도 계속됩니다) → 다시 들어와 목록에서 <b>'작성완료' 클릭</b> → 미리보기 확인 후 이메일 발송.</p>
+  <p class="note">이름 클릭 → <b>백그라운드 예약</b> 시 자동 발송 여부 선택. <b>자동 발송</b>이면 집필→PDF→이메일까지 서버가 전부 처리하고 '발송완료'로 표시됩니다. 검토 후 발송을 원하면 '작성완료' 클릭 → 미리보기 → 발송.</p>
   <label>고객 신청문 붙여넣기 (선택 — 붙여넣고 불러오기를 누르면 위 폼이 자동 입력됩니다)</label>
   <textarea id="pasteBox" placeholder="고객이 보낸 신청 내용 전체를 붙여넣으세요"></textarea>
   <button class="btn ghost" id="loadPaste" style="margin-top:12px">신청문 불러오기</button>
@@ -217,7 +221,7 @@ footer{text-align:center;font-size:.72rem;color:#5A5C68;margin-top:50px;line-hei
     <div class="msg" id="progMsg"></div>
   </div>
   <div id="preview"></div>
-  <button class="btn" id="docBtn" style="display:none">DOC 파일 내려받기</button>
+  <button class="btn" id="docBtn" style="display:none">PDF 파일 내려받기</button>
   <button class="btn ghost" id="sendBtn" style="display:none">고객 이메일로 간명서 발송</button>
   <p class="note">달 문양을 다섯 번 누르면 이 작성실이 열리고 닫힙니다. API 키는 이 기기에만 저장됩니다.</p>
 </section>
@@ -470,12 +474,13 @@ async function loadList(){
         return;
       }
       // ③ 대기·오류 → 백그라운드 예약 또는 즉시 작성
-      if(confirm(`${sajuData.name} 님 간명서 —\n\n[확인] 백그라운드 작성 예약 (창을 닫아도 서버가 집필, 3~5분 뒤 '작성완료' 클릭해 발송)\n[취소] 지금 이 화면에서 바로 작성`)){
+      if(confirm(`${sajuData.name} 님 간명서 —\n\n[확인] 백그라운드 작성 예약 (창을 닫아도 서버가 알아서 집필)\n[취소] 지금 이 화면에서 바로 작성`)){
+        const autoSend=confirm(`집필이 끝나면 고객 이메일(${sajuData.email||'없음'})로 PDF까지 자동 발송할까요?\n\n[확인] 자동 발송 — 개입 없이 발송완료까지\n[취소] 작성만 — 검토 후 직접 발송`);
         try{
-          const r=await fetch(SERVER_URL,{method:'POST',body:JSON.stringify({action:'queue',key:$('adminKey').value.trim(),id:it.id})});
+          const r=await fetch(SERVER_URL,{method:'POST',body:JSON.stringify({action:'queue',key:$('adminKey').value.trim(),id:it.id,autoSend:autoSend})});
           const jr=await r.json();
           if(!jr.ok) throw new Error(jr.error||'예약 실패');
-          toast('작성이 예약되었습니다. 3~5분 뒤 [신청 목록 불러오기]를 다시 눌러주세요');
+          toast(autoSend?'예약 완료. 집필이 끝나면 자동으로 발송됩니다 (약 4~6분)':'예약 완료. 3~5분 뒤 목록을 새로고침해 검토·발송하세요');
           loadList();
         }catch(e){toast('예약 실패: '+e.message);}
       }else{
@@ -499,8 +504,8 @@ $('loadPaste').onclick=()=>{
 };
 
 /* ═══════════ 간명서 생성 (Claude API 4회) ═══════════ */
-const PERSONA=`당신은 명리학 경력 20년의 여성 간명가 '혜윤 선생'입니다. 방송국 아나운서로 일하다 명리학에 입문해 20년째 사주를 간명해 왔습니다. 문체 원칙:
-- 정중하고 따뜻한 존댓말. 아나운서 출신답게 문장이 유려하고 발음하듯 읽기 좋게 흐릅니다.
+const PERSONA=`당신은 명리학 경력 20년의 여성 간명가 '혜윤 선생'입니다. 문체 원칙:
+- 정중하고 따뜻한 존댓말. 문장이 유려하고 소리 내어 읽어도 좋을 만큼 자연스럽게 흐릅니다.
 - 부드럽지만 단호합니다. 짚을 것은 분명히 짚되, 표현은 품위 있게 합니다.
 - 좋은 점만 나열하지 않습니다. 매 장마다 이 사주의 약한 고리, 주의할 시기, 경계할 습성을 최소 한 가지 이상 완곡하지만 분명하게 언급합니다. 다만 공포를 조장하거나 흉사를 단정하지 않고, 반드시 대비책과 함께 말합니다.
 - "~하셔야 합니다", "~은 경계하셔야겠습니다", "~은 참 귀한 복입니다" 같은 어조를 씁니다.
@@ -565,7 +570,7 @@ async function generateReport(){
       secs.push(txt.trim());
     }
     sections=secs;
-    $('progFill').style.width='100%'; $('progMsg').textContent='집필 완료 — DOC 내려받기 또는 이메일 발송을 하세요';
+    $('progFill').style.width='100%'; $('progMsg').textContent='집필 완료 — PDF 내려받기 또는 이메일 발송을 하세요';
     renderPreview(); $('docBtn').style.display='block'; $('sendBtn').style.display='block';
     if(currentAppId) markDone(currentAppId);
   }catch(e){ $('progMsg').textContent='오류: '+e.message; }
@@ -582,93 +587,54 @@ function renderPreview(){
   $('preview').style.display='block';
 }
 
-/* ═══════════ DOC 생성 ═══════════ */
-function buildDoc(){
-  const s=sajuData, today=new Date();
-  const dstr=`${today.getFullYear()}년 ${today.getMonth()+1}월 ${today.getDate()}일`;
-  const order=s.timeUnknown?['day','month','year']:['time','day','month','year'];
-  const labels={time:'시주',day:'일주',month:'월주',year:'연주'};
-  const pillarRow=f=>order.map(k=>`<td style="text-align:center;padding:8pt;border:1pt solid #B7A87F">${f(s.pillars[k])}</td>`).join('');
-  const wonTable=`<table style="border-collapse:collapse;width:100%;margin:14pt 0">
-    <tr>${order.map(k=>`<td style="text-align:center;padding:6pt;border:1pt solid #B7A87F;background:#EFE7D3;font-size:9pt">${labels[k]}</td>`).join('')}</tr>
-    <tr>${pillarRow(p=>`<span style="font-size:8pt;color:#6E6350">${p.ssGan}</span><br><span style="font-size:22pt;color:${EL_COLOR[p.ganEl]}">${p.gan}</span><br><span style="font-size:9pt">${p.ganKo}·${p.ganEl}</span>`)}</tr>
-    <tr>${pillarRow(p=>`<span style="font-size:22pt;color:${EL_COLOR[p.jiEl]}">${p.ji}</span><br><span style="font-size:9pt">${p.jiKo}·${p.jiEl}</span><br><span style="font-size:8pt;color:#6E6350">${p.ssJi} · 장간 ${p.hidden}</span>`)}</tr>
-  </table>`;
-  const ohTable=`<table style="border-collapse:collapse;width:100%;margin:10pt 0"><tr>${
-    ['목','화','토','금','수'].map(e=>`<td style="text-align:center;border:1pt solid #B7A87F;padding:5pt;color:#FFFFFF;background:${EL_COLOR[e]}">${e} ${s.elements[e]}</td>`).join('')}</tr></table>`;
-  const duTable=`<table style="border-collapse:collapse;width:100%;margin:10pt 0"><tr>${
-    s.daYun.map(d=>`<td style="text-align:center;border:1pt solid #B7A87F;padding:5pt;font-size:9pt">${d.age}세<br><b style="font-size:12pt">${d.ganzhi}</b><br>${d.ko}</td>`).join('')}</tr></table>`;
-  const secHtml=sections.map((t,i)=>`
-    <div style="page-break-before:always"></div>
-    <h1>第${'一二三四'[i]}章 　${SECTIONS[i].t}</h1>
-    ${t.split('\n').map(l=>{l=l.trim();if(!l)return'';
-      const m=l.match(/^【(.+?)】$/); if(m)return`<h2>【${m[1]}】</h2>`;
-      return `<p>${l}</p>`;}).join('\n')}`).join('\n');
-  const html=`<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
-<head><meta charset="utf-8"><title>간명서</title>
-<!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View><w:Zoom>100</w:Zoom></w:WordDocument></xml><![endif]-->
-<style>
-@page{size:A4;margin:2.5cm 2.2cm}
-body{font-family:"바탕","Batang",serif;font-size:11pt;line-height:1.9;color:#26221A}
-h1{font-size:15pt;letter-spacing:4pt;margin:0 0 16pt;color:#5A4A22;font-weight:normal;border-bottom:1pt solid #B7A87F;padding-bottom:8pt}
-h2{font-size:12pt;margin:18pt 0 8pt;color:#5A4A22;font-weight:bold}
-p{margin:0 0 10pt;text-align:justify;text-indent:10pt}
-.cover{text-align:center}
-.cover .t1{font-size:26pt;letter-spacing:14pt;margin-top:90pt;color:#26221A}
-.cover .t2{font-size:12pt;letter-spacing:6pt;color:#8A7E66;margin-top:8pt}
-.cover .who{font-size:14pt;margin-top:60pt}
-.cover .meta{font-size:10pt;color:#6E6350;line-height:2}
-.small{font-size:8.5pt;color:#8A7E66}
-</style></head><body>
-<div class="cover">
-  <p class="t1">看 命 書</p>
-  <p class="t2">월하서재 · 月下書齋</p>
-  <p class="who">${s.name} 님 (${s.gender})</p>
-  <p class="meta">${s.solarBirth}<br>${s.lunarText}${s.corrected?'<br>진태양시 보정 적용':''}${s.timeUnknown?'<br>출생 시각 미상 — 시주 제외 간명':''}</p>
-  <p class="meta" style="margin-top:70pt">간명일 　${dstr}<br>간명 　혜윤 선생</p>
-</div>
-<div style="page-break-before:always"></div>
-<h1>命式 　사주 원국</h1>
-${wonTable}
-<h2>오행의 분포</h2>${ohTable}
-<h2>대운의 흐름</h2>${duTable}
-<p class="small">본 명식은 절기(節氣) 기준 만세력에 따라 산출되었습니다.</p>
-${secHtml}
-<div style="page-break-before:always"></div>
-<p style="text-align:center;margin-top:60pt;letter-spacing:3pt">月下書齋 　혜윤 드림</p>
-<p class="small" style="text-align:center;margin-top:30pt">본 간명서는 전통 명리학 이론에 근거하여 작성된 참고 자료입니다.<br>중요한 결정은 여러 조언과 함께 신중히 내리시기 바랍니다.</p>
-</body></html>`;
-  const fname=`간명서_${s.name}_${today.getFullYear()}${String(today.getMonth()+1).padStart(2,'0')}${String(today.getDate()).padStart(2,'0')}.doc`;
-  return {html, fname};
+/* ═══════════ PDF 다운로드·발송 (서버 생성) ═══════════ */
+let pdfBusy=false;
+function serverPayload(action){
+  const pl={action:action,key:$('adminKey').value.trim()};
+  if(currentAppId) pl.id=currentAppId;
+  else { pl.data=sajuData; pl.sections=sections; pl.email=sajuData&&sajuData.email; }
+  return pl;
 }
-$('docBtn').onclick=()=>{
-  const {html,fname}=buildDoc();
-  const blob=new Blob(['\ufeff',html],{type:'application/msword;charset=utf-8'});
-  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
-  a.download=fname; a.click(); URL.revokeObjectURL(a.href);
-};
-/* ═══════════ 고객 이메일 자동 발송 ═══════════ */
-$('sendBtn').onclick=async()=>{
-  if(!sajuData){toast('간명서를 먼저 생성하세요');return;}
-  const to=sajuData.email;
-  if(!to||!to.includes('@')){toast('이 신청 건에는 이메일이 없습니다. DOC를 내려받아 직접 보내주세요');return;}
-  if(!confirm(`${sajuData.name} 님 (${to}) 에게 간명서를 발송할까요?`))return;
-  const btn=$('sendBtn'); btn.disabled=true; btn.textContent='발송 중...';
+$('docBtn').onclick=async()=>{
+  if(pdfBusy)return;
+  if(!sections||sections.length<4){toast('간명서를 먼저 생성하거나 불러오세요');return;}
+  if(!$('adminKey').value.trim()){toast('관리 열람 키를 입력하세요');return;}
+  pdfBusy=true;
+  const btn=$('docBtn'); btn.disabled=true; btn.textContent='서버에서 PDF 생성 중...';
   try{
-    const {html,fname}=buildDoc();
-    const b64=btoa(unescape(encodeURIComponent('\ufeff'+html)));
-    const r=await fetch(SERVER_URL,{method:'POST',body:JSON.stringify({
-      action:'send', key:$('adminKey').value.trim(), id:currentAppId,
-      name:sajuData.name, email:to, filename:fname, b64:b64 })});
+    const r=await fetch(SERVER_URL,{method:'POST',body:JSON.stringify(serverPayload('pdfmake'))});
+    const j=await r.json();
+    if(!j.ok) throw new Error(j.error||'PDF 생성 실패');
+    const bin=atob(j.b64), arr=new Uint8Array(bin.length);
+    for(let i=0;i<bin.length;i++) arr[i]=bin.charCodeAt(i);
+    const blob=new Blob([arr],{type:'application/pdf'});
+    const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+    a.download=j.fname||'간명서.pdf'; a.click(); URL.revokeObjectURL(a.href);
+  }catch(e){toast('PDF 생성 실패: '+e.message);}
+  btn.disabled=false; btn.textContent='PDF 파일 내려받기'; pdfBusy=false;
+};
+/* ═══════════ 고객 이메일 발송 (서버에서 PDF 생성·발송) ═══════════ */
+$('sendBtn').onclick=async()=>{
+  if(pdfBusy)return;
+  if(!sections||sections.length<4){toast('간명서를 먼저 생성하거나 불러오세요');return;}
+  if(!$('adminKey').value.trim()){toast('관리 열람 키를 입력하세요');return;}
+  const to=sajuData&&sajuData.email;
+  if(!to||!to.includes('@')){toast('이 신청 건에는 이메일이 없습니다. PDF를 내려받아 직접 보내주세요');return;}
+  if(!confirm(`${sajuData.name} 님 (${to}) 에게 간명서 PDF를 발송할까요?`))return;
+  pdfBusy=true;
+  const btn=$('sendBtn'); btn.disabled=true; btn.textContent='서버에서 발송 중...';
+  try{
+    const r=await fetch(SERVER_URL,{method:'POST',body:JSON.stringify(serverPayload('sendserver'))});
     const j=await r.json();
     if(!j.ok) throw new Error(j.error||'발송 실패');
     btn.textContent='발송 완료';
-    toast(`${sajuData.name} 님께 간명서를 발송했습니다`);
+    toast(`${sajuData.name} 님께 간명서 PDF를 발송했습니다`);
     loadList();
   }catch(e){
     btn.disabled=false; btn.textContent='고객 이메일로 간명서 발송';
     toast('발송 실패: '+e.message);
   }
+  pdfBusy=false;
 };
 </script>
 </body>
