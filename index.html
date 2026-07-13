@@ -84,6 +84,12 @@ textarea{resize:vertical;min-height:74px}
 .steps b{color:var(--tx)}
 /* 관리자 */
 #admin{display:none}
+.app-item{display:flex;justify-content:space-between;align-items:center;background:var(--ink);border:1px solid var(--line);
+  border-radius:3px;padding:12px 14px;margin-top:8px;cursor:pointer;font-size:.88rem}
+.app-item:hover{border-color:var(--gold-soft)}
+.app-item b{color:var(--gold);font-weight:400}
+.app-item .st{font-size:.75rem;color:var(--tx-dim)}
+.app-item .st.done{color:var(--gold)}
 .prog{display:none;margin-top:18px}
 .prog .bar{height:6px;background:var(--ink);border-radius:3px;overflow:hidden;border:1px solid var(--line)}
 .prog .fill{height:100%;width:0;background:var(--gold);transition:width .5s}
@@ -181,11 +187,12 @@ footer{text-align:center;font-size:.72rem;color:#5A5C68;margin-top:50px;line-hei
       <button id="copyAcct">계좌 복사</button>
     </div>
     <div class="steps">
-      ① 아래 <b>[신청 내용 복사]</b>를 눌러 카카오톡·문자로 보내주세요<br>
+      ① 아래 <b>[간명 신청하기]</b>를 누르면 신청이 바로 접수됩니다<br>
       ② 위 계좌로 <b>신청자 성함과 같은 이름</b>으로 입금해 주세요<br>
       ③ 입금 확인 후 <b>24시간 이내</b>, 간명서(문서 파일)를 보내드립니다
     </div>
-    <button class="btn ghost" id="copyApply">신청 내용 복사</button>
+    <button class="btn" id="applyBtn">간명 신청하기</button>
+    <button class="btn ghost" id="copyApply">신청 내용 복사 (접수가 안 될 때)</button>
   </section>
 </section>
 
@@ -194,6 +201,11 @@ footer{text-align:center;font-size:.72rem;color:#5A5C68;margin-top:50px;line-hei
   <h2>간명서 작성실 (관리자)</h2>
   <label>Anthropic API 키</label>
   <input type="password" id="apiKey" placeholder="sk-ant-...">
+  <label>관리 열람 키 (Apps Script의 SECRET 값)</label>
+  <input type="password" id="adminKey" placeholder="열람 키">
+  <button class="btn ghost" id="listBtn" style="margin-top:14px">신청 목록 불러오기</button>
+  <div id="appList"></div>
+  <p class="note">목록에서 <b>이름을 클릭하면</b> 만세력을 불러와 간명서가 자동 생성됩니다.</p>
   <label>고객 신청문 붙여넣기 (선택 — 붙여넣고 불러오기를 누르면 위 폼이 자동 입력됩니다)</label>
   <textarea id="pasteBox" placeholder="고객이 보낸 신청 내용 전체를 붙여넣으세요"></textarea>
   <button class="btn ghost" id="loadPaste" style="margin-top:12px">신청문 불러오기</button>
@@ -215,6 +227,11 @@ footer{text-align:center;font-size:.72rem;color:#5A5C68;margin-top:50px;line-hei
 <div class="toast" id="toast"></div>
 
 <script>
+/* ═══════════ 접수 서버 설정 ═══════════
+   구글 Apps Script 웹앱 배포 URL을 아래 따옴표 안에 붙여넣으세요.
+   예) const SERVER_URL='https://script.google.com/macros/s/AKfycb.../exec';   */
+const SERVER_URL='https://script.google.com/macros/s/AKfycbxW17F-Tz9eADoBR0HgZwc5hkrOwW_cPXgFIbDtahTBUVAYfv76_GzRDRu3mWt5MbFK/exec';
+
 /* ═══════════ 명리 기초 데이터 ═══════════ */
 const GAN_KO={'甲':'갑','乙':'을','丙':'병','丁':'정','戊':'무','己':'기','庚':'경','辛':'신','壬':'임','癸':'계'};
 const JI_KO={'子':'자','丑':'축','寅':'인','卯':'묘','辰':'진','巳':'사','午':'오','未':'미','申':'신','酉':'유','戌':'술','亥':'해'};
@@ -251,13 +268,14 @@ $('focusTags').querySelectorAll('button').forEach(b=>b.onclick=()=>{
 $('noTime').onchange=e=>$('btime').disabled=e.target.checked;
 
 /* 관리자 진입: 달 5회 클릭 */
+function openAdminRestore(){try{$('apiKey').value=localStorage.getItem('mh_key')||'';$('adminKey').value=localStorage.getItem('mh_adm')||'';}catch(e){}}
 let moonClicks=0, moonTimer=null;
 $('moon').onclick=()=>{
   moonClicks++; clearTimeout(moonTimer); moonTimer=setTimeout(()=>moonClicks=0,1800);
   if(moonClicks>=5){moonClicks=0;const a=$('admin');a.style.display=a.style.display==='block'?'none':'block';
-    if(a.style.display==='block'){try{$('apiKey').value=localStorage.getItem('mh_key')||'';}catch(e){} a.scrollIntoView({behavior:'smooth'});}}
+    if(a.style.display==='block'){openAdminRestore(); a.scrollIntoView({behavior:'smooth'});}}
 };
-if(location.hash==='#admin'){$('admin').style.display='block';try{$('apiKey').value=localStorage.getItem('mh_key')||'';}catch(e){}}
+if(location.hash==='#admin'){$('admin').style.display='block';openAdminRestore();}
 
 /* ═══════════ 만세력 계산 ═══════════ */
 function calcSaju(){
@@ -357,6 +375,23 @@ function copyText(t,msg){
     document.execCommand('copy');ta.remove();toast(msg);});
 }
 $('copyAcct').onclick=()=>copyText('3333-01-3706013','계좌번호가 복사되었습니다');
+
+/* ═══════════ 간명 신청 접수 (서버 자동 저장) ═══════════ */
+$('applyBtn').onclick=async()=>{
+  if(!sajuData){toast('먼저 만세력을 확인해 주세요');return;}
+  if(!SERVER_URL){toast('접수 서버 준비 중입니다. 아래 [신청 내용 복사]를 이용해 주세요');return;}
+  const btn=$('applyBtn'); btn.disabled=true; btn.textContent='접수 중...';
+  try{
+    const r=await fetch(SERVER_URL,{method:'POST',body:JSON.stringify({name:sajuData.name,data:sajuData})});
+    const j=await r.json();
+    if(!j.ok) throw 0;
+    btn.textContent='접수 완료';
+    toast('신청이 접수되었습니다. 입금해 주시면 24시간 이내 보내드립니다.');
+  }catch(e){
+    btn.disabled=false; btn.textContent='간명 신청하기';
+    toast('접수에 실패했습니다. [신청 내용 복사]로 보내주세요');
+  }
+};
 $('copyApply').onclick=()=>{
   if(!sajuData){toast('먼저 만세력을 확인해 주세요');return;}
   const s=sajuData, p=s.pillars;
@@ -373,6 +408,42 @@ $('copyApply').onclick=()=>{
 DATA: ${JSON.stringify(s)}`;
   copyText(t,'신청 내용이 복사되었습니다. 카카오톡·문자로 보내주세요.');
 };
+
+/* ═══════════ 관리자: 신청 목록 → 이름 클릭 → 자동 생성 ═══════════ */
+let currentAppId=null;
+$('listBtn').onclick=loadList;
+async function loadList(){
+  if(!SERVER_URL){toast('index.html 상단의 SERVER_URL을 먼저 설정하세요');return;}
+  const k=$('adminKey').value.trim();
+  if(!k){toast('관리 열람 키를 입력하세요');return;}
+  try{localStorage.setItem('mh_adm',k);}catch(e){}
+  $('listBtn').disabled=true;
+  try{
+    const r=await fetch(SERVER_URL+'?key='+encodeURIComponent(k));
+    const j=await r.json();
+    if(!j.ok){toast(j.error||'열람 키가 올바르지 않습니다');$('listBtn').disabled=false;return;}
+    const box=$('appList');
+    box.innerHTML=j.list.length ? j.list.slice().reverse().map(it=>`
+      <div class="app-item" data-id="${it.id}">
+        <span><b>${it.name}</b> 님 · ${it.ts}</span>
+        <span class="st ${it.status==='대기'?'':'done'}">${it.status} ▸</span>
+      </div>`).join('') : '<p class="note">아직 신청 내역이 없습니다.</p>';
+    box.querySelectorAll('.app-item').forEach(el=>el.onclick=()=>{
+      const it=j.list.find(x=>String(x.id)===String(el.dataset.id));
+      try{sajuData=typeof it.data==='string'?JSON.parse(it.data):it.data;}
+      catch(e){toast('신청 데이터를 읽지 못했습니다');return;}
+      currentAppId=it.id;
+      renderBoard(sajuData);
+      toast(`${sajuData.name} 님 간명서 작성을 시작합니다`);
+      generateReport();
+    });
+  }catch(e){toast('목록을 불러오지 못했습니다: '+e.message);}
+  $('listBtn').disabled=false;
+}
+async function markDone(id){
+  if(!SERVER_URL||!id)return;
+  try{await fetch(SERVER_URL,{method:'POST',body:JSON.stringify({action:'done',key:$('adminKey').value.trim(),id:id,status:'작성완료'})});}catch(e){}
+}
 
 /* ═══════════ 관리자: 신청문 불러오기 ═══════════ */
 $('loadPaste').onclick=()=>{
@@ -407,16 +478,19 @@ async function callClaude(apiKey, sys, user){
   const data=await r.json();
   return data.content.filter(c=>c.type==='text').map(c=>c.text).join('\n');
 }
-$('genBtn').onclick=async()=>{
-  if(!sajuData){toast('먼저 만세력을 확인하거나 신청문을 불러오세요');return;}
+$('genBtn').onclick=()=>generateReport();
+async function generateReport(){
+  if(!sajuData){toast('먼저 만세력을 확인하거나 신청 목록에서 이름을 클릭하세요');return;}
   const key=$('apiKey').value.trim();
-  try{if(key)localStorage.setItem('mh_key',key);}catch(e){}
+  if(!key){toast('Anthropic API 키를 입력하세요');$('admin').scrollIntoView({behavior:'smooth'});return;}
+  try{localStorage.setItem('mh_key',key);}catch(e){}
   const s=sajuData;
   const dataBlock=`[만세력 데이터 — 이 값만 사용할 것]\n${JSON.stringify({
     이름:s.name, 성별:s.gender, 출생:s.solarBirth, 음력:s.lunarText, 시간모름:s.timeUnknown,
     일간:s.dayMaster, 원국:s.pillars, 오행분포:s.elements, 대운:s.daYun, 올해세운:s.thisYear,
     관심분야:s.focus, 질문:s.question },null,1)}`;
   $('genBtn').disabled=true; $('prog').style.display='block'; $('preview').style.display='none';
+  $('prog').scrollIntoView({behavior:'smooth',block:'center'});
   $('docBtn').style.display='none'; sections=[];
   try{
     for(let i=0;i<SECTIONS.length;i++){
@@ -427,11 +501,12 @@ $('genBtn').onclick=async()=>{
         `${dataBlock}${prev}\n\n[이번 장 지시]\n제${i+1}장 「${SECTIONS[i].t}」\n${SECTIONS[i].p}\n앞 장과 내용이 겹치지 않게 하고, 본문만 출력하세요.`);
       sections.push(txt.trim());
     }
-    $('progFill').style.width='100%'; $('progMsg').textContent='집필 완료';
+    $('progFill').style.width='100%'; $('progMsg').textContent='집필 완료 — 아래에서 DOC를 내려받으세요';
     renderPreview(); $('docBtn').style.display='block';
+    if(currentAppId){markDone(currentAppId); currentAppId=null;}
   }catch(e){ $('progMsg').textContent='오류: '+e.message; }
   $('genBtn').disabled=false;
-};
+}
 function fmtSection(txt){
   return txt.split('\n').map(l=>{l=l.trim(); if(!l)return'';
     const m=l.match(/^【(.+?)】$/); if(m)return`<h3>【${m[1]}】</h3>`;
