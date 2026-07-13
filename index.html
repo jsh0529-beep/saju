@@ -192,7 +192,7 @@ footer{text-align:center;font-size:.72rem;color:#5A5C68;margin-top:50px;line-hei
     <div class="steps">
       ① 아래 <b>[간명 신청 등록]</b>을 눌러 주세요<br>
       ② 등록되면 <b>[카카오페이로 보내기]</b>가 열립니다 — 30,000원을 보내주세요<br>
-      ③ 확인 후 <b>24시간 이내</b>, 간명서(PDF)를 이메일로 보내드립니다
+      ③ 확인 후 <b>24시간 이내</b>, 간명서를 이메일로 보내드립니다
     </div>
     <button class="btn" id="applyBtn">간명 신청 등록</button>
     <button class="btn kakao" id="payBtn" disabled>카카오페이로 보내기 (등록 후 열립니다)</button>
@@ -219,7 +219,7 @@ footer{text-align:center;font-size:.72rem;color:#5A5C68;margin-top:50px;line-hei
     <div class="msg" id="progMsg"></div>
   </div>
   <div id="preview"></div>
-  <button class="btn" id="docBtn" style="display:none">PDF 파일 내려받기</button>
+  <button class="btn" id="docBtn" style="display:none">간명서 파일 내려받기</button>
   <button class="btn ghost" id="sendBtn" style="display:none">고객 이메일로 간명서 발송</button>
   <p class="note">달 문양을 다섯 번 누르면 이 작성실이 열리고 닫힙니다. API 키는 이 기기에만 저장됩니다.</p>
 </section>
@@ -235,7 +235,7 @@ footer{text-align:center;font-size:.72rem;color:#5A5C68;margin-top:50px;line-hei
 /* ═══════════ 접수 서버 설정 ═══════════
    구글 Apps Script 웹앱 배포 URL을 아래 따옴표 안에 붙여넣으세요.
    예) const SERVER_URL='https://script.google.com/macros/s/AKfycb.../exec';   */
-const SERVER_URL='https://script.google.com/macros/s/AKfycbzowZa9ryIkhlGr8_E4YDGQFFxLNepcP_eg-tXBTerwYiXMrJh3od734UnHOUGvk4bE/exec';
+const SERVER_URL='https://script.google.com/macros/s/AKfycbyJ_pqSpcdxJdcPJ6LnBU0KW7gjI81uIxBZVh-53ccjzusEgDogh8bppAd3Q00ocA8f/exec';
 
 /* ═══════════ 명리 기초 데이터 ═══════════ */
 const GAN_KO={'甲':'갑','乙':'을','丙':'병','丁':'정','戊':'무','己':'기','庚':'경','辛':'신','壬':'임','癸':'계'};
@@ -577,7 +577,7 @@ async function generateReport(){
       secs.push(txt.trim());
     }
     sections=secs;
-    $('progFill').style.width='100%'; $('progMsg').textContent='집필 완료 — PDF 내려받기 또는 이메일 발송을 하세요';
+    $('progFill').style.width='100%'; $('progMsg').textContent='집필 완료 — 파일 내려받기 또는 이메일 발송을 하세요';
     renderPreview(); $('docBtn').style.display='block'; $('sendBtn').style.display='block';
     if(currentAppId) markDone(currentAppId);
   }catch(e){ $('progMsg').textContent='오류: '+e.message; }
@@ -607,18 +607,18 @@ $('docBtn').onclick=async()=>{
   if(!sections||sections.length<4){toast('간명서를 먼저 생성하거나 불러오세요');return;}
   if(!$('adminKey').value.trim()){toast('관리 열람 키를 입력하세요');return;}
   pdfBusy=true;
-  const btn=$('docBtn'); btn.disabled=true; btn.textContent='서버에서 PDF 생성 중...';
+  const btn=$('docBtn'); btn.disabled=true; btn.textContent='서버에서 문서 생성 중...';
   try{
     const r=await fetch(SERVER_URL,{method:'POST',body:JSON.stringify(serverPayload('pdfmake'))});
     const j=await r.json();
     if(!j.ok) throw new Error(j.error||'PDF 생성 실패');
     const bin=atob(j.b64), arr=new Uint8Array(bin.length);
     for(let i=0;i<bin.length;i++) arr[i]=bin.charCodeAt(i);
-    const blob=new Blob([arr],{type:'application/pdf'});
+    const blob=new Blob([arr],{type:'application/msword'});
     const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
-    a.download=j.fname||'간명서.pdf'; a.click(); URL.revokeObjectURL(a.href);
-  }catch(e){toast('PDF 생성 실패: '+e.message);}
-  btn.disabled=false; btn.textContent='PDF 파일 내려받기'; pdfBusy=false;
+    a.download=j.fname||'간명서.doc'; a.click(); URL.revokeObjectURL(a.href);
+  }catch(e){toast('문서 생성 실패: '+e.message);}
+  btn.disabled=false; btn.textContent='간명서 파일 내려받기'; pdfBusy=false;
 };
 /* ═══════════ 고객 이메일 발송 (서버에서 PDF 생성·발송) ═══════════ */
 $('sendBtn').onclick=async()=>{
@@ -626,8 +626,8 @@ $('sendBtn').onclick=async()=>{
   if(!sections||sections.length<4){toast('간명서를 먼저 생성하거나 불러오세요');return;}
   if(!$('adminKey').value.trim()){toast('관리 열람 키를 입력하세요');return;}
   const to=sajuData&&sajuData.email;
-  if(!to||!to.includes('@')){toast('이 신청 건에는 이메일이 없습니다. PDF를 내려받아 직접 보내주세요');return;}
-  if(!confirm(`${sajuData.name} 님 (${to}) 에게 간명서 PDF를 발송할까요?`))return;
+  if(!to||!to.includes('@')){toast('이 신청 건에는 이메일이 없습니다. 파일을 내려받아 직접 보내주세요');return;}
+  if(!confirm(`${sajuData.name} 님 (${to}) 에게 간명서를 발송할까요?`))return;
   pdfBusy=true;
   const btn=$('sendBtn'); btn.disabled=true; btn.textContent='서버에서 발송 중...';
   try{
@@ -635,7 +635,7 @@ $('sendBtn').onclick=async()=>{
     const j=await r.json();
     if(!j.ok) throw new Error(j.error||'발송 실패');
     btn.textContent='발송 완료';
-    toast(`${sajuData.name} 님께 간명서 PDF를 발송했습니다`);
+    toast(`${sajuData.name} 님께 간명서를 발송했습니다`);
     loadList();
   }catch(e){
     btn.disabled=false; btn.textContent='고객 이메일로 간명서 발송';
