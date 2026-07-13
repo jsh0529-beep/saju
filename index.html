@@ -53,6 +53,7 @@ textarea{resize:vertical;min-height:74px}
 .btn.ghost{background:transparent;border:1px solid var(--gold-soft);color:var(--gold)}
 .btn.kakao{background:#FEE500;color:#1B1608;text-decoration:none;text-align:center;margin-top:14px}
 .btn.kakao:hover{background:#FFD900}
+.btn.kakao:disabled{background:#4A4636;color:#8A8676;cursor:default}
 .center-note{text-align:center}
 .btn:disabled{opacity:.45;cursor:default}
 .note{font-size:.8rem;color:var(--tx-dim);margin-top:10px;line-height:1.6}
@@ -148,8 +149,8 @@ footer{text-align:center;font-size:.72rem;color:#5A5C68;margin-top:50px;line-hei
   <label class="chk" id="leapWrap" style="display:none"><input type="checkbox" id="leap"> 윤달입니다</label>
   <div class="row">
     <div>
-      <label>생년월일 — 8자리 숫자로 입력</label>
-      <input type="text" id="bdate" inputmode="numeric" maxlength="8" placeholder="19830524">
+      <label>생년월일 — 8자리 숫자 EX) 19830524</label>
+      <input type="text" id="bdate" inputmode="numeric" maxlength="8" placeholder="EX) 19830524">
     </div>
     <div>
       <label>태어난 시각</label>
@@ -188,13 +189,13 @@ footer{text-align:center;font-size:.72rem;color:#5A5C68;margin-top:50px;line-hei
     <h2>간명서 신청 안내</h2>
     <p style="text-align:center;font-size:.88rem;color:var(--tx-dim)">A4 열 장 분량의 정성 어린 간명서를 보내드립니다</p>
     <div class="amount">30,000원</div>
-    <button class="btn kakao" id="applyBtn">간명 신청 · 카카오페이로 보내기</button>
     <div class="steps">
-      ① 위 버튼을 누르면 <b>신청이 등록</b>되고 <b>카카오페이 결제창</b>이 열립니다<br>
-      ② 카카오페이에서 <b>30,000원</b>을 보내주세요<br>
+      ① 아래 <b>[간명 신청 등록]</b>을 눌러 주세요<br>
+      ② 등록되면 <b>[카카오페이로 보내기]</b>가 열립니다 — 30,000원을 보내주세요<br>
       ③ 확인 후 <b>24시간 이내</b>, 간명서(PDF)를 이메일로 보내드립니다
     </div>
-    <p class="note center-note">결제창이 열리지 않았다면 → <a href="https://qr.kakaopay.com/FRC3Gi9eA" target="_blank" rel="noopener" style="color:var(--gold)">카카오페이 다시 열기</a></p>
+    <button class="btn" id="applyBtn">간명 신청 등록</button>
+    <button class="btn kakao" id="payBtn" disabled>카카오페이로 보내기 (등록 후 열립니다)</button>
     <button class="btn ghost" id="copyApply" style="display:none">신청 내용 복사</button>
   </section>
 </section>
@@ -387,20 +388,25 @@ function copyText(t,msg){
 const KAKAOPAY_URL='https://qr.kakaopay.com/FRC3Gi9eA';
 $('applyBtn').onclick=async()=>{
   if(!sajuData){toast('먼저 만세력을 확인해 주세요');return;}
-  // 사용자 클릭 시점에 결제창을 먼저 연다 (팝업 차단 회피)
-  window.open(KAKAOPAY_URL,'_blank');
   const btn=$('applyBtn'); btn.disabled=true; btn.textContent='신청 등록 중...';
   try{
     const r=await fetch(SERVER_URL,{method:'POST',body:JSON.stringify({name:sajuData.name,email:sajuData.email,data:sajuData})});
     const j=await r.json();
     if(!j.ok) throw 0;
-    btn.textContent='신청 등록 완료';
-    toast('신청이 등록되었습니다. 카카오페이로 30,000원을 보내주시면 확인 후 발송해 드립니다.');
+    btn.textContent='① 신청 등록 완료';
+    const pay=$('payBtn');
+    pay.disabled=false; pay.textContent='카카오페이로 30,000원 보내기';
+    pay.scrollIntoView({behavior:'smooth',block:'center'});
+    toast('등록되었습니다. 이제 카카오페이로 30,000원을 보내주세요.');
   }catch(e){
-    btn.disabled=false; btn.textContent='간명 신청 · 카카오페이로 보내기';
+    btn.disabled=false; btn.textContent='간명 신청 등록';
     $('copyApply').style.display='block';
     toast('등록에 실패했습니다. 아래 [신청 내용 복사]로 보내주세요');
   }
+};
+$('payBtn').onclick=()=>{
+  if($('payBtn').disabled)return;
+  window.open(KAKAOPAY_URL,'_blank');
 };
 $('copyApply').onclick=()=>{
   if(!sajuData){toast('먼저 만세력을 확인해 주세요');return;}
