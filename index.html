@@ -147,8 +147,8 @@ footer{text-align:center;font-size:.72rem;color:#5A5C68;margin-top:50px;line-hei
   <label class="chk" id="leapWrap" style="display:none"><input type="checkbox" id="leap"> 윤달입니다</label>
   <div class="row">
     <div>
-      <label>생년월일</label>
-      <input type="date" id="bdate" min="1930-01-01" max="2026-12-31">
+      <label>생년월일 — 8자리 숫자로 입력</label>
+      <input type="text" id="bdate" inputmode="numeric" maxlength="8" placeholder="19830524">
     </div>
     <div>
       <label>태어난 시각</label>
@@ -286,8 +286,10 @@ function calcSaju(){
   if(!name){toast('성함을 입력해 주세요');return null;}
   const email=$('email').value.trim();
   if(!email||!email.includes('@')){toast('간명서 받으실 이메일을 입력해 주세요');return null;}
-  if(!$('bdate').value){toast('생년월일을 입력해 주세요');return null;}
-  const [y,m,d]=$('bdate').value.split('-').map(Number);
+  const bd=$('bdate').value.replace(/\D/g,'');
+  if(bd.length!==8){toast('생년월일을 8자리로 입력해 주세요 (예: 19830524)');return null;}
+  const y=+bd.slice(0,4), m=+bd.slice(4,6), d=+bd.slice(6,8);
+  if(y<1900||y>2026||m<1||m>12||d<1||d>31){toast('생년월일을 다시 확인해 주세요');return null;}
   const timeUnknown=$('noTime').checked;
   let hh=12, mi=0;
   if(!timeUnknown){
@@ -340,7 +342,7 @@ function calcSaju(){
   const nowGz=Solar.fromDate(new Date()).getLunar().getYearInGanZhiByLiChun();
   return {
     name, email, gender, timeUnknown, corrected, lunarText,
-    birthInput:`${calType==='solar'?'양력':'음력'} ${$('bdate').value}${timeUnknown?' (시간 모름)':' '+$('btime').value}`,
+    birthInput:`${calType==='solar'?'양력':'음력'} ${y}년 ${m}월 ${d}일${timeUnknown?' (시간 모름)':' '+$('btime').value}`,
     solarBirth:`양력 ${y}년 ${m}월 ${d}일${timeUnknown?'':' '+String($('btime').value)}`,
     pillars, elements:cnt, dayMaster:{gan:dayGan, ko:GAN_KO[dayGan], el:GAN_EL[dayGan], yy:GAN_YY[dayGan]?'양':'음'},
     daYun:daYunArr, thisYear:{year:new Date().getFullYear(), ganzhi:nowGz, ko:ganzhiKo(nowGz)},
