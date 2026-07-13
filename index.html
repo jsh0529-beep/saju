@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>월하서재 — 사주 간명소</title>
+<meta property="og:title" content="월하서재 — 사주 간명소">
+<meta property="og:description" content="달빛 아래에서, 당신의 사주를 정성껏 읽어드립니다. 명리 20년 혜윤 선생의 A4 열 장 간명서.">
+<meta property="og:image" content="https://jsh0529-beep.github.io/saju/cover.png">
+<meta property="og:url" content="https://jsh0529-beep.github.io/saju/">
+<meta property="og:type" content="website">
+<link href="https://fonts.googleapis.com/css2?family=Song+Myung&family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/lunar-javascript@1.7.3/lunar.js"></script>
+<style>
+:root{
+  --ink:#12141C; --ink2:#1B1E29; --hanji:#F6F1E4; --hanji2:#EFE7D3;
+  --gold:#C8A24B; --gold-soft:#8F7434;
+  --tx:#E9E4D8; --tx-dim:#9C9789; --line:#2E3140;
+  --mok:#3E7C4F; --hwa:#B23A32; --to:#B8862B; --geum:#8C8C93; --su:#31566E;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--ink);color:var(--tx);font-family:'Gowun Batang',serif;line-height:1.7;min-height:100vh}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 60% 40% at 50% -5%, rgba(200,162,75,.10), transparent 70%);}
+.wrap{max-width:720px;margin:0 auto;padding:0 20px 80px}
+header{text-align:center;padding:64px 0 40px}
+.moon{width:54px;height:54px;border-radius:50%;margin:0 auto 18px;
+  background:radial-gradient(circle at 38% 34%, #F3EBD6, #C8A24B 78%);
+  box-shadow:0 0 40px rgba(200,162,75,.35);cursor:pointer}
+h1{font-family:'Song Myung',serif;font-size:2.1rem;letter-spacing:.4em;text-indent:.4em;color:var(--tx);font-weight:400}
+.hanja-sub{color:var(--gold);letter-spacing:.55em;text-indent:.55em;font-size:.85rem;margin-top:6px}
+.tagline{color:var(--tx-dim);font-size:.92rem;margin-top:20px}
+.card{background:var(--ink2);border:1px solid var(--line);border-radius:4px;padding:28px 26px;margin-bottom:22px}
+.card h2{font-family:'Song Myung',serif;font-size:1.05rem;font-weight:400;color:var(--gold);letter-spacing:.25em;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+label{display:block;font-size:.82rem;color:var(--tx-dim);margin:16px 0 6px;letter-spacing:.05em}
+input[type=text],input[type=number],input[type=date],input[type=time],input[type=password],select,textarea{
+  width:100%;background:var(--ink);border:1px solid var(--line);border-radius:3px;color:var(--tx);
+  padding:11px 12px;font-size:.95rem;font-family:'Gowun Batang',serif}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--gold-soft);outline-offset:0;border-color:var(--gold-soft)}
+textarea{resize:vertical;min-height:74px}
+.row{display:flex;gap:12px}.row>div{flex:1}
+.seg{display:flex;gap:8px}
+.seg button{flex:1;background:var(--ink);border:1px solid var(--line);color:var(--tx-dim);padding:10px;border-radius:3px;cursor:pointer;font-family:inherit;font-size:.92rem}
+.seg button.on{border-color:var(--gold);color:var(--gold)}
+.chk{display:flex;align-items:center;gap:9px;margin-top:12px;font-size:.88rem;color:var(--tx);cursor:pointer}
+.chk input{width:16px;height:16px;accent-color:var(--gold)}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.tags button{background:var(--ink);border:1px solid var(--line);color:var(--tx-dim);padding:7px 14px;border-radius:20px;cursor:pointer;font-family:inherit;font-size:.85rem}
+.tags button.on{border-color:var(--gold);color:var(--gold)}
+.btn{display:block;width:100%;background:var(--gold);color:#191509;border:none;padding:15px;font-size:1rem;
+  font-family:'Song Myung',serif;letter-spacing:.3em;text-indent:.3em;border-radius:3px;cursor:pointer;margin-top:26px}
+.btn:hover{background:#D9B45F}
+.btn.ghost{background:transparent;border:1px solid var(--gold-soft);color:var(--gold)}
+.btn:disabled{opacity:.45;cursor:default}
+.note{font-size:.8rem;color:var(--tx-dim);margin-top:10px;line-height:1.6}
+/* ── 원국판 (signature) ── */
+#board{display:none}
+.wongook{background:var(--hanji);border-radius:4px;padding:30px 18px 22px;color:#26221A;
+  box-shadow:inset 0 0 0 1px #D9CEB2, inset 0 0 0 5px var(--hanji), inset 0 0 0 6px #C4B58E}
+.wg-title{text-align:center;font-family:'Song Myung',serif;letter-spacing:.4em;text-indent:.4em;font-size:.9rem;color:#6E6350;margin-bottom:18px}
+.pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;text-align:center}
+.pl .lab{font-size:.72rem;color:#8A7E66;letter-spacing:.2em;margin-bottom:8px}
+.pl .ss{font-size:.68rem;color:#6E6350;height:1.1em;margin-bottom:2px}
+.pl .han{font-family:'Song Myung',serif;font-size:2.15rem;line-height:1.15}
+.pl .ko{font-size:.75rem;color:#6E6350;margin:1px 0 7px}
+.pl .hid{font-size:.62rem;color:#9A8E74;letter-spacing:.08em;margin-top:6px}
+.el-목{color:var(--mok)}.el-화{color:var(--hwa)}.el-토{color:var(--to)}.el-금{color:#6E6E76}.el-수{color:var(--su)}
+.ohaeng{display:flex;gap:6px;margin-top:22px}
+.oh{flex:1;text-align:center;font-size:.72rem;color:#F6F1E4;padding:7px 0 5px;border-radius:3px}
+.oh b{display:block;font-size:1rem;font-family:'Song Myung',serif}
+.daeun{margin-top:20px;border-top:1px dashed #C4B58E;padding-top:14px}
+.daeun-t{font-size:.75rem;color:#8A7E66;letter-spacing:.2em;margin-bottom:10px;text-align:center}
+.daeun-list{display:grid;grid-template-columns:repeat(8,1fr);gap:4px;text-align:center}
+.du .age{font-size:.62rem;color:#9A8E74}
+.du .gz{font-family:'Song Myung',serif;font-size:.95rem;line-height:1.2}
+.birth-line{text-align:center;font-size:.8rem;color:#6E6350;margin-top:16px}
+/* 입금 안내 */
+.pay{border:1px solid var(--gold-soft);background:linear-gradient(180deg, rgba(200,162,75,.07), transparent)}
+.pay .amount{font-family:'Song Myung',serif;font-size:1.7rem;color:var(--gold);text-align:center;margin:6px 0 2px}
+.acct{display:flex;align-items:center;justify-content:space-between;background:var(--ink);border:1px solid var(--line);
+  border-radius:3px;padding:13px 14px;margin-top:14px;font-size:.95rem}
+.acct button{background:none;border:1px solid var(--gold-soft);color:var(--gold);padding:6px 12px;border-radius:3px;cursor:pointer;font-family:inherit;font-size:.8rem}
+.steps{margin-top:16px;font-size:.86rem;color:var(--tx-dim);line-height:2}
+.steps b{color:var(--tx)}
+/* 관리자 */
+#admin{display:none}
+.prog{display:none;margin-top:18px}
+.prog .bar{height:6px;background:var(--ink);border-radius:3px;overflow:hidden;border:1px solid var(--line)}
+.prog .fill{height:100%;width:0;background:var(--gold);transition:width .5s}
+.prog .msg{font-size:.82rem;color:var(--tx-dim);margin-top:8px;text-align:center}
+#preview{display:none;background:var(--hanji);color:#26221A;border-radius:4px;padding:34px 30px;margin-top:20px;max-height:480px;overflow-y:auto;font-size:.92rem;line-height:1.95}
+#preview h3{font-family:'Song Myung',serif;font-size:1.05rem;margin:26px 0 12px;color:#5A4A22;letter-spacing:.1em}
+#preview h3:first-child{margin-top:0}
+#preview p{margin-bottom:12px}
+footer{text-align:center;font-size:.72rem;color:#5A5C68;margin-top:50px;line-height:1.9}
+.toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:var(--gold);color:#191509;
+  padding:11px 26px;border-radius:30px;font-size:.88rem;display:none;z-index:99}
+@media (max-width:520px){
+  h1{font-size:1.6rem}.row{flex-direction:column;gap:0}
+  .pl .han{font-size:1.7rem}.daeun-list{grid-template-columns:repeat(4,1fr);row-gap:10px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="moon" id="moon" title=""></div>
+  <h1>월하서재</h1>
+  <div class="hanja-sub">月 下 書 齋</div>
+  <p class="tagline">명리 이십 년 · 혜윤 선생 사주 간명<br>달빛 아래에서, 당신의 사주를 정성껏 읽어드립니다</p>
+</header>
+
+<!-- ── 1. 입력 ── -->
+<section class="card">
+  <h2>간명 신청</h2>
+  <label>성함</label>
+  <input type="text" id="name" placeholder="홍길동">
+  <div class="row">
+    <div>
+      <label>성별</label>
+      <div class="seg" id="genderSeg">
+        <button data-v="여" class="on">여성</button>
+        <button data-v="남">남성</button>
+      </div>
+    </div>
+    <div>
+      <label>양력 / 음력</label>
+      <div class="seg" id="calSeg">
+        <button data-v="solar" class="on">양력</button>
+        <button data-v="lunar">음력</button>
+      </div>
+    </div>
+  </div>
+  <label class="chk" id="leapWrap" style="display:none"><input type="checkbox" id="leap"> 윤달입니다</label>
+  <div class="row">
+    <div>
+      <label>생년월일</label>
+      <input type="date" id="bdate" min="1930-01-01" max="2026-12-31">
+    </div>
+    <div>
+      <label>태어난 시각</label>
+      <input type="time" id="btime" value="12:00">
+    </div>
+  </div>
+  <label class="chk"><input type="checkbox" id="noTime"> 태어난 시각을 모릅니다 (시주 제외 간명)</label>
+  <label class="chk"><input type="checkbox" id="fix30" checked> 한국 출생 — 진태양시 보정(−30분) 적용</label>
+  <label>특히 궁금하신 부분 (복수 선택)</label>
+  <div class="tags" id="focusTags">
+    <button data-v="재물운">재물운</button><button data-v="직업·사업운">직업·사업운</button>
+    <button data-v="애정·혼인운">애정·혼인운</button><button data-v="건강운">건강운</button>
+    <button data-v="대인관계">대인관계</button><button data-v="올해 신수">올해 신수</button>
+  </div>
+  <label>선생께 여쭙고 싶은 말씀 (선택)</label>
+  <textarea id="question" placeholder="예) 내년에 이직을 생각하고 있습니다. 시기가 괜찮을지 궁금합니다."></textarea>
+  <button class="btn" id="calcBtn">만세력 확인</button>
+  <p class="note">만세력은 절기(節氣) 기준 정통 방식으로 자동 산출됩니다. 확인 후 아래에서 간명을 신청하실 수 있습니다.</p>
+</section>
+
+<!-- ── 2. 원국판 ── -->
+<section id="board">
+  <div class="wongook">
+    <div class="wg-title">四柱原局 · 사주 원국</div>
+    <div class="pillars" id="pillars"></div>
+    <div class="ohaeng" id="ohaeng"></div>
+    <div class="daeun">
+      <div class="daeun-t">大運 · 대운의 흐름</div>
+      <div class="daeun-list" id="daeunList"></div>
+    </div>
+    <div class="birth-line" id="birthLine"></div>
+  </div>
+
+  <!-- ── 3. 입금 안내 ── -->
+  <section class="card pay" style="margin-top:22px">
+    <h2>간명서 신청 안내</h2>
+    <p style="text-align:center;font-size:.88rem;color:var(--tx-dim)">A4 열 장 분량의 정성 어린 간명서를 보내드립니다</p>
+    <div class="amount">30,000원</div>
+    <div class="acct">
+      <span>카카오뱅크 <b>3333-01-3706013</b> 장성혁</span>
+      <button id="copyAcct">계좌 복사</button>
+    </div>
+    <div class="steps">
+      ① 아래 <b>[신청 내용 복사]</b>를 눌러 카카오톡·문자로 보내주세요<br>
+      ② 위 계좌로 <b>신청자 성함과 같은 이름</b>으로 입금해 주세요<br>
+      ③ 입금 확인 후 <b>24시간 이내</b>, 간명서(문서 파일)를 보내드립니다
+    </div>
+    <button class="btn ghost" id="copyApply">신청 내용 복사</button>
+  </section>
+</section>
+
+<!-- ── 관리자 ── -->
+<section class="card" id="admin">
+  <h2>간명서 작성실 (관리자)</h2>
+  <label>Anthropic API 키</label>
+  <input type="password" id="apiKey" placeholder="sk-ant-...">
+  <label>고객 신청문 붙여넣기 (선택 — 붙여넣고 불러오기를 누르면 위 폼이 자동 입력됩니다)</label>
+  <textarea id="pasteBox" placeholder="고객이 보낸 신청 내용 전체를 붙여넣으세요"></textarea>
+  <button class="btn ghost" id="loadPaste" style="margin-top:12px">신청문 불러오기</button>
+  <button class="btn" id="genBtn">간명서 생성 (4단계)</button>
+  <div class="prog" id="prog">
+    <div class="bar"><div class="fill" id="progFill"></div></div>
+    <div class="msg" id="progMsg"></div>
+  </div>
+  <div id="preview"></div>
+  <button class="btn" id="docBtn" style="display:none">DOC 파일 내려받기</button>
+  <p class="note">달 문양을 다섯 번 누르면 이 작성실이 열리고 닫힙니다. API 키는 이 기기에만 저장됩니다.</p>
+</section>
+
+<footer>
+  月下書齋 · 본 간명서는 전통 명리학 이론에 근거하여 작성되며, 삶의 참고 자료로 활용하시기 바랍니다.<br>
+  신청·문의는 신청 내용 복사 후 연락 주시는 방법으로 받고 있습니다.
+</footer>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ═══════════ 명리 기초 데이터 ═══════════ */
+const GAN_KO={'甲':'갑','乙':'을','丙':'병','丁':'정','戊':'무','己':'기','庚':'경','辛':'신','壬':'임','癸':'계'};
+const JI_KO={'子':'자','丑':'축','寅':'인','卯':'묘','辰':'진','巳':'사','午':'오','未':'미','申':'신','酉':'유','戌':'술','亥':'해'};
+const GAN_EL={'甲':'목','乙':'목','丙':'화','丁':'화','戊':'토','己':'토','庚':'금','辛':'금','壬':'수','癸':'수'};
+const GAN_YY={'甲':1,'乙':0,'丙':1,'丁':0,'戊':1,'己':0,'庚':1,'辛':0,'壬':1,'癸':0};
+const JI_EL={'子':'수','丑':'토','寅':'목','卯':'목','辰':'토','巳':'화','午':'화','未':'토','申':'금','酉':'금','戌':'토','亥':'수'};
+const JI_MAIN={'子':'癸','丑':'己','寅':'甲','卯':'乙','辰':'戊','巳':'丙','午':'丁','未':'己','申':'庚','酉':'辛','戌':'戊','亥':'壬'};
+const JI_HID={'子':'壬癸','丑':'癸辛己','寅':'戊丙甲','卯':'甲乙','辰':'乙癸戊','巳':'戊庚丙','午':'丙己丁','未':'丁乙己','申':'戊壬庚','酉':'庚辛','戌':'辛丁戊','亥':'戊甲壬'};
+const EL_COLOR={'목':'#3E7C4F','화':'#B23A32','토':'#B8862B','금':'#6E6E76','수':'#31566E'};
+const GEN={'목':'화','화':'토','토':'금','금':'수','수':'목'};   // 생
+const CTL={'목':'토','토':'수','수':'화','화':'금','금':'목'};   // 극
+function ganzhiKo(gz){return GAN_KO[gz[0]]+JI_KO[gz[1]];}
+function sipseong(day, other){
+  const de=GAN_EL[day], oe=GAN_EL[other], same=GAN_YY[day]===GAN_YY[other];
+  if(de===oe) return same?'비견':'겁재';
+  if(GEN[de]===oe) return same?'식신':'상관';
+  if(CTL[de]===oe) return same?'편재':'정재';
+  if(CTL[oe]===de) return same?'편관':'정관';
+  if(GEN[oe]===de) return same?'편인':'정인';
+  return '';
+}
+
+/* ═══════════ UI 상태 ═══════════ */
+const $=id=>document.getElementById(id);
+let gender='여', calType='solar', focusSel=[], sajuData=null, sections=[];
+function toast(m){const t=$('toast');t.textContent=m;t.style.display='block';setTimeout(()=>t.style.display='none',2200);}
+function segInit(id, cb){$(id).querySelectorAll('button').forEach(b=>b.onclick=()=>{
+  $(id).querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on');cb(b.dataset.v);});}
+segInit('genderSeg',v=>gender=v);
+segInit('calSeg',v=>{calType=v;$('leapWrap').style.display=v==='lunar'?'flex':'none';});
+$('focusTags').querySelectorAll('button').forEach(b=>b.onclick=()=>{
+  b.classList.toggle('on');
+  focusSel=[...$('focusTags').querySelectorAll('.on')].map(x=>x.dataset.v);});
+$('noTime').onchange=e=>$('btime').disabled=e.target.checked;
+
+/* 관리자 진입: 달 5회 클릭 */
+let moonClicks=0, moonTimer=null;
+$('moon').onclick=()=>{
+  moonClicks++; clearTimeout(moonTimer); moonTimer=setTimeout(()=>moonClicks=0,1800);
+  if(moonClicks>=5){moonClicks=0;const a=$('admin');a.style.display=a.style.display==='block'?'none':'block';
+    if(a.style.display==='block'){try{$('apiKey').value=localStorage.getItem('mh_key')||'';}catch(e){} a.scrollIntoView({behavior:'smooth'});}}
+};
+if(location.hash==='#admin'){$('admin').style.display='block';try{$('apiKey').value=localStorage.getItem('mh_key')||'';}catch(e){}}
+
+/* ═══════════ 만세력 계산 ═══════════ */
+function calcSaju(){
+  const name=$('name').value.trim();
+  if(!name){toast('성함을 입력해 주세요');return null;}
+  if(!$('bdate').value){toast('생년월일을 입력해 주세요');return null;}
+  const [y,m,d]=$('bdate').value.split('-').map(Number);
+  const timeUnknown=$('noTime').checked;
+  let hh=12, mi=0;
+  if(!timeUnknown){
+    if(!$('btime').value){toast('태어난 시각을 입력해 주세요');return null;}
+    [hh,mi]=$('btime').value.split(':').map(Number);
+  }
+  // 음력 → 양력 변환
+  let sy=y, sm=m, sd=d, lunarText='';
+  if(calType==='lunar'){
+    try{
+      const lm=$('leap').checked?-m:m;
+      const sol=Lunar.fromYmd(y,lm,d).getSolar();
+      sy=sol.getYear(); sm=sol.getMonth(); sd=sol.getDay();
+      lunarText=`음력 ${y}년 ${$('leap').checked?'윤':''}${m}월 ${d}일`;
+    }catch(e){toast('음력 날짜를 확인해 주세요');return null;}
+  }
+  // 진태양시 보정 (-30분)
+  let corrected=false;
+  if($('fix30').checked && !timeUnknown){
+    const dt=new Date(sy,sm-1,sd,hh,mi); dt.setMinutes(dt.getMinutes()-30);
+    sy=dt.getFullYear(); sm=dt.getMonth()+1; sd=dt.getDate(); hh=dt.getHours(); mi=dt.getMinutes();
+    corrected=true;
+  }
+  const solar=Solar.fromYmdHms(sy,sm,sd,hh,mi,0);
+  const lunar=solar.getLunar();
+  const ec=lunar.getEightChar(); ec.setSect(1);
+  if(!lunarText) lunarText=`음력 ${lunar.getYear()}년 ${lunar.getMonth()<0?'윤':''}${Math.abs(lunar.getMonth())}월 ${lunar.getDay()}일`;
+  const pRaw={year:ec.getYear(), month:ec.getMonth(), day:ec.getDay(), time:ec.getTime()};
+  const dayGan=pRaw.day[0];
+  const mk=gz=>({
+    ganzhi:gz, ko:ganzhiKo(gz),
+    gan:gz[0], ganKo:GAN_KO[gz[0]], ganEl:GAN_EL[gz[0]],
+    ji:gz[1], jiKo:JI_KO[gz[1]], jiEl:JI_EL[gz[1]],
+    hidden:JI_HID[gz[1]].split('').map(c=>GAN_KO[c]).join('·'),
+    ssGan:sipseong(dayGan,gz[0]), ssJi:sipseong(dayGan,JI_MAIN[gz[1]])
+  });
+  const pillars={year:mk(pRaw.year), month:mk(pRaw.month), day:mk(pRaw.day)};
+  pillars.day.ssGan='일간(나)';
+  if(!timeUnknown) pillars.time=mk(pRaw.time);
+  // 오행 분포
+  const cnt={'목':0,'화':0,'토':0,'금':0,'수':0};
+  const keys=timeUnknown?['year','month','day']:['year','month','day','time'];
+  keys.forEach(k=>{cnt[pillars[k].ganEl]++;cnt[pillars[k].jiEl]++;});
+  // 대운
+  const yun=ec.getYun(gender==='남'?1:0);
+  const daYunArr=yun.getDaYun().slice(1,9).map(du=>({
+    age:du.getStartAge(), year:du.getStartYear(), ganzhi:du.getGanZhi(), ko:ganzhiKo(du.getGanZhi())
+  }));
+  // 올해 세운 (입춘 기준)
+  const nowGz=Solar.fromDate(new Date()).getLunar().getYearInGanZhiByLiChun();
+  return {
+    name, gender, timeUnknown, corrected, lunarText,
+    birthInput:`${calType==='solar'?'양력':'음력'} ${$('bdate').value}${timeUnknown?' (시간 모름)':' '+$('btime').value}`,
+    solarBirth:`양력 ${y}년 ${m}월 ${d}일${timeUnknown?'':' '+String($('btime').value)}`,
+    pillars, elements:cnt, dayMaster:{gan:dayGan, ko:GAN_KO[dayGan], el:GAN_EL[dayGan], yy:GAN_YY[dayGan]?'양':'음'},
+    daYun:daYunArr, thisYear:{year:new Date().getFullYear(), ganzhi:nowGz, ko:ganzhiKo(nowGz)},
+    focus:focusSel, question:$('question').value.trim()
+  };
+}
+
+function renderBoard(s){
+  const order=s.timeUnknown?['day','month','year']:['time','day','month','year'];
+  const labels={time:'時柱 시주',day:'日柱 일주',month:'月柱 월주',year:'年柱 연주'};
+  $('pillars').style.gridTemplateColumns=`repeat(${order.length},1fr)`;
+  $('pillars').innerHTML=order.map(k=>{const p=s.pillars[k];return `
+    <div class="pl">
+      <div class="lab">${labels[k]}</div>
+      <div class="ss">${p.ssGan}</div>
+      <div class="han el-${p.ganEl}">${p.gan}</div>
+      <div class="ko">${p.ganKo} · ${p.ganEl}</div>
+      <div class="han el-${p.jiEl}">${p.ji}</div>
+      <div class="ko">${p.jiKo} · ${p.jiEl}</div>
+      <div class="ss">${p.ssJi}</div>
+      <div class="hid">장간 ${p.hidden}</div>
+    </div>`;}).join('');
+  $('ohaeng').innerHTML=['목','화','토','금','수'].map(e=>
+    `<div class="oh" style="background:${EL_COLOR[e]}">${e}<b>${s.elements[e]}</b></div>`).join('');
+  $('daeunList').innerHTML=s.daYun.map(d=>
+    `<div class="du"><div class="age">${d.age}세</div><div class="gz">${d.ganzhi}</div><div class="age">${d.ko}</div></div>`).join('');
+  $('birthLine').textContent=`${s.name} (${s.gender}) · ${s.solarBirth} · ${s.lunarText}${s.corrected?' · 진태양시 보정':''}`;
+  $('board').style.display='block';
+  $('board').scrollIntoView({behavior:'smooth'});
+}
+$('calcBtn').onclick=()=>{const s=calcSaju(); if(s){sajuData=s; renderBoard(s);}};
+
+/* ═══════════ 신청 내용 복사 ═══════════ */
+function copyText(t,msg){
+  navigator.clipboard.writeText(t).then(()=>toast(msg)).catch(()=>{
+    const ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();
+    document.execCommand('copy');ta.remove();toast(msg);});
+}
+$('copyAcct').onclick=()=>copyText('3333-01-3706013','계좌번호가 복사되었습니다');
+$('copyApply').onclick=()=>{
+  if(!sajuData){toast('먼저 만세력을 확인해 주세요');return;}
+  const s=sajuData, p=s.pillars;
+  const line=k=>p[k]?`${p[k].ganzhi}(${p[k].ko})`:'―';
+  const t=
+`[월하서재 간명 신청]
+성함: ${s.name} (${s.gender})
+생일: ${s.birthInput} / ${s.solarBirth} / ${s.lunarText}
+보정: ${s.corrected?'진태양시 -30분 적용':'미적용'}
+원국: 년 ${line('year')} 월 ${line('month')} 일 ${line('day')} 시 ${line('time')}
+관심: ${s.focus.join(', ')||'전반'}
+질문: ${s.question||'없음'}
+입금: 카카오뱅크 3333-01-3706013 장성혁 / 30,000원 / 입금자명 "${s.name}"
+DATA: ${JSON.stringify(s)}`;
+  copyText(t,'신청 내용이 복사되었습니다. 카카오톡·문자로 보내주세요.');
+};
+
+/* ═══════════ 관리자: 신청문 불러오기 ═══════════ */
+$('loadPaste').onclick=()=>{
+  const m=$('pasteBox').value.match(/DATA:\s*(\{[\s\S]*\})/);
+  if(!m){toast('DATA 항목을 찾지 못했습니다');return;}
+  try{sajuData=JSON.parse(m[1]); renderBoard(sajuData); toast('신청 내용을 불러왔습니다');}
+  catch(e){toast('신청문 형식이 올바르지 않습니다');}
+};
+
+/* ═══════════ 간명서 생성 (Claude API 4회) ═══════════ */
+const PERSONA=`당신은 명리학 경력 20년의 여성 간명가 '혜윤 선생'입니다. 방송국 아나운서로 일하다 명리학에 입문해 20년째 사주를 간명해 왔습니다. 문체 원칙:
+- 정중하고 따뜻한 존댓말. 아나운서 출신답게 문장이 유려하고 발음하듯 읽기 좋게 흐릅니다.
+- 부드럽지만 단호합니다. 짚을 것은 분명히 짚되, 표현은 품위 있게 합니다.
+- 좋은 점만 나열하지 않습니다. 매 장마다 이 사주의 약한 고리, 주의할 시기, 경계할 습성을 최소 한 가지 이상 완곡하지만 분명하게 언급합니다. 다만 공포를 조장하거나 흉사를 단정하지 않고, 반드시 대비책과 함께 말합니다.
+- "~하셔야 합니다", "~은 경계하셔야겠습니다", "~은 참 귀한 복입니다" 같은 어조를 씁니다.
+- 마크다운 기호(별표, 샵)를 절대 쓰지 않습니다. 소제목은 【소제목】 형식으로만 씁니다.
+- 절대 규칙: 아래 제공된 만세력 데이터의 간지·오행·십성·대운을 그대로 사용하고, 스스로 다시 계산하거나 바꾸지 않습니다. 데이터에 없는 간지를 지어내지 않습니다.`;
+const SECTIONS=[
+ {t:'원국 총평과 타고난 기질', p:'첫 장을 씁니다. ① 신청자께 드리는 정중한 첫인사(3~4문장, 간명을 맡게 된 소회) ② 원국 전체를 한눈에 짚는 총평 ③ 일간을 중심으로 타고난 성정과 기질, 장점과 함께 이 기질이 지나칠 때 생기는 그림자까지. 소제목 2~3개, 전체 1700~2100자.'},
+ {t:'오행의 균형, 그리고 직업과 재물', p:'② 오행 분포의 과다·부족이 삶에서 어떻게 드러나는지 ② 십성 구조로 본 직업 적성과 일하는 방식, 맞는 길과 피해야 할 길 ③ 재물운의 크기와 그릇, 돈이 들어오는 방식과 새는 구멍(반드시 새는 구멍도 언급). 소제목 2~3개, 전체 1700~2100자.'},
+ {t:'애정과 건강, 곁에 두는 사람들', p:'① 애정·혼인운: 인연의 모양, 배우자 궁, 관계에서 반복될 수 있는 패턴(좋은 것과 조심할 것 모두) ② 건강운: 오행상 약한 장부와 나이 들며 살펴야 할 부분(의학적 단정은 피하고 양생의 관점으로) ③ 대인관계: 귀인의 방향과 멀리해야 할 인연의 결. 소제목 3개, 전체 1700~2100자.'},
+ {t:'대운의 흐름과 올해, 그리고 당부', p:'① 대운 흐름을 시기별로 짚으며 인생의 큰 물줄기 설명(좋은 대운과 견뎌야 할 대운 모두) ② 올해 세운 풀이와 상반기·하반기 조언 ③ 개운 처방: 방위, 색, 마음가짐 등 실천 가능한 것 위주 ④ 맺음말: 선생으로서의 진심 어린 당부와 서명(혜윤 드림). 소제목 3개, 전체 1900~2300자.'}
+];
+async function callClaude(apiKey, sys, user){
+  const body={model:'claude-sonnet-4-6', max_tokens:4000,
+    system:sys, messages:[{role:'user',content:user}]};
+  const headers={'Content-Type':'application/json'};
+  if(apiKey){headers['x-api-key']=apiKey; headers['anthropic-version']='2023-06-01';
+    headers['anthropic-dangerous-direct-browser-access']='true';}
+  const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers,body:JSON.stringify(body)});
+  if(!r.ok){const e=await r.text(); throw new Error('API 오류 '+r.status+': '+e.slice(0,200));}
+  const data=await r.json();
+  return data.content.filter(c=>c.type==='text').map(c=>c.text).join('\n');
+}
+$('genBtn').onclick=async()=>{
+  if(!sajuData){toast('먼저 만세력을 확인하거나 신청문을 불러오세요');return;}
+  const key=$('apiKey').value.trim();
+  try{if(key)localStorage.setItem('mh_key',key);}catch(e){}
+  const s=sajuData;
+  const dataBlock=`[만세력 데이터 — 이 값만 사용할 것]\n${JSON.stringify({
+    이름:s.name, 성별:s.gender, 출생:s.solarBirth, 음력:s.lunarText, 시간모름:s.timeUnknown,
+    일간:s.dayMaster, 원국:s.pillars, 오행분포:s.elements, 대운:s.daYun, 올해세운:s.thisYear,
+    관심분야:s.focus, 질문:s.question },null,1)}`;
+  $('genBtn').disabled=true; $('prog').style.display='block'; $('preview').style.display='none';
+  $('docBtn').style.display='none'; sections=[];
+  try{
+    for(let i=0;i<SECTIONS.length;i++){
+      $('progFill').style.width=(i/SECTIONS.length*100)+'%';
+      $('progMsg').textContent=`${i+1}/4 — 「${SECTIONS[i].t}」 집필 중...`;
+      const prev=sections.length?`\n[앞 장 요약(중복 금지 참고용)]\n${sections.map((x,j)=>SECTIONS[j].t+': '+x.slice(0,200)).join('\n')}`:'';
+      const txt=await callClaude(key, PERSONA,
+        `${dataBlock}${prev}\n\n[이번 장 지시]\n제${i+1}장 「${SECTIONS[i].t}」\n${SECTIONS[i].p}\n앞 장과 내용이 겹치지 않게 하고, 본문만 출력하세요.`);
+      sections.push(txt.trim());
+    }
+    $('progFill').style.width='100%'; $('progMsg').textContent='집필 완료';
+    renderPreview(); $('docBtn').style.display='block';
+  }catch(e){ $('progMsg').textContent='오류: '+e.message; }
+  $('genBtn').disabled=false;
+};
+function fmtSection(txt){
+  return txt.split('\n').map(l=>{l=l.trim(); if(!l)return'';
+    const m=l.match(/^【(.+?)】$/); if(m)return`<h3>【${m[1]}】</h3>`;
+    return `<p>${l.replace(/^【(.+?)】\s*/, '<b>$1</b> · ')}</p>`;}).join('');
+}
+function renderPreview(){
+  $('preview').innerHTML=sections.map((t,i)=>`<h3 style="letter-spacing:.2em">第${'一二三四'[i]}章 ${SECTIONS[i].t}</h3>`+fmtSection(t)).join('<hr style="border:none;border-top:1px dashed #C4B58E;margin:24px 0">');
+  $('preview').style.display='block';
+}
+
+/* ═══════════ DOC 내려받기 ═══════════ */
+$('docBtn').onclick=()=>{
+  const s=sajuData, today=new Date();
+  const dstr=`${today.getFullYear()}년 ${today.getMonth()+1}월 ${today.getDate()}일`;
+  const order=s.timeUnknown?['day','month','year']:['time','day','month','year'];
+  const labels={time:'시주',day:'일주',month:'월주',year:'연주'};
+  const pillarRow=f=>order.map(k=>`<td style="text-align:center;padding:8pt;border:1pt solid #B7A87F">${f(s.pillars[k])}</td>`).join('');
+  const wonTable=`<table style="border-collapse:collapse;width:100%;margin:14pt 0">
+    <tr>${order.map(k=>`<td style="text-align:center;padding:6pt;border:1pt solid #B7A87F;background:#EFE7D3;font-size:9pt">${labels[k]}</td>`).join('')}</tr>
+    <tr>${pillarRow(p=>`<span style="font-size:8pt;color:#6E6350">${p.ssGan}</span><br><span style="font-size:22pt;color:${EL_COLOR[p.ganEl]}">${p.gan}</span><br><span style="font-size:9pt">${p.ganKo}·${p.ganEl}</span>`)}</tr>
+    <tr>${pillarRow(p=>`<span style="font-size:22pt;color:${EL_COLOR[p.jiEl]}">${p.ji}</span><br><span style="font-size:9pt">${p.jiKo}·${p.jiEl}</span><br><span style="font-size:8pt;color:#6E6350">${p.ssJi} · 장간 ${p.hidden}</span>`)}</tr>
+  </table>`;
+  const ohTable=`<table style="border-collapse:collapse;width:100%;margin:10pt 0"><tr>${
+    ['목','화','토','금','수'].map(e=>`<td style="text-align:center;border:1pt solid #B7A87F;padding:5pt;color:#FFFFFF;background:${EL_COLOR[e]}">${e} ${s.elements[e]}</td>`).join('')}</tr></table>`;
+  const duTable=`<table style="border-collapse:collapse;width:100%;margin:10pt 0"><tr>${
+    s.daYun.map(d=>`<td style="text-align:center;border:1pt solid #B7A87F;padding:5pt;font-size:9pt">${d.age}세<br><b style="font-size:12pt">${d.ganzhi}</b><br>${d.ko}</td>`).join('')}</tr></table>`;
+  const secHtml=sections.map((t,i)=>`
+    <div style="page-break-before:always"></div>
+    <h1>第${'一二三四'[i]}章 　${SECTIONS[i].t}</h1>
+    ${t.split('\n').map(l=>{l=l.trim();if(!l)return'';
+      const m=l.match(/^【(.+?)】$/); if(m)return`<h2>【${m[1]}】</h2>`;
+      return `<p>${l}</p>`;}).join('\n')}`).join('\n');
+  const html=`<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
+<head><meta charset="utf-8"><title>간명서</title>
+<!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View><w:Zoom>100</w:Zoom></w:WordDocument></xml><![endif]-->
+<style>
+@page{size:A4;margin:2.5cm 2.2cm}
+body{font-family:"바탕","Batang",serif;font-size:11pt;line-height:1.9;color:#26221A}
+h1{font-size:15pt;letter-spacing:4pt;margin:0 0 16pt;color:#5A4A22;font-weight:normal;border-bottom:1pt solid #B7A87F;padding-bottom:8pt}
+h2{font-size:12pt;margin:18pt 0 8pt;color:#5A4A22;font-weight:bold}
+p{margin:0 0 10pt;text-align:justify;text-indent:10pt}
+.cover{text-align:center}
+.cover .t1{font-size:26pt;letter-spacing:14pt;margin-top:90pt;color:#26221A}
+.cover .t2{font-size:12pt;letter-spacing:6pt;color:#8A7E66;margin-top:8pt}
+.cover .who{font-size:14pt;margin-top:60pt}
+.cover .meta{font-size:10pt;color:#6E6350;line-height:2}
+.small{font-size:8.5pt;color:#8A7E66}
+</style></head><body>
+<div class="cover">
+  <p class="t1">看 命 書</p>
+  <p class="t2">월하서재 · 月下書齋</p>
+  <p class="who">${s.name} 님 (${s.gender})</p>
+  <p class="meta">${s.solarBirth}<br>${s.lunarText}${s.corrected?'<br>진태양시 보정 적용':''}${s.timeUnknown?'<br>출생 시각 미상 — 시주 제외 간명':''}</p>
+  <p class="meta" style="margin-top:70pt">간명일 　${dstr}<br>간명 　혜윤 선생</p>
+</div>
+<div style="page-break-before:always"></div>
+<h1>命式 　사주 원국</h1>
+${wonTable}
+<h2>오행의 분포</h2>${ohTable}
+<h2>대운의 흐름</h2>${duTable}
+<p class="small">본 명식은 절기(節氣) 기준 만세력에 따라 산출되었습니다.</p>
+${secHtml}
+<div style="page-break-before:always"></div>
+<p style="text-align:center;margin-top:60pt;letter-spacing:3pt">月下書齋 　혜윤 드림</p>
+<p class="small" style="text-align:center;margin-top:30pt">본 간명서는 전통 명리학 이론에 근거하여 작성된 참고 자료입니다.<br>중요한 결정은 여러 조언과 함께 신중히 내리시기 바랍니다.</p>
+</body></html>`;
+  const blob=new Blob(['\ufeff',html],{type:'application/msword;charset=utf-8'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download=`간명서_${s.name}_${today.getFullYear()}${String(today.getMonth()+1).padStart(2,'0')}${String(today.getDate()).padStart(2,'0')}.doc`;
+  a.click(); URL.revokeObjectURL(a.href);
+};
+</script>
+</body>
+</html>
