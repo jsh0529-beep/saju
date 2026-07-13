@@ -235,7 +235,7 @@ footer{text-align:center;font-size:.72rem;color:#5A5C68;margin-top:50px;line-hei
 /* ═══════════ 접수 서버 설정 ═══════════
    구글 Apps Script 웹앱 배포 URL을 아래 따옴표 안에 붙여넣으세요.
    예) const SERVER_URL='https://script.google.com/macros/s/AKfycb.../exec';   */
-const SERVER_URL='https://script.google.com/macros/s/AKfycbyJ_pqSpcdxJdcPJ6LnBU0KW7gjI81uIxBZVh-53ccjzusEgDogh8bppAd3Q00ocA8f/exec';
+const SERVER_URL='https://script.google.com/macros/s/AKfycbzqRrw4vKXaM7ebqj3l2xEMUJDP-IsMFTCm8TRtw_wtEz-VZNBAyQQN2nkh2H9VUmX1/exec';
 
 /* ═══════════ 명리 기초 데이터 ═══════════ */
 const GAN_KO={'甲':'갑','乙':'을','丙':'병','丁':'정','戊':'무','己':'기','庚':'경','辛':'신','壬':'임','癸':'계'};
@@ -614,9 +614,9 @@ $('docBtn').onclick=async()=>{
     if(!j.ok) throw new Error(j.error||'PDF 생성 실패');
     const bin=atob(j.b64), arr=new Uint8Array(bin.length);
     for(let i=0;i<bin.length;i++) arr[i]=bin.charCodeAt(i);
-    const blob=new Blob([arr],{type:'application/msword'});
+    const blob=new Blob([arr],{type:(j.fname||'').endsWith('.docx')?'application/vnd.openxmlformats-officedocument.wordprocessingml.document':'application/msword'});
     const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
-    a.download=j.fname||'간명서.doc'; a.click(); URL.revokeObjectURL(a.href);
+    a.download=j.fname||'간명서.docx'; a.click(); URL.revokeObjectURL(a.href);
   }catch(e){toast('문서 생성 실패: '+e.message);}
   btn.disabled=false; btn.textContent='간명서 파일 내려받기'; pdfBusy=false;
 };
