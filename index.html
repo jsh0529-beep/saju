@@ -104,6 +104,22 @@ textarea{resize:vertical;min-height:74px}
 #preview p{margin-bottom:12px}
 footer{text-align:center;font-size:.72rem;color:#5A5C68;margin-top:50px;line-height:1.9}
 
+
+/* ── 맛보기 ── */
+.teaser{border:1px solid var(--gold-soft);background:linear-gradient(180deg, rgba(200,162,75,.05), transparent)}
+.tbody{color:var(--tx);font-size:1rem;line-height:2.05;white-space:pre-wrap;letter-spacing:.01em}
+.tbody p{margin-bottom:14px}
+.tbody .cut{color:var(--gold);font-size:.86rem;border-top:1px dashed var(--line);padding-top:14px;margin-top:6px}
+.tloading{text-align:center;padding:14px 0;color:var(--tx-dim);font-size:.88rem}
+.tloading .dot{display:inline-block;width:6px;height:6px;margin:0 3px;border-radius:50%;background:var(--gold);
+  animation:bl 1.2s infinite ease-in-out}
+.tloading .dot:nth-child(2){animation-delay:.2s}
+.tloading .dot:nth-child(3){animation-delay:.4s}
+@keyframes bl{0%,80%,100%{opacity:.25}40%{opacity:1}}
+.tshare{display:flex;gap:8px;margin-top:18px;padding-top:16px;border-top:1px solid var(--line)}
+.tshare .sbtn{flex:1;background:var(--ink);border:1px solid var(--line);color:var(--tx-dim);
+  padding:10px 6px;border-radius:3px;cursor:pointer;font-family:inherit;font-size:.82rem}
+.tshare .sbtn:hover{border-color:var(--gold-soft);color:var(--gold)}
 .toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:var(--gold);color:#191509;
   padding:11px 26px;border-radius:30px;font-size:.88rem;display:none;z-index:99}
 @media (max-width:520px){
@@ -190,6 +206,21 @@ footer{text-align:center;font-size:.72rem;color:#5A5C68;margin-top:50px;line-hei
     <div class="birth-line" id="birthLine"></div>
   </div>
 
+  <!-- ── 맛보기 첫마디 ── -->
+  <section class="card teaser" id="teaserCard" style="margin-top:22px;display:none">
+    <h2>혜윤 선생의 첫마디</h2>
+    <div id="teaserLoading" class="tloading">
+      <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+      <p>원국을 살펴보고 있습니다…</p>
+    </div>
+    <div id="teaserBody" class="tbody"></div>
+    <div id="teaserShare" class="tshare" style="display:none">
+      <button class="sbtn" id="shKakao">카카오톡 공유</button>
+      <button class="sbtn" id="shThreads">스레드 공유</button>
+      <button class="sbtn" id="shCopy">내용 복사</button>
+    </div>
+  </section>
+
   <!-- ── 3. 입금 안내 ── -->
   <section class="card pay" style="margin-top:22px">
     <h2>간명서 신청 안내</h2>
@@ -241,7 +272,7 @@ footer{text-align:center;font-size:.72rem;color:#5A5C68;margin-top:50px;line-hei
 /* ═══════════ 접수 서버 설정 ═══════════
    구글 Apps Script 웹앱 배포 URL을 아래 따옴표 안에 붙여넣으세요.
    예) const SERVER_URL='https://script.google.com/macros/s/AKfycb.../exec';   */
-const SERVER_URL='https://script.google.com/macros/s/AKfycbxTH8u3vmdwcdBiKv9duQ-QY66SDl8sjLo4olKH6t8j7RvF6vEyD8TZWMThH1MmCSOa/exec';
+const SERVER_URL='https://script.google.com/macros/s/AKfycbxSMnKmwbRDIdaR09PODgJV6DPJwj63b8AWdmPzuPDKDGz1kibamI9Bmcqf-ur2ubgR/exec';
 
 /* ═══════════ 명리 기초 데이터 ═══════════ */
 const GAN_KO={'甲':'갑','乙':'을','丙':'병','丁':'정','戊':'무','己':'기','庚':'경','辛':'신','壬':'임','癸':'계'};
@@ -382,7 +413,47 @@ function renderBoard(s){
   $('board').style.display='block';
   $('board').scrollIntoView({behavior:'smooth'});
 }
-$('calcBtn').onclick=()=>{const s=calcSaju(); if(s){sajuData=s; renderBoard(s);}};
+$('calcBtn').onclick=()=>{const s=calcSaju(); if(s){sajuData=s; renderBoard(s); loadTeaser(s);}};
+
+/* ═══════════ 맛보기 첫마디 ═══════════ */
+let teaserText='';
+async function loadTeaser(s){
+  const card=$('teaserCard');
+  card.style.display='block';
+  $('teaserLoading').style.display='block';
+  $('teaserBody').innerHTML='';
+  $('teaserShare').style.display='none';
+  teaserText='';
+  try{
+    const r=await fetch(SERVER_URL,{method:'POST',body:JSON.stringify({action:'teaser',data:s})});
+    const j=await r.json();
+    if(!j.ok||!j.text) throw new Error(j.error||'생성 실패');
+    teaserText=j.text.trim();
+    $('teaserLoading').style.display='none';
+    $('teaserBody').innerHTML=teaserText.split('\n').filter(x=>x.trim())
+      .map(x=>`<p>${x.trim()}</p>`).join('')
+      + '<p class="cut">여기까지가 첫마디입니다. 이어지는 이야기는 A4 열 장의 간명서에 담아 보내드립니다.</p>';
+    $('teaserShare').style.display='flex';
+  }catch(e){
+    $('teaserLoading').style.display='none';
+    $('teaserBody').innerHTML='<p style="color:var(--tx-dim);font-size:.9rem">첫마디를 불러오지 못했습니다. 아래에서 간명을 신청하시면 정성껏 살펴 보내드리겠습니다.</p>';
+  }
+}
+/* 공유 */
+function shareText(){
+  const s=sajuData;
+  return `[월하서재 · 혜윤 선생의 첫마디]\n${s.name} 님 (${s.solarBirth})\n원국 ${s.pillars.year.ganzhi} ${s.pillars.month.ganzhi} ${s.pillars.day.ganzhi}${s.pillars.time?' '+s.pillars.time.ganzhi:''}\n\n${teaserText}\n\n내 사주 첫마디 무료로 보기 → ${location.origin}${location.pathname}`;
+}
+$('shCopy').onclick=()=>copyText(shareText(),'첫마디가 복사되었습니다');
+$('shKakao').onclick=()=>{
+  const txt=shareText();
+  if(navigator.share){ navigator.share({title:'월하서재 · 혜윤 선생의 첫마디', text:txt}).catch(()=>{}); }
+  else { copyText(txt,'복사했습니다. 카카오톡에 붙여넣어 주세요'); }
+};
+$('shThreads').onclick=()=>{
+  const url='https://www.threads.net/intent/post?text='+encodeURIComponent(shareText());
+  window.open(url,'_blank');
+};
 
 /* ═══════════ 신청 내용 복사 ═══════════ */
 function copyText(t,msg){
