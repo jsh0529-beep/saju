@@ -159,6 +159,12 @@ footer{text-align:center;font-size:.72rem;color:#5A5C68;margin-top:50px;line-hei
   </div>
   <label class="chk"><input type="checkbox" id="noTime"> 태어난 시각을 모릅니다 (시주 제외 간명)</label>
   <label class="chk"><input type="checkbox" id="fix30" checked> 한국 출생 — 진태양시 보정(−30분) 적용</label>
+  <label>자시(23:00~00:59) 출생 시 일주 기준</label>
+  <div class="seg" id="jasiSeg">
+    <button data-v="ya" class="on">야자시 — 당일 유지</button>
+    <button data-v="jeong">정자시 — 익일로</button>
+  </div>
+  <p class="note">한국 만세력 다수가 쓰는 야자시설이 기본입니다. 23시 이전 출생이면 선택과 무관합니다.</p>
   <label>특히 궁금하신 부분 (복수 선택)</label>
   <div class="tags" id="focusTags">
     <button data-v="재물운">재물운</button><button data-v="직업·사업운">직업·사업운</button>
@@ -261,12 +267,13 @@ function sipseong(day, other){
 
 /* ═══════════ UI 상태 ═══════════ */
 const $=id=>document.getElementById(id);
-let gender='여', calType='solar', focusSel=[], sajuData=null, sections=[];
+let gender='여', calType='solar', jasi='ya', focusSel=[], sajuData=null, sections=[];
 function toast(m){const t=$('toast');t.textContent=m;t.style.display='block';setTimeout(()=>t.style.display='none',2200);}
 function segInit(id, cb){$(id).querySelectorAll('button').forEach(b=>b.onclick=()=>{
   $(id).querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on');cb(b.dataset.v);});}
 segInit('genderSeg',v=>gender=v);
 segInit('calSeg',v=>{calType=v;$('leapWrap').style.display=v==='lunar'?'flex':'none';});
+segInit('jasiSeg',v=>jasi=v);
 $('focusTags').querySelectorAll('button').forEach(b=>b.onclick=()=>{
   b.classList.toggle('on');
   focusSel=[...$('focusTags').querySelectorAll('.on')].map(x=>x.dataset.v);});
@@ -317,7 +324,7 @@ function calcSaju(){
   }
   const solar=Solar.fromYmdHms(sy,sm,sd,hh,mi,0);
   const lunar=solar.getLunar();
-  const ec=lunar.getEightChar(); ec.setSect(1);
+  const ec=lunar.getEightChar(); ec.setSect(jasi==='jeong'?1:2);
   if(!lunarText) lunarText=`음력 ${lunar.getYear()}년 ${lunar.getMonth()<0?'윤':''}${Math.abs(lunar.getMonth())}월 ${lunar.getDay()}일`;
   const pRaw={year:ec.getYear(), month:ec.getMonth(), day:ec.getDay(), time:ec.getTime()};
   const dayGan=pRaw.day[0];
@@ -343,7 +350,7 @@ function calcSaju(){
   // 올해 세운 (입춘 기준)
   const nowGz=Solar.fromDate(new Date()).getLunar().getYearInGanZhiByLiChun();
   return {
-    name, email, gender, timeUnknown, corrected, lunarText,
+    name, email, gender, timeUnknown, corrected, lunarText, jasi:(jasi==='jeong'?'정자시(익일)':'야자시(당일)'),
     birthInput:`${calType==='solar'?'양력':'음력'} ${y}년 ${m}월 ${d}일${timeUnknown?' (시간 모름)':' '+$('btime').value}`,
     solarBirth:`양력 ${y}년 ${m}월 ${d}일${timeUnknown?'':' '+String($('btime').value)}`,
     pillars, elements:cnt, dayMaster:{gan:dayGan, ko:GAN_KO[dayGan], el:GAN_EL[dayGan], yy:GAN_YY[dayGan]?'양':'음'},
