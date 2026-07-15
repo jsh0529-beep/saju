@@ -11,6 +11,7 @@
 <meta property="og:type" content="website">
 <link href="https://fonts.googleapis.com/css2?family=Song+Myung&family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/lunar-javascript@1.7.3/lunar.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style>
 :root{
   --ink:#12141C; --ink2:#1B1E29; --hanji:#F6F1E4; --hanji2:#EFE7D3;
@@ -139,6 +140,13 @@ footer{text-align:center;font-size:.72rem;color:#5A5C68;margin-top:50px;line-hei
   letter-spacing:.05em;z-index:5}
 #copyLink:hover{border-color:var(--gold-soft);color:var(--gold)}
 header{position:relative}
+
+/* ── PC 결제 QR ── */
+#qrBox{margin-top:14px}
+.qr-inner{background:#F6F1E4;border-radius:4px;padding:22px;text-align:center}
+.qr-inner #qrCanvas{display:inline-block;padding:10px;background:#fff;border-radius:4px}
+.qr-inner p{margin-top:12px;font-size:.85rem;color:#6E6350;line-height:1.8}
+.qr-inner b{color:#8A5A00}
 .toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:var(--gold);color:#191509;
   padding:11px 26px;border-radius:30px;font-size:.88rem;display:none;z-index:99}
 @media (max-width:520px){
@@ -290,6 +298,12 @@ header{position:relative}
     </div>
     <button class="btn" id="applyBtn">간명 신청 등록</button>
     <button class="btn kakao" id="payBtn" disabled>카카오페이로 보내기 (등록 후 열립니다)</button>
+    <div id="qrBox" style="display:none">
+      <div class="qr-inner">
+        <div id="qrCanvas"></div>
+        <p>휴대폰 카메라 또는 카카오톡으로<br>QR을 스캔해 <b id="qrAmount">30,000</b>원을 보내주세요</p>
+      </div>
+    </div>
     <button class="btn ghost" id="copyApply" style="display:none">신청 내용 복사</button>
   </section>
 </section>
@@ -612,9 +626,22 @@ $('applyBtn').onclick=async()=>{
     toast('등록에 실패했습니다. 아래 [신청 내용 복사]로 보내주세요');
   }
 };
+let qrMade=false;
+function isMobile(){return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);}
 $('payBtn').onclick=()=>{
   if($('payBtn').disabled)return;
-  window.open(KAKAOPAY_URL,'_blank');
+  if(isMobile()){
+    window.open(KAKAOPAY_URL,'_blank');
+  }else{
+    const box=$('qrBox');
+    $('qrAmount').textContent=fmt(sajuData?sajuData.price:currentPrice());
+    if(!qrMade){
+      try{ new QRCode($('qrCanvas'),{text:KAKAOPAY_URL,width:180,height:180,correctLevel:QRCode.CorrectLevel.M}); qrMade=true; }
+      catch(e){ window.open(KAKAOPAY_URL,'_blank'); return; }
+    }
+    box.style.display='block';
+    box.scrollIntoView({behavior:'smooth',block:'center'});
+  }
 };
 $('copyApply').onclick=()=>{
   if(!sajuData){toast('먼저 만세력을 확인해 주세요');return;}
