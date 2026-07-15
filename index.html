@@ -593,7 +593,7 @@ function copyText(t,msg){
 }
 
 /* ═══════════ 간명 신청 접수 (서버 자동 저장) ═══════════ */
-const KAKAOPAY_URL='https://qr.kakaopay.com/FRC3Gi9eA';
+const KAKAOPAY_URL='https://qr.kakaopay.com/281006011151732061004456';
 $('applyBtn').onclick=async()=>{
   if(!sajuData){toast('먼저 만세력을 확인해 주세요');return;}
   const btn=$('applyBtn'); btn.disabled=true; btn.textContent='신청 등록 중...';
@@ -634,7 +634,7 @@ $('copyApply').onclick=()=>{
 ${bodyTxt}
 관심: ${s.focus.join(', ')||'전반'}
 질문: ${s.question||'없음'}
-결제: 카카오페이 ${fmt(s.price)}원 (https://qr.kakaopay.com/FRC3Gi9eA)
+결제: 카카오페이 ${fmt(s.price)}원 (https://qr.kakaopay.com/281006011151732061004456)
 DATA: ${JSON.stringify(s)}`;
   copyText(t,'신청 내용이 복사되었습니다. 카카오톡·문자로 보내주세요.');
 };
