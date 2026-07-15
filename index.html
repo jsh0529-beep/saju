@@ -120,6 +120,18 @@ footer{text-align:center;font-size:.72rem;color:#5A5C68;margin-top:50px;line-hei
 .tshare .sbtn{flex:1;background:var(--ink);border:1px solid var(--line);color:var(--tx-dim);
   padding:10px 6px;border-radius:3px;cursor:pointer;font-family:inherit;font-size:.82rem}
 .tshare .sbtn:hover{border-color:var(--gold-soft);color:var(--gold)}
+
+/* ── 간명 종류·가격제 ── */
+.p2divider{font-family:'Song Myung',serif;color:var(--gold);letter-spacing:.2em;font-size:.85rem;
+  margin:26px 0 4px;padding-top:18px;border-top:1px dashed var(--line)}
+#tierWrap{display:flex;flex-direction:column;gap:8px;margin-bottom:6px}
+.tier{display:flex;align-items:center;gap:12px;background:var(--ink);border:1px solid var(--line);
+  border-radius:3px;padding:13px 14px;cursor:pointer}
+.tier b{font-weight:400;color:var(--tx);font-size:.95rem;white-space:nowrap}
+.tier span{flex:1;color:var(--tx-dim);font-size:.78rem}
+.tier em{font-style:normal;color:var(--tx-dim);font-size:.95rem;white-space:nowrap}
+.tier.on{border-color:var(--gold)}
+.tier.on b,.tier.on em{color:var(--gold)}
 .toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:var(--gold);color:#191509;
   padding:11px 26px;border-radius:30px;font-size:.88rem;display:none;z-index:99}
 @media (max-width:520px){
@@ -142,6 +154,12 @@ footer{text-align:center;font-size:.72rem;color:#5A5C68;margin-top:50px;line-hei
 <!-- ── 1. 입력 ── -->
 <section class="card">
   <h2>간명 신청</h2>
+  <label>간명 종류</label>
+  <div class="seg" id="modeSeg">
+    <button data-v="personal" class="on">개인 간명</button>
+    <button data-v="couple">궁합 간명</button>
+  </div>
+  <div class="p2divider" id="p1label" style="display:none">첫 번째 사람</div>
   <label>성함</label>
   <input type="text" id="name" placeholder="홍길동">
   <label>간명서 받으실 이메일</label>
@@ -174,6 +192,41 @@ footer{text-align:center;font-size:.72rem;color:#5A5C68;margin-top:50px;line-hei
     </div>
   </div>
   <label class="chk"><input type="checkbox" id="noTime"> 태어난 시각을 모릅니다 (시주 제외 간명)</label>
+
+  <div id="p2block" style="display:none">
+    <div class="p2divider">두 번째 사람</div>
+    <label>성함</label>
+    <input type="text" id="name2" placeholder="상대방 성함">
+    <div class="row">
+      <div>
+        <label>성별</label>
+        <div class="seg" id="genderSeg2">
+          <button data-v="여">여성</button>
+          <button data-v="남" class="on">남성</button>
+        </div>
+      </div>
+      <div>
+        <label>양력 / 음력</label>
+        <div class="seg" id="calSeg2">
+          <button data-v="solar" class="on">양력</button>
+          <button data-v="lunar">음력</button>
+        </div>
+      </div>
+    </div>
+    <label class="chk" id="leapWrap2" style="display:none"><input type="checkbox" id="leap2"> 윤달입니다</label>
+    <div class="row">
+      <div>
+        <label>생년월일 — 8자리 숫자 EX) 19850316</label>
+        <input type="text" id="bdate2" inputmode="numeric" maxlength="8" placeholder="EX) 19850316">
+      </div>
+      <div>
+        <label>태어난 시각</label>
+        <input type="time" id="btime2" value="12:00">
+      </div>
+    </div>
+    <label class="chk"><input type="checkbox" id="noTime2"> 태어난 시각을 모릅니다</label>
+  </div>
+
   <label class="chk"><input type="checkbox" id="fix30" checked> 한국 출생 — 진태양시 보정(−30분) 적용</label>
   <label>자시(23:00~00:59) 출생 시 일주 기준</label>
   <div class="seg" id="jasiSeg">
@@ -195,16 +248,7 @@ footer{text-align:center;font-size:.72rem;color:#5A5C68;margin-top:50px;line-hei
 
 <!-- ── 2. 원국판 ── -->
 <section id="board">
-  <div class="wongook">
-    <div class="wg-title">四柱原局 · 사주 원국</div>
-    <div class="pillars" id="pillars"></div>
-    <div class="ohaeng" id="ohaeng"></div>
-    <div class="daeun">
-      <div class="daeun-t">大運 · 대운의 흐름</div>
-      <div class="daeun-list" id="daeunList"></div>
-    </div>
-    <div class="birth-line" id="birthLine"></div>
-  </div>
+  <div id="boards"></div>
 
   <!-- ── 맛보기 첫마디 ── -->
   <section class="card teaser" id="teaserCard" style="margin-top:22px;display:none">
@@ -224,11 +268,16 @@ footer{text-align:center;font-size:.72rem;color:#5A5C68;margin-top:50px;line-hei
   <!-- ── 3. 입금 안내 ── -->
   <section class="card pay" style="margin-top:22px">
     <h2>간명서 신청 안내</h2>
-    <p style="text-align:center;font-size:.88rem;color:var(--tx-dim)">A4 열 장 분량의 정성 어린 간명서를 보내드립니다</p>
-    <div class="amount">30,000원</div>
+    <div id="tierWrap">
+      <div class="tier" data-t="basic"><b>약식 간명</b><span>A4 5장 · 핵심 풀이</span><em>10,000원</em></div>
+      <div class="tier on" data-t="standard"><b>정식 간명</b><span>A4 10장 · 전 분야 풀이</span><em>30,000원</em></div>
+      <div class="tier" data-t="deep"><b>심층 간명</b><span>A4 15장 · 십년지계 + 질문 3개 답변</span><em>49,000원</em></div>
+    </div>
+    <p id="coupleTierInfo" style="display:none;text-align:center;font-size:.9rem;color:var(--tx)">궁합 간명 · A4 10장 · 두 원국의 합충과 시기 궁합</p>
+    <div class="amount" id="payAmount">30,000원</div>
     <div class="steps">
       ① 아래 <b>[간명 신청 등록]</b>을 눌러 주세요<br>
-      ② 등록되면 <b>[카카오페이로 보내기]</b>가 열립니다 — 30,000원을 보내주세요<br>
+      ② 등록되면 <b>[카카오페이로 보내기]</b>가 열립니다 — <b><span id="stepAmount">30,000</span>원</b>을 보내주세요<br>
       ③ 확인 후 <b>24시간 이내</b>, 간명서를 이메일로 보내드립니다
     </div>
     <button class="btn" id="applyBtn">간명 신청 등록</button>
@@ -272,7 +321,7 @@ footer{text-align:center;font-size:.72rem;color:#5A5C68;margin-top:50px;line-hei
 /* ═══════════ 접수 서버 설정 ═══════════
    구글 Apps Script 웹앱 배포 URL을 아래 따옴표 안에 붙여넣으세요.
    예) const SERVER_URL='https://script.google.com/macros/s/AKfycb.../exec';   */
-const SERVER_URL='https://script.google.com/macros/s/AKfycby8ybNrCyGkJvokDy9dRP_M5mg0Jb7aeD_n4qGyKYci76kDnccBFffrR1EzmDBJSTY0/exec';
+const SERVER_URL='https://script.google.com/macros/s/AKfycbxH8ckd0LWI4HKzaSCn_TNHvlg9sv1q6poFaLE3OSoZbyPHVTkYncF36SLYWo9G76bd/exec';
 
 /* ═══════════ 명리 기초 데이터 ═══════════ */
 const GAN_KO={'甲':'갑','乙':'을','丙':'병','丁':'정','戊':'무','己':'기','庚':'경','辛':'신','壬':'임','癸':'계'};
@@ -298,13 +347,50 @@ function sipseong(day, other){
 
 /* ═══════════ UI 상태 ═══════════ */
 const $=id=>document.getElementById(id);
-let gender='여', calType='solar', jasi='ya', focusSel=[], sajuData=null, sections=[];
+let gender='여', calType='solar', gender2='남', calType2='solar', jasi='ya', mode='personal', tier='standard';
+let focusSel=[], sajuData=null, sections=[];
+const TIERS={
+  basic:{name:'약식 간명',price:10000,pages:'A4 5장'},
+  standard:{name:'정식 간명',price:30000,pages:'A4 10장'},
+  deep:{name:'심층 간명',price:49000,pages:'A4 15장'},
+  couple:{name:'궁합 간명',price:30000,pages:'A4 10장'}
+};
+function fmt(n){return n.toLocaleString('ko-KR');}
+function currentPrice(){return mode==='couple'?TIERS.couple.price:TIERS[tier].price;}
+function updatePriceUI(){
+  const p=currentPrice();
+  $('payAmount').textContent=fmt(p)+'원';
+  $('stepAmount').textContent=fmt(p);
+  const pay=$('payBtn');
+  if(!pay.disabled) pay.textContent='카카오페이로 '+fmt(p)+'원 보내기';
+}
 function toast(m){const t=$('toast');t.textContent=m;t.style.display='block';setTimeout(()=>t.style.display='none',2200);}
 function segInit(id, cb){$(id).querySelectorAll('button').forEach(b=>b.onclick=()=>{
   $(id).querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on');cb(b.dataset.v);});}
 segInit('genderSeg',v=>gender=v);
 segInit('calSeg',v=>{calType=v;$('leapWrap').style.display=v==='lunar'?'flex':'none';});
 segInit('jasiSeg',v=>jasi=v);
+segInit('genderSeg2',v=>gender2=v);
+segInit('calSeg2',v=>{calType2=v;$('leapWrap2').style.display=v==='lunar'?'flex':'none';});
+segInit('modeSeg',v=>{
+  mode=v;
+  const cp=v==='couple';
+  $('p2block').style.display=cp?'block':'none';
+  $('p1label').style.display=cp?'block':'none';
+  $('tierWrap').style.display=cp?'none':'flex';
+  $('coupleTierInfo').style.display=cp?'block':'none';
+  $('calcBtn').textContent=cp?'궁합 확인':'만세력 확인';
+  $('board').style.display='none';
+  sajuData=null;
+  updatePriceUI();
+});
+/* 가격제 선택 */
+document.querySelectorAll('#tierWrap .tier').forEach(el=>el.onclick=()=>{
+  document.querySelectorAll('#tierWrap .tier').forEach(x=>x.classList.remove('on'));
+  el.classList.add('on'); tier=el.dataset.t;
+  if(sajuData&&sajuData.type!=='couple'){sajuData.tier=tier;sajuData.price=TIERS[tier].price;sajuData.product=TIERS[tier].name;}
+  updatePriceUI();
+});
 $('focusTags').querySelectorAll('button').forEach(b=>b.onclick=()=>{
   b.classList.toggle('on');
   focusSel=[...$('focusTags').querySelectorAll('.on')].map(x=>x.dataset.v);});
@@ -321,32 +407,28 @@ $('moon').onclick=()=>{
 if(location.hash==='#admin'){$('admin').style.display='block';openAdminRestore();}
 
 /* ═══════════ 만세력 계산 ═══════════ */
-function calcSaju(){
-  const name=$('name').value.trim();
+function computeChart(cfg){ // {name,gender,calType,leap,bdRaw,timeStr,timeUnknown} → chart | null(토스트 출력)
+  const name=cfg.name.trim();
   if(!name){toast('성함을 입력해 주세요');return null;}
-  const email=$('email').value.trim();
-  if(!email||!email.includes('@')){toast('간명서 받으실 이메일을 입력해 주세요');return null;}
-  const bd=$('bdate').value.replace(/\D/g,'');
-  if(bd.length!==8){toast('생년월일을 8자리로 입력해 주세요 (예: 19830524)');return null;}
+  const bd=cfg.bdRaw.replace(/\D/g,'');
+  if(bd.length!==8){toast(name+' 님 생년월일을 8자리로 입력해 주세요 (예: 19830524)');return null;}
   const y=+bd.slice(0,4), m=+bd.slice(4,6), d=+bd.slice(6,8);
-  if(y<1900||y>2026||m<1||m>12||d<1||d>31){toast('생년월일을 다시 확인해 주세요');return null;}
-  const timeUnknown=$('noTime').checked;
+  if(y<1900||y>2026||m<1||m>12||d<1||d>31){toast(name+' 님 생년월일을 다시 확인해 주세요');return null;}
+  const timeUnknown=cfg.timeUnknown;
   let hh=12, mi=0;
   if(!timeUnknown){
-    if(!$('btime').value){toast('태어난 시각을 입력해 주세요');return null;}
-    [hh,mi]=$('btime').value.split(':').map(Number);
+    if(!cfg.timeStr){toast(name+' 님 태어난 시각을 입력해 주세요');return null;}
+    [hh,mi]=cfg.timeStr.split(':').map(Number);
   }
-  // 음력 → 양력 변환
   let sy=y, sm=m, sd=d, lunarText='';
-  if(calType==='lunar'){
+  if(cfg.calType==='lunar'){
     try{
-      const lm=$('leap').checked?-m:m;
+      const lm=cfg.leap?-m:m;
       const sol=Lunar.fromYmd(y,lm,d).getSolar();
       sy=sol.getYear(); sm=sol.getMonth(); sd=sol.getDay();
-      lunarText=`음력 ${y}년 ${$('leap').checked?'윤':''}${m}월 ${d}일`;
-    }catch(e){toast('음력 날짜를 확인해 주세요');return null;}
+      lunarText=`음력 ${y}년 ${cfg.leap?'윤':''}${m}월 ${d}일`;
+    }catch(e){toast(name+' 님 음력 날짜를 확인해 주세요');return null;}
   }
-  // 진태양시 보정 (-30분)
   let corrected=false;
   if($('fix30').checked && !timeUnknown){
     const dt=new Date(sy,sm-1,sd,hh,mi); dt.setMinutes(dt.getMinutes()-30);
@@ -369,32 +451,44 @@ function calcSaju(){
   const pillars={year:mk(pRaw.year), month:mk(pRaw.month), day:mk(pRaw.day)};
   pillars.day.ssGan='일간(나)';
   if(!timeUnknown) pillars.time=mk(pRaw.time);
-  // 오행 분포
   const cnt={'목':0,'화':0,'토':0,'금':0,'수':0};
   const keys=timeUnknown?['year','month','day']:['year','month','day','time'];
   keys.forEach(k=>{cnt[pillars[k].ganEl]++;cnt[pillars[k].jiEl]++;});
-  // 대운
-  const yun=ec.getYun(gender==='남'?1:0);
+  const yun=ec.getYun(cfg.gender==='남'?1:0);
   const daYunArr=yun.getDaYun().slice(1,9).map(du=>({
     age:du.getStartAge(), year:du.getStartYear(), ganzhi:du.getGanZhi(), ko:ganzhiKo(du.getGanZhi())
   }));
-  // 올해 세운 (입춘 기준)
   const nowGz=Solar.fromDate(new Date()).getLunar().getYearInGanZhiByLiChun();
   return {
-    name, email, gender, timeUnknown, corrected, lunarText, jasi:(jasi==='jeong'?'정자시(익일)':'야자시(당일)'),
-    birthInput:`${calType==='solar'?'양력':'음력'} ${y}년 ${m}월 ${d}일${timeUnknown?' (시간 모름)':' '+$('btime').value}`,
-    solarBirth:`양력 ${y}년 ${m}월 ${d}일${timeUnknown?'':' '+String($('btime').value)}`,
+    name, gender:cfg.gender, timeUnknown, corrected, lunarText,
+    birthInput:`${cfg.calType==='solar'?'양력':'음력'} ${y}년 ${m}월 ${d}일${timeUnknown?' (시간 모름)':' '+cfg.timeStr}`,
+    solarBirth:`양력 ${y}년 ${m}월 ${d}일${timeUnknown?'':' '+String(cfg.timeStr)}`,
     pillars, elements:cnt, dayMaster:{gan:dayGan, ko:GAN_KO[dayGan], el:GAN_EL[dayGan], yy:GAN_YY[dayGan]?'양':'음'},
-    daYun:daYunArr, thisYear:{year:new Date().getFullYear(), ganzhi:nowGz, ko:ganzhiKo(nowGz)},
-    focus:focusSel, question:$('question').value.trim()
+    daYun:daYunArr, thisYear:{year:new Date().getFullYear(), ganzhi:nowGz, ko:ganzhiKo(nowGz)}
   };
 }
+function calcSaju(){
+  const email=$('email').value.trim();
+  if(!email||!email.includes('@')){toast('간명서 받으실 이메일을 입력해 주세요');return null;}
+  const c1=computeChart({name:$('name').value, gender, calType, leap:$('leap').checked,
+    bdRaw:$('bdate').value, timeStr:$('btime').value, timeUnknown:$('noTime').checked});
+  if(!c1) return null;
+  if(mode==='couple'){
+    const c2=computeChart({name:$('name2').value, gender:gender2, calType:calType2, leap:$('leap2').checked,
+      bdRaw:$('bdate2').value, timeStr:$('btime2').value, timeUnknown:$('noTime2').checked});
+    if(!c2) return null;
+    return {type:'couple', tier:'couple', product:TIERS.couple.name, price:TIERS.couple.price,
+      name:c1.name+'·'+c2.name, email, p1:c1, p2:c2,
+      focus:focusSel, question:$('question').value.trim()};
+  }
+  return Object.assign({}, c1, {type:'personal', tier, product:TIERS[tier].name, price:TIERS[tier].price,
+    email, focus:focusSel, question:$('question').value.trim()});
+}
 
-function renderBoard(s){
-  const order=s.timeUnknown?['day','month','year']:['time','day','month','year'];
+function boardHTML(c, title){
+  const order=c.timeUnknown?['day','month','year']:['time','day','month','year'];
   const labels={time:'時柱 시주',day:'日柱 일주',month:'月柱 월주',year:'年柱 연주'};
-  $('pillars').style.gridTemplateColumns=`repeat(${order.length},1fr)`;
-  $('pillars').innerHTML=order.map(k=>{const p=s.pillars[k];return `
+  const pills=order.map(k=>{const p=c.pillars[k];return `
     <div class="pl">
       <div class="lab">${labels[k]}</div>
       <div class="ss">${p.ssGan}</div>
@@ -405,11 +499,26 @@ function renderBoard(s){
       <div class="ss">${p.ssJi}</div>
       <div class="hid">장간 ${p.hidden}</div>
     </div>`;}).join('');
-  $('ohaeng').innerHTML=['목','화','토','금','수'].map(e=>
-    `<div class="oh" style="background:${EL_COLOR[e]}">${e}<b>${s.elements[e]}</b></div>`).join('');
-  $('daeunList').innerHTML=s.daYun.map(d=>
+  const oh=['목','화','토','금','수'].map(e=>
+    `<div class="oh" style="background:${EL_COLOR[e]}">${e}<b>${c.elements[e]}</b></div>`).join('');
+  const du=c.daYun.map(d=>
     `<div class="du"><div class="age">${d.age}세</div><div class="gz">${d.ganzhi}</div><div class="age">${d.ko}</div></div>`).join('');
-  $('birthLine').textContent=`${s.name} (${s.gender}) · ${s.solarBirth} · ${s.lunarText}${s.corrected?' · 진태양시 보정':''}`;
+  return `<div class="wongook" style="margin-bottom:14px">
+    <div class="wg-title">${title}</div>
+    <div class="pillars" style="grid-template-columns:repeat(${order.length},1fr)">${pills}</div>
+    <div class="ohaeng">${oh}</div>
+    <div class="daeun"><div class="daeun-t">大運 · 대운의 흐름</div><div class="daeun-list">${du}</div></div>
+    <div class="birth-line">${c.name} (${c.gender}) · ${c.solarBirth} · ${c.lunarText}${c.corrected?' · 진태양시 보정':''}</div>
+  </div>`;
+}
+function renderBoard(s){
+  const box=$('boards');
+  if(s.type==='couple'){
+    box.innerHTML=boardHTML(s.p1,'四柱原局 · '+s.p1.name)+boardHTML(s.p2,'四柱原局 · '+s.p2.name);
+  }else{
+    box.innerHTML=boardHTML(s,'四柱原局 · 사주 원국');
+  }
+  updatePriceUI();
   $('board').style.display='block';
   $('board').scrollIntoView({behavior:'smooth'});
 }
@@ -442,7 +551,13 @@ async function loadTeaser(s){
 /* 공유 */
 function shareText(){
   const s=sajuData;
-  return `[월하서재 · 혜윤 선생의 첫마디]\n${s.name} 님 (${s.solarBirth})\n원국 ${s.pillars.year.ganzhi} ${s.pillars.month.ganzhi} ${s.pillars.day.ganzhi}${s.pillars.time?' '+s.pillars.time.ganzhi:''}\n\n${teaserText}\n\n내 사주 첫마디 무료로 보기 → ${location.origin}${location.pathname}`;
+  let headLine;
+  if(s.type==='couple'){
+    headLine=`${s.p1.name} · ${s.p2.name} 궁합\n${s.p1.name} 일주 ${s.p1.pillars.day.ganzhi} / ${s.p2.name} 일주 ${s.p2.pillars.day.ganzhi}`;
+  }else{
+    headLine=`${s.name} 님 (${s.solarBirth})\n원국 ${s.pillars.year.ganzhi} ${s.pillars.month.ganzhi} ${s.pillars.day.ganzhi}${s.pillars.time?' '+s.pillars.time.ganzhi:''}`;
+  }
+  return `[월하서재 · 혜윤 선생의 첫마디]\n${headLine}\n\n${teaserText}\n\n내 사주 첫마디 무료로 보기 → ${location.origin}${location.pathname}`;
 }
 $('shCopy').onclick=()=>copyText(shareText(),'첫마디가 복사되었습니다');
 $('shKakao').onclick=()=>{
@@ -473,9 +588,9 @@ $('applyBtn').onclick=async()=>{
     if(!j.ok) throw 0;
     btn.textContent='① 신청 등록 완료';
     const pay=$('payBtn');
-    pay.disabled=false; pay.textContent='카카오페이로 30,000원 보내기';
+    pay.disabled=false; pay.textContent='카카오페이로 '+fmt(sajuData.price)+'원 보내기';
     pay.scrollIntoView({behavior:'smooth',block:'center'});
-    toast('등록되었습니다. 이제 카카오페이로 30,000원을 보내주세요.');
+    toast('등록되었습니다. 이제 카카오페이로 '+fmt(sajuData.price)+'원을 보내주세요.');
   }catch(e){
     btn.disabled=false; btn.textContent='간명 신청 등록';
     $('copyApply').style.display='block';
@@ -488,18 +603,23 @@ $('payBtn').onclick=()=>{
 };
 $('copyApply').onclick=()=>{
   if(!sajuData){toast('먼저 만세력을 확인해 주세요');return;}
-  const s=sajuData, p=s.pillars;
-  const line=k=>p[k]?`${p[k].ganzhi}(${p[k].ko})`:'―';
+  const s=sajuData;
+  let bodyTxt;
+  if(s.type==='couple'){
+    bodyTxt=`두 사람: ${s.p1.name}(${s.p1.gender}) ${s.p1.solarBirth} / ${s.p2.name}(${s.p2.gender}) ${s.p2.solarBirth}`;
+  }else{
+    const p=s.pillars, line=k=>p[k]?`${p[k].ganzhi}(${p[k].ko})`:'―';
+    bodyTxt=`생일: ${s.birthInput} / ${s.lunarText}
+원국: 년 ${line('year')} 월 ${line('month')} 일 ${line('day')} 시 ${line('time')}`;
+  }
   const t=
-`[월하서재 간명 신청]
-성함: ${s.name} (${s.gender})
+`[월하서재 간명 신청 — ${s.product}]
+성함: ${s.name}
 이메일: ${s.email}
-생일: ${s.birthInput} / ${s.solarBirth} / ${s.lunarText}
-보정: ${s.corrected?'진태양시 -30분 적용':'미적용'}
-원국: 년 ${line('year')} 월 ${line('month')} 일 ${line('day')} 시 ${line('time')}
+${bodyTxt}
 관심: ${s.focus.join(', ')||'전반'}
 질문: ${s.question||'없음'}
-결제: 카카오페이 30,000원 (https://qr.kakaopay.com/FRC3Gi9eA)
+결제: 카카오페이 ${fmt(s.price)}원 (https://qr.kakaopay.com/FRC3Gi9eA)
 DATA: ${JSON.stringify(s)}`;
   copyText(t,'신청 내용이 복사되었습니다. 카카오톡·문자로 보내주세요.');
 };
@@ -521,9 +641,11 @@ async function loadList(){
     box.innerHTML=j.list.length ? j.list.slice().reverse().map(it=>{
       const st=String(it.status||'');
       const cls=st.startsWith('작성완료')||st.startsWith('발송완료')?'done':'';
+      let prod='';
+      try{const dd=typeof it.data==='string'?JSON.parse(it.data):it.data; prod=dd.product||(dd.type==='couple'?'궁합 간명':'정식 간명');}catch(e){}
       return `
       <div class="app-item" data-id="${it.id}">
-        <span><b>${it.name}</b> 님 · ${it.ts}</span>
+        <span><b>${it.name}</b> 님 · ${it.ts}${prod?' · '+prod:''}</span>
         <span class="st ${cls}">${st} ▸</span>
       </div>`;}).join('') : '<p class="note">아직 신청 내역이 없습니다.</p>';
     box.querySelectorAll('.app-item').forEach(el=>el.onclick=async()=>{
@@ -542,7 +664,7 @@ async function loadList(){
           const jr=await r.json();
           if(!jr.ok) throw new Error(jr.error||'불러오기 실패');
           sections=JSON.parse(jr.sections||'[]');
-          if(sections.length<4){toast('저장된 간명서가 불완전합니다. 다시 예약해 주세요');return;}
+          if(sections.length<expectedLen(sajuData)){toast('저장된 간명서가 불완전합니다. 다시 예약해 주세요');return;}
           $('prog').style.display='none';
           renderPreview();
           $('docBtn').style.display='block';
@@ -623,6 +745,8 @@ let genRunning=false;
 async function generateReport(){
   if(genRunning){toast('이미 집필 중입니다. 잠시만 기다려 주세요');return;}
   if(!sajuData){toast('먼저 만세력을 확인하거나 신청 목록에서 이름을 클릭하세요');return;}
+  if(sajuData.type==='couple'||(sajuData.tier&&sajuData.tier!=='standard')){
+    toast('약식·심층·궁합 간명은 백그라운드 예약으로 진행해 주세요 (목록에서 이름 클릭 → 예약)');return;}
   let key=$('apiKey').value.replace(/[^\x21-\x7E]/g,'').trim(); // 영문·숫자·기호만 허용
   $('apiKey').value=key;
   if(!key){toast('Anthropic API 키를 입력하세요');$('admin').scrollIntoView({behavior:'smooth'});return;}
@@ -668,8 +792,16 @@ function fmtSection(txt){
     const m=l.match(/^【(.+?)】$/); if(m)return`<h3>【${m[1]}】</h3>`;
     return `<p>${l.replace(/^【(.+?)】\s*/, '<b>$1</b> · ')}</p>`;}).join('');
 }
+function titlesFor(d){
+  if(d&&d.type==='couple')return ['두 원국이 만나다 — 서로의 기질','합과 충 — 끌림과 부딪힘의 구조','배우자궁과 살림의 궁합','두 사람의 시절 — 시기 궁합과 당부'];
+  if(d&&d.tier==='basic')return [SECTIONS[0].t,'재물·직업·애정, 그리고 올해'];
+  if(d&&d.tier==='deep')return [SECTIONS[0].t,SECTIONS[1].t,SECTIONS[2].t,'대운의 흐름과 올해','십년지계 — 다가올 두 대운의 전략','여쭈신 질문에 대한 답, 그리고 당부'];
+  return SECTIONS.map(x=>x.t);
+}
+function expectedLen(d){return titlesFor(d).length;}
 function renderPreview(){
-  $('preview').innerHTML=sections.map((t,i)=>`<h3 style="letter-spacing:.2em">第${'一二三四'[i]}章 ${SECTIONS[i].t}</h3>`+fmtSection(t)).join('<hr style="border:none;border-top:1px dashed #C4B58E;margin:24px 0">');
+  const titles=titlesFor(sajuData), NUM='一二三四五六';
+  $('preview').innerHTML=sections.map((t,i)=>`<h3 style="letter-spacing:.2em">第${NUM[i]||i+1}章 ${titles[i]||''}</h3>`+fmtSection(t)).join('<hr style="border:none;border-top:1px dashed #C4B58E;margin:24px 0">');
   $('preview').style.display='block';
 }
 
@@ -683,7 +815,7 @@ function serverPayload(action){
 }
 $('docBtn').onclick=async()=>{
   if(pdfBusy)return;
-  if(!sections||sections.length<4){toast('간명서를 먼저 생성하거나 불러오세요');return;}
+  if(!sections||sections.length<expectedLen(sajuData)){toast('간명서를 먼저 생성하거나 불러오세요');return;}
   if(!$('adminKey').value.trim()){toast('관리 열람 키를 입력하세요');return;}
   pdfBusy=true;
   const btn=$('docBtn'); btn.disabled=true; btn.textContent='서버에서 문서 생성 중...';
@@ -702,7 +834,7 @@ $('docBtn').onclick=async()=>{
 /* ═══════════ 고객 이메일 발송 (서버에서 PDF 생성·발송) ═══════════ */
 $('sendBtn').onclick=async()=>{
   if(pdfBusy)return;
-  if(!sections||sections.length<4){toast('간명서를 먼저 생성하거나 불러오세요');return;}
+  if(!sections||sections.length<expectedLen(sajuData)){toast('간명서를 먼저 생성하거나 불러오세요');return;}
   if(!$('adminKey').value.trim()){toast('관리 열람 키를 입력하세요');return;}
   const to=sajuData&&sajuData.email;
   if(!to||!to.includes('@')){toast('이 신청 건에는 이메일이 없습니다. 파일을 내려받아 직접 보내주세요');return;}
