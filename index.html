@@ -357,6 +357,11 @@ const TIERS={
 };
 function fmt(n){return n.toLocaleString('ko-KR');}
 function currentPrice(){return mode==='couple'?TIERS.couple.price:TIERS[tier].price;}
+function resetApplyUI(){
+  const a=$('applyBtn'); a.disabled=false; a.textContent='간명 신청 등록';
+  const p=$('payBtn'); p.disabled=true; p.textContent='카카오페이로 보내기 (등록 후 열립니다)';
+  $('copyApply').style.display='none';
+}
 function updatePriceUI(){
   const p=currentPrice();
   $('payAmount').textContent=fmt(p)+'원';
@@ -382,6 +387,7 @@ segInit('modeSeg',v=>{
   $('calcBtn').textContent=cp?'궁합 확인':'만세력 확인';
   $('board').style.display='none';
   sajuData=null;
+  resetApplyUI();
   updatePriceUI();
 });
 /* 가격제 선택 */
@@ -522,7 +528,7 @@ function renderBoard(s){
   $('board').style.display='block';
   $('board').scrollIntoView({behavior:'smooth'});
 }
-$('calcBtn').onclick=()=>{const s=calcSaju(); if(s){sajuData=s; renderBoard(s); loadTeaser(s);}};
+$('calcBtn').onclick=()=>{const s=calcSaju(); if(s){sajuData=s; resetApplyUI(); renderBoard(s); loadTeaser(s);}};
 
 /* ═══════════ 맛보기 첫마디 ═══════════ */
 let teaserText='';
