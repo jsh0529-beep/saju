@@ -132,6 +132,13 @@ footer{text-align:center;font-size:.72rem;color:#5A5C68;margin-top:50px;line-hei
 .tier em{font-style:normal;color:var(--tx-dim);font-size:.95rem;white-space:nowrap}
 .tier.on{border-color:var(--gold)}
 .tier.on b,.tier.on em{color:var(--gold)}
+
+/* ── 링크 복사 버튼 ── */
+#copyLink{position:absolute;top:18px;right:18px;background:transparent;border:1px solid var(--line);
+  color:var(--tx-dim);padding:7px 13px;border-radius:20px;cursor:pointer;font-family:inherit;font-size:.76rem;
+  letter-spacing:.05em;z-index:5}
+#copyLink:hover{border-color:var(--gold-soft);color:var(--gold)}
+header{position:relative}
 .toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:var(--gold);color:#191509;
   padding:11px 26px;border-radius:30px;font-size:.88rem;display:none;z-index:99}
 @media (max-width:520px){
@@ -145,6 +152,7 @@ footer{text-align:center;font-size:.72rem;color:#5A5C68;margin-top:50px;line-hei
 <div class="wrap">
 
 <header>
+  <button id="copyLink" title="월하서재 링크 복사">🔗 링크 복사</button>
   <div class="moon" id="moon" title=""></div>
   <h1>월하서재</h1>
   <div class="hanja-sub">月 下 書 齋</div>
@@ -372,6 +380,7 @@ function updatePriceUI(){
 function toast(m){const t=$('toast');t.textContent=m;t.style.display='block';setTimeout(()=>t.style.display='none',2200);}
 function segInit(id, cb){$(id).querySelectorAll('button').forEach(b=>b.onclick=()=>{
   $(id).querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on');cb(b.dataset.v);});}
+$('copyLink').onclick=()=>copyText('https://jsh0529-beep.github.io/saju/','월하서재 링크가 복사되었습니다');
 segInit('genderSeg',v=>gender=v);
 segInit('calSeg',v=>{calType=v;$('leapWrap').style.display=v==='lunar'?'flex':'none';});
 segInit('jasiSeg',v=>jasi=v);
