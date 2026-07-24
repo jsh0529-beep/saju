@@ -680,7 +680,8 @@ async function loadList(){
     const j=await r.json();
     if(!j.ok){toast(j.error||'열람 키가 올바르지 않습니다');$('listBtn').disabled=false;return;}
     const box=$('appList');
-    box.innerHTML=j.list.length ? j.list.slice().reverse().map(it=>{
+    const all=j.list.slice().reverse();
+    const renderItems=(arr)=>arr.map(it=>{
       const st=String(it.status||'');
       const cls=st.startsWith('작성완료')||st.startsWith('발송완료')?'done':'';
       let prod='';
@@ -689,7 +690,15 @@ async function loadList(){
       <div class="app-item" data-id="${it.id}">
         <span><b>${it.name}</b> 님 · ${it.ts}${prod?' · '+prod:''}</span>
         <span class="st ${cls}">${st} ▸</span>
-      </div>`;}).join('') : '<p class="note">아직 신청 내역이 없습니다.</p>';
+      </div>`;}).join('');
+    if(!all.length){ box.innerHTML='<p class="note">아직 신청 내역이 없습니다.</p>'; }
+    else{
+      box.innerHTML=renderItems(all.slice(0,5))
+        + (all.length>5?`<button class="btn ghost" id="moreBtn" style="margin-top:10px;font-size:.85rem;padding:11px">더보기 (${all.length-5}건)</button>`:'');
+      const mb=document.getElementById('moreBtn');
+      if(mb) mb.onclick=()=>{ box.innerHTML=renderItems(all); bindItems(); };
+    }
+    function bindItems(){
     box.querySelectorAll('.app-item').forEach(el=>el.onclick=async()=>{
       if(genRunning){toast('집필이 진행 중입니다. 완료 후 선택해 주세요');return;}
       const it=j.list.find(x=>String(x.id)===String(el.dataset.id));
@@ -736,6 +745,8 @@ async function loadList(){
         generateReport();
       }
     });
+    }
+    bindItems();
   }catch(e){toast('목록을 불러오지 못했습니다: '+e.message);}
   $('listBtn').disabled=false;
 }
