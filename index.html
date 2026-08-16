@@ -173,7 +173,15 @@ header{position:relative}
   <label>간명 종류</label>
   <div class="seg" id="modeSeg">
     <button data-v="personal" class="on">개인 간명</button>
-    <button data-v="couple">궁합 간명</button>
+    <button data-v="couple">궁합</button>
+    <button data-v="tojeong">토정비결</button>
+  </div>
+  <div id="tjYearWrap" style="display:none">
+    <label>토정비결 대상 연도</label>
+    <div class="seg" id="tjYearSeg">
+      <button data-v="2026" class="on">올해 · 2026 병오년</button>
+      <button data-v="2027">내년 · 2027 정미년</button>
+    </div>
   </div>
   <div class="p2divider" id="p1label" style="display:none">첫 번째 사람</div>
   <label>성함</label>
@@ -290,6 +298,7 @@ header{position:relative}
       <div class="tier" data-t="deep"><b>심층 간명</b><span>A4 15장 · 십년지계 + 질문 3개 답변</span><em>49,000원</em></div>
     </div>
     <p id="coupleTierInfo" style="display:none;text-align:center;font-size:.9rem;color:var(--tx)">궁합 간명 · A4 10장 · 두 원국의 합충과 시기 궁합</p>
+    <p id="tojeongTierInfo" style="display:none;text-align:center;font-size:.9rem;color:var(--tx)">토정비결 · A4 8장 · 정통 작괘 144괘 + 열두 달 비결</p>
     <div class="amount" id="payAmount">30,000원</div>
     <div class="steps">
       ① 아래 <b>[간명 신청 등록]</b>을 눌러 주세요<br>
@@ -375,10 +384,12 @@ const TIERS={
   basic:{name:'약식 간명',price:10000,pages:'A4 5장'},
   standard:{name:'정식 간명',price:30000,pages:'A4 10장'},
   deep:{name:'심층 간명',price:49000,pages:'A4 15장'},
-  couple:{name:'궁합 간명',price:30000,pages:'A4 10장'}
+  couple:{name:'궁합 간명',price:30000,pages:'A4 10장'},
+  tojeong:{name:'토정비결',price:15000,pages:'A4 8장'}
 };
+let tjYear=2026;
 function fmt(n){return n.toLocaleString('ko-KR');}
-function currentPrice(){return mode==='couple'?TIERS.couple.price:TIERS[tier].price;}
+function currentPrice(){return mode==='couple'?TIERS.couple.price:(mode==='tojeong'?TIERS.tojeong.price:TIERS[tier].price);}
 function resetApplyUI(){
   const a=$('applyBtn'); a.disabled=false; a.textContent='간명 신청 등록';
   const p=$('payBtn'); p.disabled=true; p.textContent='카카오페이로 보내기 (등록 후 열립니다)';
@@ -402,17 +413,20 @@ segInit('genderSeg2',v=>gender2=v);
 segInit('calSeg2',v=>{calType2=v;$('leapWrap2').style.display=v==='lunar'?'flex':'none';});
 segInit('modeSeg',v=>{
   mode=v;
-  const cp=v==='couple';
+  const cp=v==='couple', tj=v==='tojeong';
   $('p2block').style.display=cp?'block':'none';
   $('p1label').style.display=cp?'block':'none';
-  $('tierWrap').style.display=cp?'none':'flex';
+  $('tjYearWrap').style.display=tj?'block':'none';
+  $('tierWrap').style.display=(cp||tj)?'none':'flex';
   $('coupleTierInfo').style.display=cp?'block':'none';
-  $('calcBtn').textContent=cp?'궁합 확인':'만세력 확인';
+  $('tojeongTierInfo').style.display=tj?'block':'none';
+  $('calcBtn').textContent=cp?'궁합 확인':(tj?'토정비결 작괘':'만세력 확인');
   $('board').style.display='none';
   sajuData=null;
   resetApplyUI();
   updatePriceUI();
 });
+segInit('tjYearSeg',v=>{tjYear=+v;});
 /* 가격제 선택 */
 document.querySelectorAll('#tierWrap .tier').forEach(el=>el.onclick=()=>{
   document.querySelectorAll('#tierWrap .tier').forEach(x=>x.classList.remove('on'));
@@ -468,6 +482,7 @@ function computeChart(cfg){ // {name,gender,calType,leap,bdRaw,timeStr,timeUnkno
   const lunar=solar.getLunar();
   const ec=lunar.getEightChar(); ec.setSect(jasi==='jeong'?1:2);
   if(!lunarText) lunarText=`음력 ${lunar.getYear()}년 ${lunar.getMonth()<0?'윤':''}${Math.abs(lunar.getMonth())}월 ${lunar.getDay()}일`;
+  const lunNum={y:lunar.getYear(), m:Math.abs(lunar.getMonth()), d:lunar.getDay()};
   const pRaw={year:ec.getYear(), month:ec.getMonth(), day:ec.getDay(), time:ec.getTime()};
   const dayGan=pRaw.day[0];
   const mk=gz=>({
@@ -493,9 +508,46 @@ function computeChart(cfg){ // {name,gender,calType,leap,bdRaw,timeStr,timeUnkno
     birthInput:`${cfg.calType==='solar'?'양력':'음력'} ${y}년 ${m}월 ${d}일${timeUnknown?' (시간 모름)':' '+cfg.timeStr}`,
     solarBirth:`양력 ${y}년 ${m}월 ${d}일${timeUnknown?'':' '+String(cfg.timeStr)}`,
     pillars, elements:cnt, dayMaster:{gan:dayGan, ko:GAN_KO[dayGan], el:GAN_EL[dayGan], yy:GAN_YY[dayGan]?'양':'음'},
-    daYun:daYunArr, thisYear:{year:new Date().getFullYear(), ganzhi:nowGz, ko:ganzhiKo(nowGz)}
+    daYun:daYunArr, thisYear:{year:new Date().getFullYear(), ganzhi:nowGz, ko:ganzhiKo(nowGz)},
+    lun:lunNum
   };
 }
+/* ═══════════ 토정비결 작괘 (선천수 기반 정통 144괘) ═══════════ */
+const SEONCHEON={'甲':9,'己':9,'子':9,'午':9,'乙':8,'庚':8,'丑':8,'未':8,'丙':7,'辛':7,'寅':7,'申':7,'丁':6,'壬':6,'卯':6,'酉':6,'戊':5,'癸':5,'辰':5,'戌':5,'巳':4,'亥':4};
+const HANNUM=['','一','二','三','四','五','六','七','八'];
+function seonSum(gz){return (SEONCHEON[gz[0]]||0)+(SEONCHEON[gz[1]]||0);}
+function calcTojeong(chart, targetYear){
+  const age = targetYear - chart.lun.y + 1;              // 세는나이 (음력 기준)
+  const bm = chart.lun.m, bdRaw = chart.lun.d;
+  const mObj = LunarMonth.fromYm(targetYear, bm);        // 대상 연도의 내 생월
+  const dayCount = mObj ? mObj.getDayCount() : 30;       // 대월 30 · 소월 29
+  const bd = Math.min(bdRaw, dayCount);
+  const lun = Lunar.fromYmd(targetYear, bm, bd);
+  const taese = lun.getYearInGanZhi();                   // 태세 (음력 기준 그 해 간지)
+  const wolgeon = lun.getMonthInGanZhi();                // 생월 월건
+  const iljin = lun.getDayInGanZhi();                    // 생일 일진
+  let sang = (age + seonSum(taese)) % 8; if(!sang) sang = 8;
+  let jung = (dayCount + seonSum(wolgeon)) % 6; if(!jung) jung = 6;
+  let ha   = (bd + seonSum(iljin)) % 3; if(!ha) ha = 3;
+  const guae = {
+    '상':sang, '중':jung, '하':ha,
+    '번호':''+sang+jung+ha,
+    '한자':HANNUM[sang]+HANNUM[jung]+HANNUM[ha],
+    '태세':taese+'('+ganzhiKo(taese)+')', '월건':wolgeon+'('+ganzhiKo(wolgeon)+')', '일진':iljin+'('+ganzhiKo(iljin)+')',
+    '계산':`상괘 (나이 ${age} + 태세수 ${seonSum(taese)}) % 8 = ${sang} · 중괘 (생월일수 ${dayCount} + 월건수 ${seonSum(wolgeon)}) % 6 = ${jung} · 하괘 (생일 ${bd} + 일진수 ${seonSum(iljin)}) % 3 = ${ha}`
+  };
+  // 대상 연도 열두 달 월건·십성 (일간 기준)
+  const dg = chart.dayMaster.gan;
+  const months = [];
+  for (let m = 1; m <= 12; m++) {
+    const l = Lunar.fromYmd(targetYear, m, 15);
+    const gz = l.getMonthInGanZhi();
+    months.push({'음력월':m, '월건':gz+'('+ganzhiKo(gz)+')',
+      '천간십성':sipseong(dg, gz[0]), '지지십성':sipseong(dg, JI_MAIN[gz[1]])});
+  }
+  return {guae, months};
+}
+
 function calcSaju(){
   const email=$('email').value.trim();
   if(!email||!email.includes('@')){toast('간명서 받으실 이메일을 입력해 주세요');return null;}
@@ -509,6 +561,14 @@ function calcSaju(){
     return {type:'couple', tier:'couple', product:TIERS.couple.name, price:TIERS.couple.price,
       name:c1.name+'·'+c2.name, email, p1:c1, p2:c2,
       focus:focusSel, question:$('question').value.trim()};
+  }
+  if(mode==='tojeong'){
+    let tj;
+    try{ tj=calcTojeong(c1, tjYear); }
+    catch(e){ toast('작괘 계산에 실패했습니다: '+e.message); return null; }
+    return Object.assign({}, c1, {type:'tojeong', tier:'tojeong', product:'토정비결 '+tjYear,
+      price:TIERS.tojeong.price, targetYear:tjYear, guae:tj.guae, months:tj.months,
+      email, focus:focusSel, question:$('question').value.trim()});
   }
   return Object.assign({}, c1, {type:'personal', tier, product:TIERS[tier].name, price:TIERS[tier].price,
     email, focus:focusSel, question:$('question').value.trim()});
@@ -540,10 +600,21 @@ function boardHTML(c, title){
     <div class="birth-line">${c.name} (${c.gender}) · ${c.solarBirth} · ${c.lunarText}${c.corrected?' · 진태양시 보정':''}</div>
   </div>`;
 }
+function guaeHTML(s){
+  const g=s.guae;
+  return `<div class="wongook" style="margin-bottom:14px;text-align:center">
+    <div class="wg-title">土亭秘訣 · ${s.targetYear}년 ${s.targetYear===2026?'병오년':'정미년'}</div>
+    <div style="font-family:'Song Myung',serif;font-size:2.6rem;letter-spacing:.3em;text-indent:.3em;color:#26221A;margin:6px 0 2px">${g['한자']}</div>
+    <div style="font-size:.95rem;color:#6E6350;margin-bottom:10px">제 ${g['번호']} 괘 　(상 ${g['상']} · 중 ${g['중']} · 하 ${g['하']})</div>
+    <div style="font-size:.72rem;color:#9A8E74;border-top:1px dashed #C4B58E;padding-top:10px">태세 ${g['태세']} · 월건 ${g['월건']} · 일진 ${g['일진']}<br>정통 선천수(先天數) 작괘법으로 산출</div>
+  </div>`;
+}
 function renderBoard(s){
   const box=$('boards');
   if(s.type==='couple'){
     box.innerHTML=boardHTML(s.p1,'四柱原局 · '+s.p1.name)+boardHTML(s.p2,'四柱原局 · '+s.p2.name);
+  }else if(s.type==='tojeong'){
+    box.innerHTML=guaeHTML(s)+boardHTML(s,'四柱原局 · 사주 원국');
   }else{
     box.innerHTML=boardHTML(s,'四柱原局 · 사주 원국');
   }
@@ -570,7 +641,7 @@ async function loadTeaser(s){
     $('teaserLoading').style.display='none';
     $('teaserBody').innerHTML=teaserText.split('\n').filter(x=>x.trim())
       .map(x=>`<p>${x.trim()}</p>`).join('')
-      + '<p class="cut">여기까지가 첫마디입니다. 이어지는 이야기는 A4 열 장의 간명서에 담아 보내드립니다.</p>';
+      + `<p class="cut">여기까지가 첫마디입니다. 이어지는 이야기는 ${sajuData&&sajuData.type==='tojeong'?'열두 달을 모두 풀어 적은 비결서':'정성껏 적은 간명서'}에 담아 보내드립니다.</p>`;
     $('teaserShare').style.display='flex';
   }catch(e){
     $('teaserLoading').style.display='none';
@@ -583,6 +654,8 @@ function shareText(){
   let headLine;
   if(s.type==='couple'){
     headLine=`${s.p1.name} · ${s.p2.name} 궁합\n${s.p1.name} 일주 ${s.p1.pillars.day.ganzhi} / ${s.p2.name} 일주 ${s.p2.pillars.day.ganzhi}`;
+  }else if(s.type==='tojeong'){
+    headLine=`${s.name} 님 · ${s.targetYear}년 토정비결\n괘상 ${s.guae['한자']} · 제 ${s.guae['번호']} 괘`;
   }else{
     headLine=`${s.name} 님 (${s.solarBirth})\n원국 ${s.pillars.year.ganzhi} ${s.pillars.month.ganzhi} ${s.pillars.day.ganzhi}${s.pillars.time?' '+s.pillars.time.ganzhi:''}`;
   }
@@ -798,8 +871,8 @@ let genRunning=false;
 async function generateReport(){
   if(genRunning){toast('이미 집필 중입니다. 잠시만 기다려 주세요');return;}
   if(!sajuData){toast('먼저 만세력을 확인하거나 신청 목록에서 이름을 클릭하세요');return;}
-  if(sajuData.type==='couple'||(sajuData.tier&&sajuData.tier!=='standard')){
-    toast('약식·심층·궁합 간명은 백그라운드 예약으로 진행해 주세요 (목록에서 이름 클릭 → 예약)');return;}
+  if(sajuData.type!=='personal'||(sajuData.tier&&sajuData.tier!=='standard')){
+    toast('약식·심층·궁합·토정비결은 백그라운드 예약으로 진행해 주세요 (목록에서 이름 클릭 → 예약)');return;}
   let key=$('apiKey').value.replace(/[^\x21-\x7E]/g,'').trim(); // 영문·숫자·기호만 허용
   $('apiKey').value=key;
   if(!key){toast('Anthropic API 키를 입력하세요');$('admin').scrollIntoView({behavior:'smooth'});return;}
@@ -846,6 +919,7 @@ function fmtSection(txt){
     return `<p>${l.replace(/^【(.+?)】\s*/, '<b>$1</b> · ')}</p>`;}).join('');
 }
 function titlesFor(d){
+  if(d&&d.type==='tojeong')return ['괘상 총운 — 한 해의 큰 그림','열두 달 비결 — 달마다 다른 하늘','액막이와 개운 — 한 해를 건너는 법'];
   if(d&&d.type==='couple')return ['두 원국이 만나다 — 서로의 기질','합과 충 — 끌림과 부딪힘의 구조','배우자궁과 살림의 궁합','두 사람의 시절 — 시기 궁합과 당부'];
   if(d&&d.tier==='basic')return [SECTIONS[0].t,'재물·직업·애정, 그리고 올해'];
   if(d&&d.tier==='deep')return [SECTIONS[0].t,SECTIONS[1].t,SECTIONS[2].t,'대운의 흐름과 올해','십년지계 — 다가올 두 대운의 전략','여쭈신 질문에 대한 답, 그리고 당부'];
