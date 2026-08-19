@@ -140,6 +140,11 @@ header{position:relative}
 .qr-inner #qrCanvas{display:inline-block;padding:10px;background:#fff;border-radius:4px}
 .qr-inner p{margin-top:12px;font-size:.85rem;color:#6E6350;line-height:1.8}
 .qr-inner b{color:#8A5A00}
+
+/* ── 글자별 한자 입력 ── */
+.hc{display:flex;align-items:center;gap:12px;margin-top:8px}
+.hc .ch{font-family:'Song Myung',serif;font-size:1.5rem;color:var(--gold);width:40px;text-align:center;flex-shrink:0}
+.hc input{flex:1}
 .toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:var(--gold);color:#191509;
   padding:11px 26px;border-radius:30px;font-size:.88rem;display:none;z-index:99}
 @media (max-width:520px){
@@ -170,9 +175,9 @@ header{position:relative}
   </div>
   <p class="note" id="samhapDesc" style="margin-top:8px">하늘의 때(토정비결) · 땅의 바탕(사주) · 사람의 이름(성명학)을 한 권으로 읽는 월하서재의 전권 간명입니다.</p>
   <div id="nameBlock" style="display:none">
-    <label>이름 한자 — 한자를 모르면 뜻(훈음)으로 적어주세요</label>
-    <input type="text" id="hanName" placeholder="EX) 洪吉童 또는 넓을 홍, 길할 길, 아이 동">
-    <p class="note" style="margin-top:6px">한자를 몰라도 됩니다. "길할 길, 아이 동"처럼 뜻으로 적어주시면 선생이 글자를 특정해 풀이합니다.</p>
+    <label>이름 글자별 한자 — 각 칸에 그 글자의 한자나 뜻을 적어주세요</label>
+    <div id="hanChars"><p class="note" style="margin:4px 0">위 성함 칸에 이름을 쓰면, 글자마다 입력칸이 여기 나타납니다.</p></div>
+    <p class="note" style="margin-top:8px">한자를 알면 한자로(예: 吉), 모르면 뜻으로(예: 길할) 적어주세요. 비워두셔도 소리 오행으로 풀이해 드립니다.</p>
     <label>본관 (선택)</label>
     <input type="text" id="bongwan" placeholder="EX) 남양 홍씨 (한자 몰라도 됩니다)">
   </div>
@@ -406,6 +411,21 @@ function toast(m){const t=$('toast');t.textContent=m;t.style.display='block';set
 function segInit(id, cb){$(id).querySelectorAll('button').forEach(b=>b.onclick=()=>{
   $(id).querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on');cb(b.dataset.v);});}
 $('copyLink').onclick=()=>copyText('https://jsh0529-beep.github.io/saju/','월하서재 링크가 복사되었습니다');
+/* 성함 입력 → 글자별 한자 칸 생성 (기존 입력값 유지) */
+function renderHanChars(){
+  if(mode==='couple') return;
+  const box=$('hanChars');
+  const nm=$('name').value.replace(/[^가-힣]/g,'');
+  const prev={};
+  box.querySelectorAll('input').forEach((inp,i)=>{prev[i]=inp.value;});
+  if(!nm){box.innerHTML='<p class="note" style="margin:4px 0">위 성함 칸에 이름을 쓰면, 글자마다 입력칸이 여기 나타납니다.</p>';return;}
+  box.innerHTML=nm.split('').map((ch,i)=>`
+    <div class="hc">
+      <span class="ch">${ch}</span>
+      <input type="text" data-i="${i}" value="${(prev[i]||'').replace(/"/g,'')}" placeholder="'${ch}'의 한자나 뜻 (예: ${i===0?'吉 또는 길할':'한자 또는 뜻'})">
+    </div>`).join('');
+}
+$('name').addEventListener('input',renderHanChars);
 segInit('genderSeg',v=>gender=v);
 segInit('calSeg',v=>{calType=v;$('leapWrap').style.display=v==='lunar'?'flex':'none';});
 segInit('jasiSeg',v=>jasi=v);
@@ -521,23 +541,22 @@ const JAWON={
 /* 금 */ '金':'금','鈺':'금','鉉':'금','銀':'금','銅':'금','鋼':'금','錫':'금','鍾':'금','鎬':'금','鎭':'금','錦':'금','銘':'금','鑑':'금','釗':'금','鏞':'금','鍊':'금','錬':'금','錄':'금','鈴':'금','玉':'금','珍':'금','珉':'금','玟':'금','珠':'금','現':'금','球':'금','理':'금','琳':'금','琇':'금','琪':'금','琥':'금','瑛':'금','瑄':'금','璟':'금','璿':'금','瓊':'금','玧':'금','珪':'금','班':'금','瑞':'금','瑩':'금','珀':'금','琉':'금','瑟':'금','環':'금','璧':'금','璐':'금','玲':'금','琬':'금','瑀':'금','珖':'금','利':'금','列':'금','別':'금','判':'금','制':'금','到':'금','則':'금','前':'금','剛':'금','義':'금','西':'금','秋':'금','庚':'금','辛':'금','申':'금','酉':'금','商':'금','鐵':'금','錚':'금','鎔':'금','鑽':'금',
 /* 수 */ '水':'수','江':'수','河':'수','海':'수','洙':'수','淵':'수','源':'수','溪':'수','湖':'수','洪':'수','浩':'수','澔':'수','泰':'수','洋':'수','淸':'수','清':'수','淑':'수','澈':'수','潤':'수','汶':'수','沅':'수','泳':'수','洗':'수','津':'수','浚':'수','洛':'수','滿':'수','漢':'수','沇':'수','沃':'수','沼':'수','泉':'수','洌':'수','流':'수','浪':'수','涉':'수','淡':'수','深':'수','淳':'수','渠':'수','游':'수','溶':'수','演':'수','潭':'수','澤':'수','濟':'수','瀚':'수','灣':'수','沚':'수','汀':'수','雨':'수','雲':'수','雪':'수','霖':'수','露':'수','霞':'수','雯':'수','冬':'수','冰':'수','北':'수','壬':'수','癸':'수','子':'수','亥':'수','玄':'수','永':'수','求':'수','氷':'수','泓':'수','涵':'수','湜':'수','潾':'수','澹':'수','沆':'수','洹':'수','淏':'수','渼':'수','湺':'수','潽':'수'
 };
-function analyzeName(korName, hanStr){
-  const raw=(hanStr||'').trim();
-  const hans=raw.replace(/[^\u4E00-\u9FFF]/g,'').split('').filter(Boolean);
+function analyzeName(korName){
+  const inputs=[...document.querySelectorAll('#hanChars input')];
   const chars=[];
-  korName.split('').forEach((ch,i)=>{
+  korName.replace(/[^가-힣]/g,'').split('').forEach((ch,i)=>{
     const cho=choseong(ch);
-    let han=hans[i]||'', hunum='';
-    if(!han && raw){
-      // 훈음 입력: "성할 성" 처럼 해당 음절로 끝나는 훈음 조각 탐색
-      const m=raw.match(new RegExp('([가-힣]{1,6})\\s+'+ch+'(?=[\\s,\\/]|$)'));
-      if(m) hunum=m[1]+' '+ch;
+    const v=(inputs[i]?inputs[i].value:'').trim();
+    const cjk=(v.match(/[\u4E00-\u9FFF]/)||[])[0]||'';
+    let hunum='';
+    if(!cjk && v){
+      hunum=v.endsWith(ch)?v:(v+' '+ch);  // "길할" → "길할 길"
     }
     chars.push({
       '글자':ch,
-      '한자':han||(hunum?('훈음: '+hunum):'(미입력)'),
+      '한자':cjk||(hunum?('훈음: '+hunum):'(미입력)'),
       '발음오행':cho?(CHO_OH[cho]||'?')+'('+cho+')':'?',
-      '자원오행':han?(JAWON[han]||'판정필요'):(hunum?'훈음으로 판정':'(미입력)')
+      '자원오행':cjk?(JAWON[cjk]||'판정필요'):(hunum?'훈음으로 판정':'(미입력)')
     });
   });
   return chars;
@@ -594,9 +613,9 @@ function calcSaju(){
       focus:focusSel, question:$('question').value.trim()};
   }
   // 천지인 삼합: 사주 + 이름 + 토정 작괘를 한 번에
-  const hanName=$('hanName').value.trim();
   const bongwan=$('bongwan').value.trim();
-  const nameChars=analyzeName(c1.name, hanName);
+  const nameChars=analyzeName(c1.name);
+  const hanName=nameChars.map(c=>c['한자']).join(' ');
   let tj;
   try{ tj=calcTojeong(c1, tjYear); }
   catch(e){ toast('작괘 계산에 실패했습니다: '+e.message); return null; }
