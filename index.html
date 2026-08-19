@@ -421,8 +421,8 @@ function renderHanChars(){
   if(!nm){box.innerHTML='<p class="note" style="margin:4px 0">위 성함 칸에 이름을 쓰면, 글자마다 입력칸이 여기 나타납니다.</p>';return;}
   box.innerHTML=nm.split('').map((ch,i)=>`
     <div class="hc">
+      <input type="text" data-i="${i}" value="${(prev[i]||'').replace(/"/g,'')}" placeholder="뜻이나 한자 (예: ${i===0?'베풀':'맑을'})">
       <span class="ch">${ch}</span>
-      <input type="text" data-i="${i}" value="${(prev[i]||'').replace(/"/g,'')}" placeholder="'${ch}'의 한자나 뜻 (예: ${i===0?'吉 또는 길할':'한자 또는 뜻'})">
     </div>`).join('');
 }
 $('name').addEventListener('input',renderHanChars);
