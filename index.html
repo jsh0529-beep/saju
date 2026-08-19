@@ -40,7 +40,8 @@ input[type=text],input[type=number],input[type=date],input[type=time],input[type
 input:focus,select:focus,textarea:focus{outline:2px solid var(--gold-soft);outline-offset:0;border-color:var(--gold-soft)}
 textarea{resize:vertical;min-height:74px}
 .row{display:flex;gap:12px}.row>div{flex:1}
-.seg{display:flex;gap:8px}
+.seg{display:flex;gap:8px;flex-wrap:wrap}
+#modeSeg button{flex-basis:calc(50% - 4px)}
 .seg button{flex:1;background:var(--ink);border:1px solid var(--line);color:var(--tx-dim);padding:10px;border-radius:3px;cursor:pointer;font-family:inherit;font-size:.92rem}
 .seg button.on{border-color:var(--gold);color:var(--gold)}
 .chk{display:flex;align-items:center;gap:9px;margin-top:12px;font-size:.88rem;color:var(--tx);cursor:pointer}
@@ -175,6 +176,14 @@ header{position:relative}
     <button data-v="personal" class="on">개인 간명</button>
     <button data-v="couple">궁합</button>
     <button data-v="tojeong">토정비결</button>
+    <button data-v="name">이름 풀이</button>
+  </div>
+  <div id="nameBlock" style="display:none">
+    <label>이름 한자 — 한자를 모르면 뜻(훈음)으로 적어주세요</label>
+    <input type="text" id="hanName" placeholder="EX) 張晟赫 또는 베풀 장, 성할 성, 붉을 혁">
+    <p class="note" style="margin-top:6px">한자를 몰라도 됩니다. "성할 성, 붉을 혁"처럼 뜻으로 적어주시면 선생이 글자를 특정해 풀이합니다.</p>
+    <label>본관 (선택)</label>
+    <input type="text" id="bongwan" placeholder="EX) 인동 장씨 (한자 몰라도 됩니다)">
   </div>
   <div id="tjYearWrap" style="display:none">
     <label>토정비결 대상 연도</label>
@@ -299,6 +308,7 @@ header{position:relative}
     </div>
     <p id="coupleTierInfo" style="display:none;text-align:center;font-size:.9rem;color:var(--tx)">궁합 간명 · A4 10장 · 두 원국의 합충과 시기 궁합</p>
     <p id="tojeongTierInfo" style="display:none;text-align:center;font-size:.9rem;color:var(--tx)">토정비결 · A4 8장 · 정통 작괘 144괘 + 열두 달 비결</p>
+    <p id="nameTierInfo" style="display:none;text-align:center;font-size:.9rem;color:var(--tx)">사주·이름 통합 리딩 · A4 12장 · 자원·발음오행 + 본관까지</p>
     <div class="amount" id="payAmount">30,000원</div>
     <div class="steps">
       ① 아래 <b>[간명 신청 등록]</b>을 눌러 주세요<br>
@@ -385,11 +395,12 @@ const TIERS={
   standard:{name:'정식 간명',price:30000,pages:'A4 10장'},
   deep:{name:'심층 간명',price:49000,pages:'A4 15장'},
   couple:{name:'궁합 간명',price:30000,pages:'A4 10장'},
-  tojeong:{name:'토정비결',price:15000,pages:'A4 8장'}
+  tojeong:{name:'토정비결',price:15000,pages:'A4 8장'},
+  name:{name:'사주·이름 통합 리딩',price:39000,pages:'A4 12장'}
 };
 let tjYear=2026;
 function fmt(n){return n.toLocaleString('ko-KR');}
-function currentPrice(){return mode==='couple'?TIERS.couple.price:(mode==='tojeong'?TIERS.tojeong.price:TIERS[tier].price);}
+function currentPrice(){return mode==='couple'?TIERS.couple.price:(mode==='tojeong'?TIERS.tojeong.price:(mode==='name'?TIERS.name.price:TIERS[tier].price));}
 function resetApplyUI(){
   const a=$('applyBtn'); a.disabled=false; a.textContent='간명 신청 등록';
   const p=$('payBtn'); p.disabled=true; p.textContent='카카오페이로 보내기 (등록 후 열립니다)';
@@ -413,14 +424,16 @@ segInit('genderSeg2',v=>gender2=v);
 segInit('calSeg2',v=>{calType2=v;$('leapWrap2').style.display=v==='lunar'?'flex':'none';});
 segInit('modeSeg',v=>{
   mode=v;
-  const cp=v==='couple', tj=v==='tojeong';
+  const cp=v==='couple', tj=v==='tojeong', nm=v==='name';
   $('p2block').style.display=cp?'block':'none';
   $('p1label').style.display=cp?'block':'none';
   $('tjYearWrap').style.display=tj?'block':'none';
-  $('tierWrap').style.display=(cp||tj)?'none':'flex';
+  $('nameBlock').style.display=nm?'block':'none';
+  $('tierWrap').style.display=(cp||tj||nm)?'none':'flex';
   $('coupleTierInfo').style.display=cp?'block':'none';
   $('tojeongTierInfo').style.display=tj?'block':'none';
-  $('calcBtn').textContent=cp?'궁합 확인':(tj?'토정비결 작괘':'만세력 확인');
+  $('nameTierInfo').style.display=nm?'block':'none';
+  $('calcBtn').textContent=cp?'궁합 확인':(tj?'토정비결 작괘':(nm?'이름 풀이 보기':'만세력 확인'));
   $('board').style.display='none';
   sajuData=null;
   resetApplyUI();
@@ -512,6 +525,40 @@ function computeChart(cfg){ // {name,gender,calType,leap,bdRaw,timeStr,timeUnkno
     lun:lunNum
   };
 }
+/* ═══════════ 성명학 — 발음오행·자원오행 ═══════════ */
+const CHO_OH={'ㄱ':'목','ㅋ':'목','ㄲ':'목','ㄴ':'화','ㄷ':'화','ㄸ':'화','ㄹ':'화','ㅌ':'화','ㅇ':'토','ㅎ':'토','ㅅ':'금','ㅆ':'금','ㅈ':'금','ㅉ':'금','ㅊ':'금','ㅁ':'수','ㅂ':'수','ㅃ':'수','ㅍ':'수'};
+const CHO_LIST=['ㄱ','ㄲ','ㄴ','ㄷ','ㄸ','ㄹ','ㅁ','ㅂ','ㅃ','ㅅ','ㅆ','ㅇ','ㅈ','ㅉ','ㅊ','ㅋ','ㅌ','ㅍ','ㅎ'];
+function choseong(ch){const c=ch.charCodeAt(0)-0xAC00; if(c<0||c>11171)return null; return CHO_LIST[Math.floor(c/588)];}
+/* 자원오행 상용 작명 한자 테이블 (부수·본뜻·오상 배속 기준) */
+const JAWON={
+/* 목 */ '木':'목','林':'목','森':'목','樹':'목','松':'목','柏':'목','桂':'목','柳':'목','梅':'목','蘭':'목','菊':'목','竹':'목','桓':'목','槿':'목','權':'목','柱':'목','根':'목','桐':'목','楓':'목','植':'목','材':'목','村':'목','桃':'목','李':'목','杏':'목','栗':'목','東':'목','春':'목','花':'목','英':'목','茂':'목','芝':'목','苑':'목','芸':'목','菜':'목','葉':'목','萬':'목','蓮':'목','荷':'목','藝':'목','若':'목','筠':'목','範':'목','策':'목','簡':'목','第':'목','節':'목','仁':'목','寅':'목','卯':'목','甲':'목','乙':'목','榮':'목','業':'목','杰':'목','柄':'목','株':'목','橋':'목','果':'목','和':'목','秀':'목','科':'목','程':'목','稙':'목','穆':'목','稀':'목','蒼':'목','芳':'목','苗':'목','茶':'목','草':'목','薰':'목','蕙':'목','芽':'목','莊':'목','菁':'목','箱':'목','管':'목','築':'목','篤':'목','簾':'목','籍':'목',
+/* 화 */ '火':'화','炎':'화','燦':'화','煥':'화','熙':'화','熹':'화','烈':'화','炯':'화','燁':'화','煜':'화','燾':'화','燈':'화','炫':'화','晃':'화','昞':'화','昺':'화','昌':'화','明':'화','晶':'화','旭':'화','曉':'화','晛':'화','日':'화','昇':'화','暻':'화','景':'화','晟':'화','盛':'화','赫':'화','夏':'화','南':'화','丹':'화','紅':'화','禮':'화','星':'화','光':'화','輝':'화','煇':'화','曜':'화','晳':'화','晏':'화','旿':'화','昊':'화','旻':'화','晩':'화','智':'수','暖':'화','暢':'화','曦':'화','熱':'화','照':'화','焄':'화','然':'화','燕':'화','熊':'화','午':'화','巳':'화','丙':'화','丁':'화','夭':'화','太':'화','炅':'화','烋':'화','燻':'화','爀':'화','晙':'화','旼':'화','昶':'화','晧':'화','煌':'화','熀':'화',
+/* 토 */ '土':'토','均':'토','基':'토','培':'토','城':'토','坤':'토','圭':'토','在':'토','堅':'토','垠':'토','境':'토','壇':'토','增':'토','壎':'토','山':'토','峻':'토','崇':'토','岳':'토','峰':'토','崙':'토','崔':'토','嵐':'토','岸':'토','石':'토','碩':'토','磊':'토','磯':'토','田':'토','界':'토','留':'토','當':'토','宇':'토','宙':'토','安':'토','宅':'토','宗':'토','容':'토','宣':'토','完':'토','定':'토','官':'토','宮':'토','室':'토','家':'토','富':'토','寬':'토','寧':'토','實':'토','信':'토','戊':'토','己':'토','辰':'토','戌':'토','丑':'토','未':'토','央':'토','堂':'토','址':'토','坪':'토','埈':'토','奎':'토','壽':'토','園':'토','國':'토','圓':'토','固':'토',
+/* 금 */ '金':'금','鈺':'금','鉉':'금','銀':'금','銅':'금','鋼':'금','錫':'금','鍾':'금','鎬':'금','鎭':'금','錦':'금','銘':'금','鑑':'금','釗':'금','鏞':'금','鍊':'금','錬':'금','錄':'금','鈴':'금','玉':'금','珍':'금','珉':'금','玟':'금','珠':'금','現':'금','球':'금','理':'금','琳':'금','琇':'금','琪':'금','琥':'금','瑛':'금','瑄':'금','璟':'금','璿':'금','瓊':'금','玧':'금','珪':'금','班':'금','瑞':'금','瑩':'금','珀':'금','琉':'금','瑟':'금','環':'금','璧':'금','璐':'금','玲':'금','琬':'금','瑀':'금','珖':'금','利':'금','列':'금','別':'금','判':'금','制':'금','到':'금','則':'금','前':'금','剛':'금','義':'금','西':'금','秋':'금','庚':'금','辛':'금','申':'금','酉':'금','商':'금','鐵':'금','錚':'금','鎔':'금','鑽':'금',
+/* 수 */ '水':'수','江':'수','河':'수','海':'수','洙':'수','淵':'수','源':'수','溪':'수','湖':'수','洪':'수','浩':'수','澔':'수','泰':'수','洋':'수','淸':'수','清':'수','淑':'수','澈':'수','潤':'수','汶':'수','沅':'수','泳':'수','洗':'수','津':'수','浚':'수','洛':'수','滿':'수','漢':'수','沇':'수','沃':'수','沼':'수','泉':'수','洌':'수','流':'수','浪':'수','涉':'수','淡':'수','深':'수','淳':'수','渠':'수','游':'수','溶':'수','演':'수','潭':'수','澤':'수','濟':'수','瀚':'수','灣':'수','沚':'수','汀':'수','雨':'수','雲':'수','雪':'수','霖':'수','露':'수','霞':'수','雯':'수','冬':'수','冰':'수','北':'수','壬':'수','癸':'수','子':'수','亥':'수','玄':'수','永':'수','求':'수','氷':'수','泓':'수','涵':'수','湜':'수','潾':'수','澹':'수','沆':'수','洹':'수','淏':'수','渼':'수','湺':'수','潽':'수'
+};
+function analyzeName(korName, hanStr){
+  const raw=(hanStr||'').trim();
+  const hans=raw.replace(/[^\u4E00-\u9FFF]/g,'').split('').filter(Boolean);
+  const chars=[];
+  korName.split('').forEach((ch,i)=>{
+    const cho=choseong(ch);
+    let han=hans[i]||'', hunum='';
+    if(!han && raw){
+      // 훈음 입력: "성할 성" 처럼 해당 음절로 끝나는 훈음 조각 탐색
+      const m=raw.match(new RegExp('([가-힣]{1,6})\\s+'+ch+'(?=[\\s,\\/]|$)'));
+      if(m) hunum=m[1]+' '+ch;
+    }
+    chars.push({
+      '글자':ch,
+      '한자':han||(hunum?('훈음: '+hunum):'(미입력)'),
+      '발음오행':cho?(CHO_OH[cho]||'?')+'('+cho+')':'?',
+      '자원오행':han?(JAWON[han]||'판정필요'):(hunum?'훈음으로 판정':'(미입력)')
+    });
+  });
+  return chars;
+}
+
 /* ═══════════ 토정비결 작괘 (선천수 기반 정통 144괘) ═══════════ */
 const SEONCHEON={'甲':9,'己':9,'子':9,'午':9,'乙':8,'庚':8,'丑':8,'未':8,'丙':7,'辛':7,'寅':7,'申':7,'丁':6,'壬':6,'卯':6,'酉':6,'戊':5,'癸':5,'辰':5,'戌':5,'巳':4,'亥':4};
 const HANNUM=['','一','二','三','四','五','六','七','八'];
@@ -562,6 +609,14 @@ function calcSaju(){
       name:c1.name+'·'+c2.name, email, p1:c1, p2:c2,
       focus:focusSel, question:$('question').value.trim()};
   }
+  if(mode==='name'){
+    const hanName=$('hanName').value.trim();
+    const bongwan=$('bongwan').value.trim();
+    const nameChars=analyzeName(c1.name, hanName);
+    return Object.assign({}, c1, {type:'name', tier:'name', product:TIERS.name.name,
+      price:TIERS.name.price, hanName, bongwan, nameChars,
+      email, focus:focusSel, question:$('question').value.trim()});
+  }
   if(mode==='tojeong'){
     let tj;
     try{ tj=calcTojeong(c1, tjYear); }
@@ -609,12 +664,28 @@ function guaeHTML(s){
     <div style="font-size:.72rem;color:#9A8E74;border-top:1px dashed #C4B58E;padding-top:10px">태세 ${g['태세']} · 월건 ${g['월건']} · 일진 ${g['일진']}<br>정통 선천수(先天數) 작괘법으로 산출</div>
   </div>`;
 }
+function nameCardHTML(s){
+  const rows=s.nameChars.map(c=>`
+    <div style="flex:1;text-align:center">
+      <div style="font-family:'Song Myung',serif;font-size:2rem;color:#26221A">${c['글자']}</div>
+      <div style="font-size:${String(c['한자']).startsWith('훈음')?'.72rem':'1.05rem'};color:#4A4032;margin:2px 0">${c['한자']}</div>
+      <div style="font-size:.72rem;color:#8A7E66">소리 ${c['발음오행']}</div>
+      <div style="font-size:.72rem;color:#6E6350">자원 ${c['자원오행']}</div>
+    </div>`).join('');
+  return `<div class="wongook" style="margin-bottom:14px">
+    <div class="wg-title">姓名五行 · 이름의 오행</div>
+    <div style="display:flex;gap:8px;padding:6px 0 10px">${rows}</div>
+    ${s.bongwan?`<div style="text-align:center;font-size:.75rem;color:#8A7E66;border-top:1px dashed #C4B58E;padding-top:8px">뿌리 · ${s.bongwan}</div>`:''}
+  </div>`;
+}
 function renderBoard(s){
   const box=$('boards');
   if(s.type==='couple'){
     box.innerHTML=boardHTML(s.p1,'四柱原局 · '+s.p1.name)+boardHTML(s.p2,'四柱原局 · '+s.p2.name);
   }else if(s.type==='tojeong'){
     box.innerHTML=guaeHTML(s)+boardHTML(s,'四柱原局 · 사주 원국');
+  }else if(s.type==='name'){
+    box.innerHTML=nameCardHTML(s)+boardHTML(s,'四柱原局 · 사주 원국');
   }else{
     box.innerHTML=boardHTML(s,'四柱原局 · 사주 원국');
   }
@@ -656,6 +727,8 @@ function shareText(){
     headLine=`${s.p1.name} · ${s.p2.name} 궁합\n${s.p1.name} 일주 ${s.p1.pillars.day.ganzhi} / ${s.p2.name} 일주 ${s.p2.pillars.day.ganzhi}`;
   }else if(s.type==='tojeong'){
     headLine=`${s.name} 님 · ${s.targetYear}년 토정비결\n괘상 ${s.guae['한자']} · 제 ${s.guae['번호']} 괘`;
+  }else if(s.type==='name'){
+    headLine=`${s.name} 님 이름 풀이\n${s.nameChars.map(c=>c['글자']+'('+c['발음오행'].split('(')[0]+')').join(' ')}`;
   }else{
     headLine=`${s.name} 님 (${s.solarBirth})\n원국 ${s.pillars.year.ganzhi} ${s.pillars.month.ganzhi} ${s.pillars.day.ganzhi}${s.pillars.time?' '+s.pillars.time.ganzhi:''}`;
   }
@@ -872,7 +945,7 @@ async function generateReport(){
   if(genRunning){toast('이미 집필 중입니다. 잠시만 기다려 주세요');return;}
   if(!sajuData){toast('먼저 만세력을 확인하거나 신청 목록에서 이름을 클릭하세요');return;}
   if(sajuData.type!=='personal'||(sajuData.tier&&sajuData.tier!=='standard')){
-    toast('약식·심층·궁합·토정비결은 백그라운드 예약으로 진행해 주세요 (목록에서 이름 클릭 → 예약)');return;}
+    toast('약식·심층·궁합·토정비결·통합 리딩은 백그라운드 예약으로 진행해 주세요 (목록에서 이름 클릭 → 예약)');return;}
   let key=$('apiKey').value.replace(/[^\x21-\x7E]/g,'').trim(); // 영문·숫자·기호만 허용
   $('apiKey').value=key;
   if(!key){toast('Anthropic API 키를 입력하세요');$('admin').scrollIntoView({behavior:'smooth'});return;}
@@ -919,6 +992,7 @@ function fmtSection(txt){
     return `<p>${l.replace(/^【(.+?)】\s*/, '<b>$1</b> · ')}</p>`;}).join('');
 }
 function titlesFor(d){
+  if(d&&d.type==='name')return ['원국의 큰 그림, 그리고 길신','원국의 빈자리와 이름의 소임','뿌리와 연결 — 본관까지 읽다','채우는 법 — 개운 처방과 총평'];
   if(d&&d.type==='tojeong')return ['괘상 총운 — 한 해의 큰 그림','열두 달 비결 — 달마다 다른 하늘','액막이와 개운 — 한 해를 건너는 법'];
   if(d&&d.type==='couple')return ['두 원국이 만나다 — 서로의 기질','합과 충 — 끌림과 부딪힘의 구조','배우자궁과 살림의 궁합','두 사람의 시절 — 시기 궁합과 당부'];
   if(d&&d.tier==='basic')return [SECTIONS[0].t,'재물·직업·애정, 그리고 올해'];
