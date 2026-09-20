@@ -8,3 +8,5 @@ Original Tokyo diorama created with built-in image generation. Other public info
 
 
 Catalog: 20 sightseeing/shopping destinations and 14 restaurants/cafes. Each entry in places-data.js includes a checked official source and maps query. Search, region and category filters are client-side. Opening hours, prices and availability are not live. Source pages checked 2026-09-20.
+
+Audio fix (2026-09-20): 14 locally hosted Japanese MP3 phrases replace device-dependent Web Speech synthesis. Audio is generated synthetic speech (Google Translate TTS, ja); matching text is in assets/audio/transcripts.json. No runtime TTS service, key, or login is needed. Playback errors have visible status, native audio controls, and a direct audio link. Play starts only on a user gesture and stops when the card closes or changes.
