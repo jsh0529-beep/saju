@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#2462ef"><meta name="description" content="하준이의 4박 5일 도쿄 여행. 일정, 길 찾기, 일본어 카드와 여행 준비를 한곳에서.">
+  <meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="하준 도쿄">
+  <title>하준이의 도쿄 여행</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%232462ef'/%3E%3Cpath d='M19 18v28m25-28v28M19 32h25' stroke='white' stroke-width='7'/%3E%3Ccircle cx='48' cy='15' r='6' fill='%23ffbd55'/%3E%3C/svg%3E">
+  <link rel="manifest" href="./manifest.webmanifest"><link rel="apple-touch-icon" href="./assets/icon-192.png">
+  <link rel="stylesheet" href="./style.css"><script src="./places-data.js" defer></script><script src="./app.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">본문으로 건너뛰기</a>
+  <aside class="sidebar">
+    <a class="brand" href="#trip" aria-label="여행 일정으로"><span class="brand-mark">h<span>•</span></span><span>HAJUN<span class="brand-sub">in TOKYO</span></span></a>
+    <div class="rail-label">MY LITTLE JOURNEY</div>
+    <nav class="main-nav" aria-label="앱 메뉴" id="desktop-nav"></nav>
+    <div class="rail-bottom"><div class="rail-stamp">TOKYO <span>東京</span></div><p>2026. 09. 25 — 09. 29</p><small>하준이와 함께하는 4박 5일</small><button class="rail-install" data-action="install"><span data-icon="phone"></span> 홈 화면에 추가하기</button></div>
+  </aside>
+  <div class="workspace">
+    <header class="topbar"><div><span class="mobile-brand">HAJUN in TOKYO</span><span class="breadcrumb">나의 여행 <span>/</span> <b id="current-section">여행 일정</b></span></div><div class="top-right"><span class="tokyo-clock" id="tokyo-clock"></span><button class="help-button" data-action="help"><span data-icon="heart"></span> 도움 요청</button><span class="avatar" aria-label="하준">하</span></div></header>
+    <main id="main">
+      <section id="view-trip" class="view" aria-labelledby="trip-heading">
+        <div class="page-heading"><div><p class="eyebrow">TOKYO, HERE WE COME</p><h1 id="trip-heading">하준이의 도쿄 여행<span class="orange-dot">.</span></h1></div><span class="date-pill"><span data-icon="calendar"></span> 9.25 금 — 9.29 화</span></div>
+        <div class="home-grid">
+          <div class="main-column">
+            <div class="hero-card"><img src="./assets/tokyo-diorama.webp" alt="도쿄타워와 전철, 후지산을 표현한 입체 여행 일러스트" width="1536" height="1024"><div class="hero-wash"></div><div class="hero-copy"><span class="trip-count" id="trip-count">4박 5일의 작은 모험</span><h2>오늘은 어디로<br>가볼까, 하준아?</h2><p>천천히 둘러봐도 충분히 즐거워.</p><button class="button navy" data-action="hotel"><span data-icon="home"></span> 우리 호텔 찾기</button></div><span class="art-label">TOKYO · 2026</span></div>
+            <div class="quick-actions"><button data-action="navigate" data-view="places"><span class="quick-icon blue" data-icon="pin"></span><span>관광·맛집</span></button><button data-action="navigate" data-view="phrases"><span class="quick-icon orange" data-icon="chat"></span><span>일본어 한마디</span></button><button data-action="money"><span class="quick-icon green" data-icon="wallet"></span><span>엔화 계산</span></button><button data-action="rest"><span class="quick-icon purple" data-icon="coffee"></span><span>잠깐 쉬자</span></button></div>
+            <section class="itinerary-section"><div class="section-heading"><h2>우리의 5일</h2><button class="text-button" data-action="add-event"><span data-icon="plus"></span> 일정 추가</button></div><div id="day-tabs" class="day-tabs" role="tablist" aria-label="여행 날짜"></div><div id="day-panel" role="tabpanel"><div class="day-caption"><div><span id="day-kicker" class="eyebrow"></span><h3 id="day-title"></h3></div><span id="day-progress" class="small-pill"></span></div><p class="day-note" id="day-note"></p><div class="timeline" id="timeline"></div></div></section>
+          </div>
+          <aside class="side-column">
+            <section class="ticket card"><div class="ticket-top"><span class="eyebrow">OUR FLIGHT</span><span class="ticket-airline">JEJU air</span></div><div class="flight-line"><div><b>PUS</b><span>김해</span></div><span class="flight-path"><span data-icon="plane"></span></span><div><b>NRT</b><span>나리타</span></div></div><div class="flight-times"><div><small>9.25 금요일</small><strong>07:30 → 09:30</strong><span>7C1151 · 도착 T3</span></div><span class="flight-divider"></span><div><small>9.29 화요일 · 귀국</small><strong>10:30 → 13:00</strong><span>7C1152 · 나리타 출발 T3</span></div></div><div class="ticket-foot"><span data-icon="info"></span> 항공권 기준 · 당일 운항 확인</div></section>
+            <section class="hotel-card card"><div class="mini-icon blue" data-icon="home"></div><span class="eyebrow">OUR HOME IN TOKYO</span><h2>도쿄돔호텔</h2><p lang="ja">東京ドームホテル</p><p class="hotel-address">東京都文京区後楽1-3-61</p><div class="hotel-actions"><button class="button primary" data-action="hotel">호텔 길 찾기 <span data-icon="arrow"></span></button><button class="button icon-only" data-action="hotel-card" aria-label="호텔 주소 크게 보기"><span data-icon="expand"></span></button></div><a class="subtle-link" href="https://www.tokyodome-hotels.co.jp/" target="_blank" rel="noopener noreferrer">호텔 공식 안내 ↗</a></section>
+            <section class="phrase-teaser"><span class="eyebrow">오늘의 한마디</span><button data-action="phrase" data-id="thanks"><span lang="ja">ありがとうございます</span><b>아리가토 고자이마스</b><small>고맙습니다 <span data-icon="volume"></span></small></button></section>
+          </aside>
+        </div>
+      </section>
+      <section id="view-places" class="view" hidden aria-labelledby="places-heading">
+        <div class="page-heading"><div><p class="eyebrow">YOUR TOKYO, YOUR CHOICE</p><h1 id="places-heading">도쿄 구경 & 맛집<span class="orange-dot">.</span></h1><p class="page-description">가보고 싶은 곳, 먹어보고 싶은 한 끼. 하준이가 골라봐.</p></div></div>
+        <div class="explore-banner"><div><span class="eyebrow">34 LITTLE DISCOVERIES</span><h2>오늘은 어디로 갈까?</h2><p>관광·쇼핑 20곳 & 식당·카페 14곳<br>마음에 드는 장소를 여행 일정에 담아봐.</p></div><img src="./assets/tokyo-diorama.webp" alt="" width="1536" height="1024" loading="lazy"></div>
+        <div class="place-toolbar"><div class="search-field"><label for="place-search">장소·음식 검색</label><input id="place-search" type="search" placeholder="예: 초밥, 포켓몬, 라멘" autocomplete="off" maxlength="100"></div><div class="area-field"><label for="place-area">지역</label><select id="place-area"></select></div></div>
+        <div class="filter-row" id="place-filters" aria-label="장소 분류"></div><div class="place-results"><p id="place-count" role="status" aria-live="polite"></p><button class="subtle-link" data-action="reset-places">필터 초기화</button></div><div id="place-grid" class="place-grid"></div>
+        <p class="footnote">장소·매장 공식 안내 확인: 2026.09.20. 영업시간·휴무·메뉴·예약·입장권은 각 카드의 공식 정보에서 다시 확인해 주세요. 일정에 담기는 예약 기능이 아닙니다.</p>
+      </section>
+      <section id="view-phrases" class="view" hidden aria-labelledby="phrases-heading"><div class="page-heading"><div><p class="eyebrow">A LITTLE JAPANESE</p><h1 id="phrases-heading">말이 통하는 여행<span class="orange-dot">.</span></h1><p class="page-description">카드를 누르면 큰 글씨로 보여주거나 소리로 들을 수 있어.</p></div><span class="language-pill">한국어 <span>↔</span> 日本語</span></div><div class="filter-row" id="phrase-filters" aria-label="일본어 상황 분류"></div><div id="phrase-grid" class="phrase-grid"></div><p class="footnote">발음 표기는 읽기 도움용입니다. 음성 재생은 기기의 일본어 음성 지원에 따라 달라집니다.</p></section>
+      <section id="view-bag" class="view" hidden aria-labelledby="bag-heading"><div class="page-heading"><div><p class="eyebrow">READY WHEN YOU ARE</p><h1 id="bag-heading">하준이의 여행 가방<span class="orange-dot">.</span></h1><p class="page-description">준비물부터 계산기까지, 필요한 건 여기에.</p></div></div><div class="bag-grid"><section class="card padded"><div class="section-heading"><h2>출발 전 챙기기</h2><span class="small-pill" id="packing-count"></span></div><div id="packing-list" class="packing-list"></div><p class="storage-note">체크와 메모는 지금 사용하는 기기에 저장돼요.</p></section><section class="card padded currency" id="currency-section"><span class="eyebrow">YEN → WON</span><h2>이거 얼마지?</h2><label class="field-label" for="yen">일본 엔</label><div class="currency-input"><span>¥</span><input id="yen" inputmode="decimal" type="number" min="0" max="1000000000" step="any" value="1000" aria-label="일본 엔 금액"></div><div class="currency-result"><span>우리 돈으로 약</span><output id="won" for="yen rate">환율을 입력해 주세요</output></div><div class="rate-row"><label for="rate">100엔당 원화</label><input id="rate" inputmode="decimal" type="number" min="1" max="100000" step="any" placeholder="예: 950"><span>원</span></div><p class="storage-note">직접 입력한 환율로 계산해요. 실시간 환율·환전 수수료는 반영되지 않아요.</p></section><section class="card padded"><div class="section-heading"><h2>여행 메모</h2><span id="memo-status" class="storage-note" role="status"></span></div><label class="sr-only" for="trip-memo">여행 메모</label><textarea id="trip-memo" maxlength="3000" rows="6" placeholder="먹어보고 싶은 간식, 사고 싶은 기념품…"></textarea><p class="storage-note">여권번호·예약번호 같은 중요한 정보는 적지 마세요.</p></section><section class="card padded useful"><h2>바로 찾아보기</h2><a href="https://services.digital.go.jp/visit-japan-web/" target="_blank" rel="noopener noreferrer"><span data-icon="passport"></span><span>Visit Japan Web<small>입국 준비 · 공식 사이트</small></span><span data-icon="external"></span></a><a href="https://www.gotokyo.org/en/plan/getting-around/subways/index.html" target="_blank" rel="noopener noreferrer"><span data-icon="train"></span><span>도쿄 지하철 안내<small>GO TOKYO · 공식 관광 안내</small></span><span data-icon="external"></span></a><button data-action="help"><span data-icon="heart"></span><span>도움이 필요할 때<small>일본어 도움 카드 · 긴급 연락처</small></span><span data-icon="arrow"></span></button><button data-action="install"><span data-icon="phone"></span><span>홈 화면에 추가<small>휴대폰에서 앱처럼 열기</small></span><span data-icon="plus"></span></button></section></div></section>
+      <footer><span>MADE FOR HAJUN <span class="footer-dot">✦</span> TOKYO 2026</span><button class="subtle-link" data-action="sources">여행 정보 출처 · 이용 안내</button></footer>
+    </main>
+  </div>
+  <nav class="bottom-nav" id="mobile-nav" aria-label="휴대폰 앱 메뉴"></nav>
+  <dialog id="modal" aria-labelledby="modal-title"><button class="modal-close icon-only" data-action="close-modal" aria-label="닫기"><span data-icon="close"></span></button><div id="modal-body"></div></dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <noscript><p class="noscript">이 앱의 일정과 도움 카드를 보려면 브라우저의 자바스크립트를 켜 주세요.</p></noscript>
+</body>
+</html>
