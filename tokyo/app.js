@@ -35,31 +35,256 @@ const mapURL=(destination,mode='transit')=>`https://www.google.com/maps/dir/?api
 const hotelQuery='Tokyo Dome Hotel, 1-3-61 Koraku, Bunkyo City, Tokyo';
 const hotelText='東京ドームホテル\n〒112-8562 東京都文京区後楽1-3-61\n03-5805-2111';
 const dayInfo=[
- {date:25,week:'금',short:'도쿄 도착',title:'반가워, 도쿄!',note:'비행기 시간은 항공권 기준. 도착 후에는 호텔 주변에서 가볍게 시작해요.'},
- {date:26,week:'토',short:'후지산',title:'후지산을 만나러 가는 날',note:'앞서 말씀하신 가족 계획을 담았어요. 출발 전 투어의 집합 장소와 시간을 예약 안내에서 확인해 주세요.'},
- {date:27,week:'일',short:'도쿄 산책',title:'오래된 거리, 새로운 풍경',note:'추천 일정이에요. 아사쿠사와 스카이트리 중 한 곳만 골라도 좋아요.'},
- {date:28,week:'월',short:'취향 탐험',title:'좋아하는 것을 찾아서',note:'추천 일정이에요. 캐릭터 구경과 기념품 고르기 사이에 쉬는 시간을 넣었어요.'},
- {date:29,week:'화',short:'집으로',title:'도쿄, 다음에 또 만나!',note:'06:00 호텔 출발은 앞서 말씀하신 샌딩 계획이에요. 픽업 장소·시간과 항공편을 다시 확인해 주세요.'}
+ {
+  "date": 25,
+  "week": "금",
+  "short": "도쿄 도착",
+  "title": "도쿄 도착, 우리 호텔로!",
+  "note": "가족 일정표 기준이에요. 김해 07:30 출발, 나리타 09:30 도착 후 예약 차량으로 도쿄돔호텔에 가요."
+ },
+ {
+  "date": 26,
+  "week": "토",
+  "short": "후지산 투어",
+  "title": "도쿄역에서 후지산으로",
+  "note": "도쿄역에서 출발하는 후지산 투어. 센겐공원·가와구치호·오시노 핫카이·혼마치를 둘러봐요. 집합 시각과 방문 순서는 투어 안내를 따라요."
+ },
+ {
+  "date": 27,
+  "week": "일",
+  "short": "아키하바라",
+  "title": "아키하바라와 하비코로 장난감",
+  "note": "애니메이션·게임·피규어·전자제품을 구경하는 날. 방문 시각은 자유롭게 정해요."
+ },
+ {
+  "date": 28,
+  "week": "월",
+  "short": "시부야·미드타운",
+  "title": "시부야 구경, 미드타운 쇼핑",
+  "note": "시부야 스카이·몽벨·미야시타 파크를 둘러보고 도쿄 미드타운으로 가요. 빔즈 하우스와 츠지한도 일정에 담았어요. 시간은 자유롭게 조절해요."
+ },
+ {
+  "date": 29,
+  "week": "화",
+  "short": "집으로",
+  "title": "나리타에서 김해로",
+  "note": "예약한 단독 차량으로 나리타공항에 가요. 새 일정표에는 호텔 픽업 시각이 없으므로 차량 안내를 확인해 주세요. 항공편은 10:30 출발이에요."
+ }
 ];
 const defaults={
- 0:[{id:'arrival-flight',time:'07:30',title:'김해에서 도쿄로 출발',note:'제주항공 7C1151 · 나리타 09:30 도착 예정 · 항공권 기준 터미널 3',query:'Gimhae International Airport International Terminal',icon:'plane',tag:'항공권 기준'},
- {id:'arrival-transfer',time:'도착 후',title:'예약 차량 만나기',note:'기사님과 약속한 미팅 지점을 확인해요. 짐을 찾은 뒤 호텔로 이동해요.',query:'Narita Airport Terminal 3',icon:'bag',tag:'가족 계획'},
- {id:'arrival-hotel',time:'호텔 도착',title:'도쿄돔호텔에 짐 맡기기',note:'체크인 가능 시각은 예약 조건에 따라 달라요. 도착이 이르면 짐 보관을 물어봐요.',query:hotelQuery,icon:'home',tag:'가족 계획'},
- {id:'arrival-city',time:'오후',title:'도쿄돔시티 가볍게 둘러보기',note:'호텔 근처에서 식사하고 주변을 구경해요. 오늘은 충분히 쉬어 가요.',query:'Tokyo Dome City Tokyo',icon:'coffee',tag:'추천 일정'}],
- 1:[{id:'fuji-meet',time:'집합 안내 확인',title:'후지산 투어 차량 만나기',note:'정확한 집합 시간과 장소는 투어 예약 안내를 따라요.',query:'',icon:'mountain',tag:'가족 계획'},
- {id:'fuji-tour',time:'투어 일정에 따라',title:'후지산 풍경 감상하기',note:'방문 지점은 예약한 투어 코스로 확인해요. 날씨에 따라 전망과 일정이 달라질 수 있어요.',query:'',icon:'mountain',tag:'가족 계획'},
- {id:'fuji-rest',time:'돌아온 뒤',title:'호텔에서 쉬고 저녁 먹기',note:'긴 이동을 마친 날. 호텔 가까운 곳에서 식사하고 푹 쉬어요.',query:hotelQuery,icon:'coffee',tag:'추천 일정'}],
- 2:[{id:'asakusa',time:'오전',title:'아사쿠사에서 도쿄 산책',note:'가미나리몬과 나카미세 거리에서 사진을 남겨요. 오래 걷기보다 보고 싶은 구간만 골라요.',query:'Kaminarimon Asakusa Tokyo',icon:'pin',tag:'추천 일정'},
- {id:'asakusa-lunch',time:'점심',title:'식사하고 충분히 쉬기',note:'가까운 식당에서 앉아서 쉬어요. 다음 코스는 컨디션을 보고 정해도 괜찮아요.',query:'restaurants near Asakusa Station Tokyo',icon:'food',tag:'추천 일정'},
- {id:'skytree',time:'오후 · 선택',title:'스카이트리 주변 구경',note:'전망대는 별도 입장권과 운영 확인이 필요해요. 주변 구경만 해도 좋아요.',query:'Tokyo Skytree',icon:'tower',tag:'추천 일정'},
- {id:'asakusa-home',time:'저녁',title:'우리 호텔로 돌아가기',note:'오늘 찍은 사진 중 가장 마음에 드는 한 장을 골라봐요.',query:hotelQuery,icon:'home',tag:'추천 일정'}],
- 3:[{id:'character',time:'오전',title:'도쿄역 캐릭터 스트리트',note:'도쿄역 일번가 지하에서 캐릭터 숍을 구경해요. 살 물건은 가격부터 확인!',query:'Tokyo Character Street Tokyo Station',icon:'star',tag:'추천 일정'},
- {id:'character-lunch',time:'점심',title:'점심 먹고 잠깐 쉬기',note:'사고 싶은 기념품이 있다면 여행 가방의 엔화 계산기를 써봐요.',query:'Tokyo Station restaurants',icon:'food',tag:'추천 일정'},
- {id:'akihabara',time:'오후 · 선택',title:'아키하바라 취향 탐험',note:'게임·애니메이션·전자제품 가게가 있는 거리. 가족과 함께 가고 싶은 가게를 골라요.',query:'Akihabara Station Tokyo',icon:'star',tag:'추천 일정'},
- {id:'pack-home',time:'저녁',title:'내일 아침 출발 준비',note:'여권과 짐을 챙기고 샌딩 차량의 미팅 장소·06:00 출발 계획을 확인해요.',query:hotelQuery,icon:'bag',tag:'가족 계획'}],
- 4:[{id:'return-transfer',time:'06:00',title:'호텔에서 공항으로',note:'앞서 말씀하신 예약 차량 샌딩 계획. 픽업 위치와 기사님 연락을 확인해요.',query:'Narita Airport Terminal 3',icon:'bag',tag:'가족 계획'},
- {id:'return-flight',time:'10:30',title:'나리타에서 김해로 출발',note:'제주항공 7C1152 · 항공권 기준 나리타 터미널 3 · 김해 13:00 도착 예정',query:'Narita Airport Terminal 3',icon:'plane',tag:'항공권 기준'},
- {id:'return-home',time:'13:00',title:'김해 도착 예정',note:'입국 수속을 마치고 짐을 찾아요. 하준이의 도쿄 여행, 수고했어!',query:'',icon:'home',tag:'항공권 기준'}]
+ "0": [
+  {
+   "id": "photo26-arrival-0",
+   "time": "07:30",
+   "title": "김해에서 도쿄로 출발",
+   "note": "제주항공 7C1151 · 나리타 09:30 도착 예정 · 항공권 기준 터미널 3",
+   "query": "Gimhae International Airport International Terminal",
+   "icon": "plane",
+   "tag": "항공권 기준"
+  },
+  {
+   "id": "photo26-arrival-1",
+   "time": "도착 후",
+   "title": "예약 차량 만나기",
+   "note": "기사님과 약속한 미팅 지점을 확인해요. 짐을 찾은 뒤 호텔로 이동해요.",
+   "query": "Narita Airport Terminal 3",
+   "icon": "bag",
+   "tag": "가족 계획"
+  },
+  {
+   "id": "photo26-arrival-2",
+   "time": "호텔 도착",
+   "title": "도쿄돔호텔에 짐 맡기기",
+   "note": "체크인 가능 시각은 예약 조건에 따라 달라요. 도착이 이르면 짐 보관을 물어봐요.",
+   "query": "Tokyo Dome Hotel, 1-3-61 Koraku, Bunkyo City, Tokyo",
+   "icon": "home",
+   "tag": "가족 계획"
+  },
+  {
+   "id": "photo26-arrival-3",
+   "time": "오후",
+   "title": "도쿄돔시티 가볍게 둘러보기",
+   "note": "호텔 근처에서 식사하고 주변을 구경해요. 오늘은 충분히 쉬어 가요.",
+   "query": "Tokyo Dome City Tokyo",
+   "icon": "coffee",
+   "tag": "추천 일정"
+  }
+ ],
+ "1": [
+  {
+   "id": "photo26-guide",
+   "time": "안내메일 확인",
+   "title": "후지산 투어 안내 확인",
+   "note": "가이드가 안내한 집합 시각·장소를 확인해요. 방문 순서와 귀환 일정은 투어 안내를 따라요.",
+   "query": "",
+   "icon": "info",
+   "tag": "가족 일정표",
+   "mode": "transit"
+  },
+  {
+   "id": "photo26-meeting",
+   "time": "집합 시각 확인",
+   "title": "도쿄역 투어 집합 장소로 이동",
+   "note": "도쿄역에서 출발하는 후지산 당일 투어. 역 안의 정확한 집합 지점과 시각은 예약 안내를 따라요.",
+   "query": "Tokyo Station",
+   "icon": "train",
+   "tag": "가족 일정표",
+   "mode": "driving"
+  },
+  {
+   "id": "photo26-sengen",
+   "time": "투어 안내에 따라",
+   "title": "센겐공원",
+   "note": "가족 일정표에 포함된 후지산 투어 코스예요. 실제 방문 순서와 정차 지점은 가이드 안내를 따라요.",
+   "query": "浅間公園 富士吉田",
+   "icon": "mountain",
+   "tag": "가족 일정표",
+   "mode": "driving"
+  },
+  {
+   "id": "photo26-kawaguchiko",
+   "time": "투어 안내에 따라",
+   "title": "가와구치호",
+   "note": "가족 일정표에 포함된 후지산 투어 코스예요. 집합 시각과 차량 탑승 위치를 기억해요.",
+   "query": "Lake Kawaguchiko Japan",
+   "icon": "mountain",
+   "tag": "가족 일정표",
+   "mode": "driving"
+  },
+  {
+   "id": "photo26-oshino",
+   "time": "투어 안내에 따라",
+   "title": "오시노 핫카이",
+   "note": "가족 일정표에 포함된 투어 코스예요. 다음 출발 시각을 가이드에게 확인해요.",
+   "query": "Oshino Hakkai Japan",
+   "icon": "mountain",
+   "tag": "가족 일정표",
+   "mode": "driving"
+  },
+  {
+   "id": "photo26-honmachi",
+   "time": "투어 안내에 따라",
+   "title": "혼마치 거리",
+   "note": "가족 일정표에 포함된 투어 코스예요. 방문 순서와 귀환 일정은 투어 안내를 따라요.",
+   "query": "Honcho Street Fujiyoshida Japan",
+   "icon": "pin",
+   "tag": "가족 일정표",
+   "mode": "driving"
+  }
+ ],
+ "2": [
+  {
+   "id": "photo26-akihabara",
+   "time": "자유 일정",
+   "title": "아키하바라 구경",
+   "note": "애니메이션·게임·피규어·전자제품 등 일본 서브컬처를 구경해요.",
+   "query": "Akihabara Tokyo",
+   "icon": "star",
+   "tag": "가족 일정표",
+   "mode": "driving"
+  },
+  {
+   "id": "photo26-habikoro",
+   "time": "아키하바라 구경 후",
+   "title": "하비코로 장난감",
+   "note": "가챠 상품을 골라서 살 수 있는 가게로 일정표에 적혀 있어요. 상품별 가격과 방문할 지점을 확인해요.",
+   "query": "ハビコロ玩具 秋葉原",
+   "icon": "star",
+   "tag": "가족 일정표",
+   "mode": "driving"
+  }
+ ],
+ "3": [
+  {
+   "id": "photo26-shibuya-sky",
+   "time": "자유 일정",
+   "title": "시부야 스카이",
+   "note": "시부야에서 전망을 즐기는 코스예요. 입장권과 운영 안내를 확인해요.",
+   "query": "SHIBUYA SKY Tokyo",
+   "icon": "tower",
+   "tag": "가족 일정표",
+   "mode": "driving"
+  },
+  {
+   "id": "photo26-montbell",
+   "time": "시부야에서",
+   "title": "시부야 몽벨",
+   "note": "가족 일정표의 쇼핑 코스예요. 시부야 구경 중 들러봐요.",
+   "query": "モンベル 渋谷店",
+   "icon": "bag",
+   "tag": "가족 일정표",
+   "mode": "walking"
+  },
+  {
+   "id": "photo26-miyashita",
+   "time": "시부야에서",
+   "title": "미야시타 파크",
+   "note": "가족 일정표의 시부야 코스예요. 쇼핑과 산책 사이에 잠깐 쉬어가요.",
+   "query": "MIYASHITA PARK Shibuya",
+   "icon": "pin",
+   "tag": "가족 일정표",
+   "mode": "walking"
+  },
+  {
+   "id": "photo26-midtown",
+   "time": "시부야 다음",
+   "title": "도쿄 미드타운",
+   "note": "도쿄 미드타운에서 기념품을 고르고 공원과 산책 공간을 둘러봐요.",
+   "query": "Tokyo Midtown Roppongi",
+   "icon": "bag",
+   "tag": "가족 일정표",
+   "mode": "driving"
+  },
+  {
+   "id": "photo26-beams",
+   "time": "미드타운에서",
+   "title": "빔즈 하우스",
+   "note": "가족 일정표에 적힌 도쿄 미드타운 쇼핑 코스예요.",
+   "query": "BEAMS HOUSE Roppongi Tokyo Midtown",
+   "icon": "bag",
+   "tag": "가족 일정표",
+   "mode": "walking"
+  },
+  {
+   "id": "photo26-tsujihan",
+   "time": "미드타운에서 식사",
+   "title": "츠지한 미드타운점",
+   "note": "가족 일정표에서 꼭 들를 곳으로 표시한 식사 코스예요. 매장 운영시간과 대기 상황을 확인해요.",
+   "query": "日本橋海鮮丼 つじ半 ミッドタウン店",
+   "icon": "food",
+   "tag": "가족 일정표",
+   "mode": "walking"
+  }
+ ],
+ "4": [
+  {
+   "id": "photo26-return-0",
+   "time": "차량 안내 시각",
+   "title": "호텔에서 공항으로",
+   "note": "공항 이동 차량의 픽업 시각과 위치는 예약 안내에서 확인해요.",
+   "query": "Narita Airport Terminal 3",
+   "icon": "bag",
+   "tag": "가족 계획"
+  },
+  {
+   "id": "photo26-return-1",
+   "time": "10:30",
+   "title": "나리타에서 김해로 출발",
+   "note": "제주항공 7C1152 · 항공권 기준 나리타 터미널 3 · 김해 13:00 도착 예정",
+   "query": "Narita Airport Terminal 3",
+   "icon": "plane",
+   "tag": "항공권 기준"
+  },
+  {
+   "id": "photo26-return-2",
+   "time": "13:00",
+   "title": "김해 도착 예정",
+   "note": "입국 수속을 마치고 짐을 찾아요. 하준이의 도쿄 여행, 수고했어!",
+   "query": "",
+   "icon": "home",
+   "tag": "항공권 기준"
+  }
+ ]
 };
 const places=window.TOKYO_PLACES;
 const phrases=[
@@ -80,15 +305,24 @@ const phrases=[
 ];
 const packing=['여권 · 항공권','Visit Japan Web 확인','휴대폰 · 충전기 · 보조배터리','유심 / eSIM / 로밍 확인','교통카드 · 현금 · 결제카드','여행자보험 연락처','담당의가 안내한 약·관리용품','편한 옷 · 가벼운 가방'];
 const storageKey='hajun-tokyo-trip-v1';
-let state={events:JSON.parse(JSON.stringify(defaults)),done:[],packed:[],memo:'',rate:''};
-let storageAvailable=true;
+const itineraryVersion='2026-09-22-photo';
+const previousDefaultIds=new Set(['arrival-flight','arrival-transfer','arrival-hotel','arrival-city','fuji-meet','fuji-tour','fuji-rest','asakusa','asakusa-lunch','skytree','asakusa-home','character','character-lunch','akihabara','pack-home','return-transfer','return-flight','return-home']);
+const currentDefaultIds=new Set(Object.values(defaults).flat().map(e=>e.id));
+let state={itineraryVersion,events:JSON.parse(JSON.stringify(defaults)),done:[],packed:[],memo:'',rate:''};
+let storageAvailable=true,scheduleUpdated=false;
 function validEvent(e){return e && typeof e.id==='string' && typeof e.title==='string' && typeof e.time==='string' && typeof e.note==='string' && typeof e.query==='string' && typeof e.icon==='string' && typeof e.tag==='string';}
 try{const raw=localStorage.getItem(storageKey);if(raw){const s=JSON.parse(raw);if(s&&typeof s==='object'){
- if(s.events&&typeof s.events==='object')for(let i=0;i<5;i++)if(Array.isArray(s.events[i])&&s.events[i].length<=100&&s.events[i].every(validEvent))state.events[i]=s.events[i];
- if(Array.isArray(s.done))state.done=s.done.filter(x=>typeof x==='string');
+ const sameVersion=s.itineraryVersion===itineraryVersion;
+ if(s.events&&typeof s.events==='object')for(let i=0;i<5;i++)if(Array.isArray(s.events[i])&&s.events[i].length<=200&&s.events[i].every(validEvent)){
+  if(sameVersion)state.events[i]=s.events[i];
+  else state.events[i].push(...s.events[i].filter(e=>!previousDefaultIds.has(e.id)&&!currentDefaultIds.has(e.id)));
+ }
+ const liveIds=new Set(Object.values(state.events).flat().map(e=>e.id));
+ if(Array.isArray(s.done))state.done=s.done.filter(x=>typeof x==='string'&&liveIds.has(x));
  if(Array.isArray(s.packed))state.packed=s.packed.filter(x=>Number.isInteger(x)&&x>=0&&x<packing.length);
  if(typeof s.memo==='string')state.memo=s.memo.slice(0,3000);
  if(typeof s.rate==='string' && Number(s.rate)>0 && Number(s.rate)<=100000)state.rate=s.rate;
+ if(!sameVersion){localStorage.setItem(storageKey+'-before-'+itineraryVersion,raw);localStorage.setItem(storageKey,JSON.stringify(state));scheduleUpdated=true;}
 }}}catch{storageAvailable=false;}
 let currentView='trip', selectedDay=0, placeFilter='전체', placeArea='전체 지역', placeSearch='', phraseFilter='전체', modalPhrase=null, toastTimer=null, installPrompt=null;
 const tokyoDate=()=>new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
@@ -111,7 +345,7 @@ function renderDays(){
  $('#day-progress').textContent=`${events.filter(e=>state.done.includes(e.id)).length} / ${events.length} 완료`;
  $('#timeline').innerHTML=events.length?events.map((e,i)=>{
  const done=state.done.includes(e.id);
- return `<article class="timeline-item"><div class="time-marker"><span class="timeline-icon">${icon(e.icon)}</span><span>${String(i+1).padStart(2,'0')}</span></div><div class="event-card ${done?'done':''}"><div class="event-head"><div><div class="event-time">${esc(e.time)}</div><h4 class="event-title">${esc(e.title)}</h4></div><button class="check-event" data-action="check-event" data-id="${esc(e.id)}" aria-label="${esc(e.title)} 완료 표시" aria-pressed="${done}">${icon('check')}</button></div><p>${esc(e.note)}</p><div class="event-meta"><span class="event-tag ${e.tag==='항공권 기준'?'known':''}">${esc(e.tag)}</span><button class="edit-event" data-action="edit-event" data-id="${esc(e.id)}">수정</button>${e.query?`<a class="map-link" href="${esc(mapURL(e.query))}" target="_blank" rel="noopener noreferrer">${icon('pin')} 길 찾기 ${icon('external')}</a>`:''}</div></div></article>`;
+ return `<article class="timeline-item"><div class="time-marker"><span class="timeline-icon">${icon(e.icon)}</span><span>${String(i+1).padStart(2,'0')}</span></div><div class="event-card ${done?'done':''}"><div class="event-head"><div><div class="event-time">${esc(e.time)}</div><h4 class="event-title">${esc(e.title)}</h4></div><button class="check-event" data-action="check-event" data-id="${esc(e.id)}" aria-label="${esc(e.title)} 완료 표시" aria-pressed="${done}">${icon('check')}</button></div><p>${esc(e.note)}</p><div class="event-meta"><span class="event-tag ${e.tag==='항공권 기준'?'known':''}">${esc(e.tag)}</span><button class="edit-event" data-action="edit-event" data-id="${esc(e.id)}">수정</button>${e.query?`<a class="map-link" href="${esc(mapURL(e.query,['driving','walking','transit'].includes(e.mode)?e.mode:'transit'))}" target="_blank" rel="noopener noreferrer">${icon('pin')} 길 찾기 ${icon('external')}</a>`:''}</div></div></article>`;
  }).join(''):'<div class="empty-state">아직 일정이 없어요.<br>위의 일정 추가를 눌러 채워보세요.</div>';
 }
 function selectDay(day){if(!Number.isInteger(day)||day<0||day>4)throw new Error('날짜는 0~4 사이여야 합니다.');selectedDay=day;renderDays();return {date:`2026-09-${day+25}`,events:state.events[day]};}
@@ -142,12 +376,12 @@ function speak(){const player=currentPhraseAudio;if(!player)return;const attempt
 async function copy(text){try{await navigator.clipboard.writeText(text);toast('복사했어요.');}catch{toast('복사를 지원하지 않아요. 글씨를 길게 눌러 복사해 주세요.');}}
 function showHotel(){openModal(`<span class="eyebrow">OUR HOTEL</span><h2 id="modal-title">기사님께 보여주세요</h2><p class="large-japanese" lang="ja">東京ドームホテルまで<br>お願いします。</p><div class="help-intro" lang="ja">東京ドームホテル<br>〒112-8562 東京都文京区後楽1-3-61<br>03-5805-2111</div><div class="modal-actions"><a class="button primary" href="${esc(mapURL(hotelQuery,'driving'))}" target="_blank" rel="noopener noreferrer">${icon('pin')} 호텔 길 찾기</a><button class="button" data-action="copy-hotel">${icon('copy')} 주소 복사</button></div><div class="modal-actions"><a class="button" href="tel:+81358052111">${icon('call')} 호텔에 전화</a><button class="button" data-action="phrase" data-id="hotel">${icon('volume')} 일본어로 읽기</button></div><a class="subtle-link" href="https://www.tokyodome-hotels.co.jp/" target="_blank" rel="noopener noreferrer">주소·연락처: 도쿄돔호텔 공식 안내 ↗</a>`);}
 function showHelp(){openModal(`<span class="eyebrow">WE ARE HERE FOR YOU</span><h2 id="modal-title">도움이 필요할 때</h2><p class="help-intro">가족과 떨어졌다면 가까운 가게 직원이나 역무원에게 도움을 요청해요.</p><div class="modal-actions"><button class="button primary" data-action="phrase" data-id="lost">가족을 찾고 있어요</button><button class="button" data-action="phrase" data-id="arm">팔을 다쳤어요</button></div><div class="contact-card"><div><strong>일본 구급차 · 소방</strong><small>일본 안에서 긴급할 때</small></div><a href="tel:119">${icon('call')} 119</a></div><div class="contact-card"><div><strong>일본 경찰</strong><small>일본 안에서 긴급할 때</small></div><a href="tel:110">${icon('call')} 110</a></div><div class="contact-card hotline"><strong>일본정부관광국 여행자 핫라인</strong><small>한국어 지원 · 24시간</small><a href="tel:+815038162787">${icon('call')} 050-3816-2787</a></div><p class="storage-note">통화 가능한 회선이 필요해요. 데이터 전용 eSIM이라면 주변 직원에게 전화 도움을 요청해 주세요.</p><a class="subtle-link" href="https://www.japan.travel/en/plan/hotline/" target="_blank" rel="noopener noreferrer">긴급번호·핫라인: JNTO 공식 안내 ↗</a>`);}
-function showSources(){openModal(`<span class="eyebrow">TRAVEL NOTES</span><h2 id="modal-title">여행 정보와 이용 안내</h2><p class="modal-description">여행 일정은 앞서 알려주신 항공권과 가족 계획을 바탕으로 만들었어요. 관광 코스는 추천안이며, 예약이 완료됐다는 뜻은 아니에요.</p><ul class="modal-list"><li>항공권: 9.25 김해 07:30 → 나리타 09:30, 9.29 나리타 10:30 → 김해 13:00. 운항 변경은 항공사에서 확인해 주세요.</li><li>숙소는 앞서 사용하신 도쿄돔호텔 기준이에요. 후지산 투어·차량은 예약 안내를 다시 확인해 주세요.</li><li>일정 수정, 체크, 메모, 환율은 이 브라우저에만 저장돼요. 다른 기기에 자동으로 공유되지 않으며, 브라우저 데이터를 지우면 없어질 수 있어요.</li><li>길 찾기는 Google 지도로 연결돼요. 출발지·교통수단·소요시간은 지도에서 확인해 주세요.</li><li>엔화 계산은 직접 입력한 환율을 사용해요. 일본어 음성은 앱에 포함된 합성 음성 MP3를 재생해요. 재생 버튼을 누르고 휴대폰의 미디어 음량을 확인해 주세요.</li><li>여행 카드는 인터넷 연결이 있는 환경에서 사용해 주세요. 첫 화면의 도쿄 그림은 AI로 만든 창작 일러스트예요.</li></ul><div class="source-list"><a href="https://www.tokyodome-hotels.co.jp/" target="_blank" rel="noopener noreferrer">도쿄돔호텔 · 주소와 연락처</a><a href="https://www.tokyo-dome.co.jp/travel/" target="_blank" rel="noopener noreferrer">도쿄돔시티 · 시설 안내</a><a href="https://www.gotokyo.org/en/destinations/eastern-tokyo/asakusa/index.html" target="_blank" rel="noopener noreferrer">GO TOKYO · 아사쿠사</a><a href="https://www.gotokyo.org/en/destinations/central-tokyo/akihabara/index.html" target="_blank" rel="noopener noreferrer">GO TOKYO · 아키하바라</a><a href="https://www.tokyoeki-1bangai.co.jp/shop/?area=area2&floor=b1f&anchor=1" target="_blank" rel="noopener noreferrer">도쿄역 일번가 · 캐릭터 스트리트</a><a href="https://www.japan.travel/en/plan/hotline/" target="_blank" rel="noopener noreferrer">JNTO · 긴급 연락처</a></div><p class="storage-note">외부 여행 정보 확인: 2026년 9월 20일 (한국 시간)</p>`);}
+function showSources(){openModal(`<span class="eyebrow">TRAVEL NOTES</span><h2 id="modal-title">여행 정보와 이용 안내</h2><p class="modal-description">여행 코스는 9월 22일 보내주신 일정표를 반영했어요. 예약번호·좌석·객실 등 예약 세부정보는 공개 페이지에 넣지 않았어요.</p><ul class="modal-list"><li>항공권: 9.25 김해 07:30 → 나리타 09:30, 9.29 나리타 10:30 → 김해 13:00. 운항 변경은 항공사에서 확인해 주세요.</li><li>숙소는 도쿄돔호텔 기준이에요. 객실·좌석·예약번호 등 예약 세부정보는 예약 안내에서 확인해 주세요.</li><li>일정 수정, 체크, 메모, 환율은 이 브라우저에만 저장돼요. 다른 기기에 자동으로 공유되지 않으며, 브라우저 데이터를 지우면 없어질 수 있어요.</li><li>길 찾기는 Google 지도로 연결돼요. 출발지·교통수단·소요시간은 지도에서 확인해 주세요.</li><li>엔화 계산은 직접 입력한 환율을 사용해요. 일본어 음성은 앱에 포함된 합성 음성 MP3를 재생해요. 재생 버튼을 누르고 휴대폰의 미디어 음량을 확인해 주세요.</li><li>여행 카드는 인터넷 연결이 있는 환경에서 사용해 주세요. 첫 화면의 도쿄 그림은 AI로 만든 창작 일러스트예요.</li></ul><div class="source-list"><a href="https://www.tokyodome-hotels.co.jp/" target="_blank" rel="noopener noreferrer">도쿄돔호텔 · 주소와 연락처</a><a href="https://www.tokyo-dome.co.jp/travel/" target="_blank" rel="noopener noreferrer">도쿄돔시티 · 시설 안내</a><a href="https://www.gotokyo.org/en/destinations/eastern-tokyo/asakusa/index.html" target="_blank" rel="noopener noreferrer">GO TOKYO · 아사쿠사</a><a href="https://www.gotokyo.org/en/destinations/central-tokyo/akihabara/index.html" target="_blank" rel="noopener noreferrer">GO TOKYO · 아키하바라</a><a href="https://www.tokyoeki-1bangai.co.jp/shop/?area=area2&floor=b1f&anchor=1" target="_blank" rel="noopener noreferrer">도쿄역 일번가 · 캐릭터 스트리트</a><a href="https://www.japan.travel/en/plan/hotline/" target="_blank" rel="noopener noreferrer">JNTO · 긴급 연락처</a></div><p class="storage-note">외부 여행 정보 확인: 2026년 9월 20일 (한국 시간)</p>`);}
 function editEvent(id=null,place=null){const existing=id?state.events[selectedDay].find(e=>e.id===id):null;if(id&&!existing)return;const e=existing||{title:place?.name||'',time:'',note:place?[place.area+' · '+place.kind,place.desc,place.tip].join('\n'):'',query:place?.query||'',icon:place?.icon||'pin'};
- openModal(`<span class="eyebrow">MY TRAVEL PLAN</span><h2 id="modal-title">${existing?'일정 수정':place?'가고 싶은 곳 담기':'나의 일정 추가'}</h2><form class="edit-form" id="event-form" data-event-id="${esc(id||'')}" data-event-icon="${esc(e.icon)}"><div class="form-row"><label>날짜<select name="day">${dayInfo.map((d,i)=>`<option value="${i}" ${i===selectedDay?'selected':''}>9월 ${d.date}일 (${d.week})</option>`).join('')}</select></label><label>시간 또는 때<input name="time" maxlength="24" placeholder="예: 14:00 / 오후" value="${esc(e.time)}"></label></div><label>무엇을 할까?<input name="title" maxlength="80" value="${esc(e.title)}" placeholder="예: 편의점에서 간식 고르기" required></label><label>메모<textarea name="note" maxlength="500" rows="3">${esc(e.note)}</textarea></label><label>지도에서 찾을 장소<input name="query" maxlength="150" value="${esc(e.query)}" placeholder="장소 이름과 지역을 적어주세요"></label><p class="storage-note">지금 사용하는 기기에 저장돼요.${existing?'':' 새 일정은 해당 날짜의 맨 아래에 추가돼요.'}</p><div class="modal-actions">${existing?`<button type="button" class="button danger" data-action="delete-event" data-id="${esc(id)}">삭제</button>`:'<button type="button" class="button" data-action="close-modal">취소</button>'}<button type="submit" class="button primary">저장하기</button></div></form>`);}
+ openModal(`<span class="eyebrow">MY TRAVEL PLAN</span><h2 id="modal-title">${existing?'일정 수정':place?'가고 싶은 곳 담기':'나의 일정 추가'}</h2><form class="edit-form" id="event-form" data-event-id="${esc(id||'')}" data-event-icon="${esc(e.icon)}" data-event-mode="${esc(e.mode||'transit')}"><div class="form-row"><label>날짜<select name="day">${dayInfo.map((d,i)=>`<option value="${i}" ${i===selectedDay?'selected':''}>9월 ${d.date}일 (${d.week})</option>`).join('')}</select></label><label>시간 또는 때<input name="time" maxlength="24" placeholder="예: 14:00 / 오후" value="${esc(e.time)}"></label></div><label>무엇을 할까?<input name="title" maxlength="80" value="${esc(e.title)}" placeholder="예: 편의점에서 간식 고르기" required></label><label>메모<textarea name="note" maxlength="500" rows="3">${esc(e.note)}</textarea></label><label>지도에서 찾을 장소<input name="query" maxlength="150" value="${esc(e.query)}" placeholder="장소 이름과 지역을 적어주세요"></label><p class="storage-note">지금 사용하는 기기에 저장돼요.${existing?'':' 새 일정은 해당 날짜의 맨 아래에 추가돼요.'}</p><div class="modal-actions">${existing?`<button type="button" class="button danger" data-action="delete-event" data-id="${esc(id)}">삭제</button>`:'<button type="button" class="button" data-action="close-modal">취소</button>'}<button type="submit" class="button primary">저장하기</button></div></form>`);}
 function persistEvent(form){const f=new FormData(form);const title=String(f.get('title')||'').trim();const day=Number(f.get('day'));if(!title||!Number.isInteger(day)||day<0||day>4){toast('날짜와 일정 이름을 확인해 주세요.');return;}if(state.events[day].length>=100){toast('하루에 최대 100개까지 저장할 수 있어요.');return;}
  const id=form.dataset.eventId||`custom-${Date.now()}-${Math.random().toString(36).slice(2,8)}`;
- const event={id,title:title.slice(0,80),time:String(f.get('time')||'').trim().slice(0,24)||'자유롭게',note:String(f.get('note')||'').trim().slice(0,500),query:String(f.get('query')||'').trim().slice(0,150),icon:form.dataset.eventIcon||'pin',tag:form.dataset.eventId?'직접 수정':'나의 일정'};
+ const event={id,title:title.slice(0,80),time:String(f.get('time')||'').trim().slice(0,24)||'자유롭게',note:String(f.get('note')||'').trim().slice(0,500),query:String(f.get('query')||'').trim().slice(0,150),icon:form.dataset.eventIcon||'pin',mode:['driving','walking','transit'].includes(form.dataset.eventMode)?form.dataset.eventMode:'transit',tag:form.dataset.eventId?'직접 수정':'나의 일정'};
  const originalDay=Object.keys(state.events).find(d=>state.events[d].some(e=>e.id===id));
  if(originalDay!==undefined && Number(originalDay)===day){state.events[day]=state.events[day].map(e=>e.id===id?event:e);}else{if(originalDay!==undefined)state.events[originalDay]=state.events[originalDay].filter(e=>e.id!==id);state.events[day].push(event);}
  const saved=save();selectedDay=day;renderDays();closeModal();navigate('trip');if(saved)toast(`9월 ${day+25}일 일정에 저장했어요.`);
@@ -193,6 +427,7 @@ $('#place-area').innerHTML=['전체 지역',...new Set(places.map(p=>p.area))].m
 $('#place-search').addEventListener('input',()=>{placeSearch=$('#place-search').value;renderPlaces();});
 $('#place-area').addEventListener('change',()=>{placeArea=$('#place-area').value;if(placeFilter==='호텔 근처'&&placeArea!=='전체 지역'&&placeArea!=='도쿄돔·스이도바시')placeFilter='전체';renderPlaces();});
 renderNav();renderDays();renderPlaces();renderPhrases();renderPacking();hydrateIcons();$('#trip-memo').value=state.memo;$('#rate').value=state.rate;calculate();updateClock();setInterval(updateClock,30000);navigate(location.hash.slice(1)||'trip',false);
+if(scheduleUpdated)toast('보내주신 일정표로 여행 코스를 바꿨어요. 추가 일정과 메모는 그대로예요.');
 if(!storageAvailable)toast('저장된 정보를 읽을 수 없어요. 변경 내용 저장 여부를 확인해 주세요.');
 // Expose the same journeys to supported, user-authorized browser agents.
 if(document.modelContext?.registerTool){const lifecycle=new AbortController();const register=tool=>{try{Promise.resolve(document.modelContext.registerTool(tool,{signal:lifecycle.signal})).catch(()=>{});}catch{}};
