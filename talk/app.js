@@ -8,46 +8,29 @@ const synth=window.speechSynthesis;
 const input=$('#korean');
 let recognition=null,recognitionTimer=null,recognitionError=false,finalTranscript='',interimTranscript='';
 let requestNumber=0,controller=null,current=null,phase='idle',history=[],count=0,category='전체';
-let audio=null,utterance=null,soundNumber=0,soundTimer=null,toastTimer=null,installPrompt=null;
+let toastTimer=null,installPrompt=null;
 const memoryCache=new Map();
 const STATES={idle:['누르고 한국어로 말해봐','말이 끝나면 일본어로 읽어줄게.'],listening:['듣고 있어, 하준아','다 말했으면 마이크를 한 번 더 눌러도 돼.'],translating:['일본어로 바꾸는 중','잠깐만, 한마디를 전해줄게.'],ready:['한마디, 잘 전했어!','다른 말도 해볼까?'],error:['다시 한번 해볼까?','아래 입력창이나 여행 카드를 써도 좋아.']};
 function setPhase(next,message){phase=next;$('#mic-stage').className='mic-stage '+(next==='listening'||next==='translating'?next:'');$('#mic-title').textContent=STATES[next][0];$('#status').textContent=message||STATES[next][1];$('#mic').setAttribute('aria-pressed',String(next==='listening'));$('#mic').setAttribute('aria-label',next==='listening'?'말하기 끝내기':'한국어로 말하기');$('#translate').disabled=next==='translating';input.readOnly=next==='listening';}
 function toast(text){clearTimeout(toastTimer);$('#toast').textContent=text;$('#toast').classList.add('visible');toastTimer=setTimeout(()=>$('#toast').classList.remove('visible'),4000);}
 function updateCount(){ $('#char-count').textContent=`${input.value.length} / 150`; }
 function externalLink(text){$('#external').href='https://translate.google.com/?sl=ko&tl=ja&text='+encodeURIComponent(text)+'&op=translate';$('#external').hidden=!text;}
-function stopSound(){soundNumber++;clearTimeout(soundTimer);if(audio){audio.onended=null;audio.onerror=null;audio.pause();audio=null;}if(synth)synth.cancel();utterance=null;$('#mic-stage').classList.remove('speaking');}
+function stopSound(){speechPlayer.stop();$('#mic-stage').classList.remove('speaking');}
 function cancelTranslation(){requestNumber++;if(controller){controller.abort();controller=null;}}
 function cancelRecognition(){clearTimeout(recognitionTimer);if(recognition){const previous=recognition;recognition=null;previous.onend=null;previous.onresult=null;previous.onerror=null;try{previous.abort();}catch{}}input.readOnly=false;}
-function clearResult(){current=null;$('#phrase-audio').hidden=true;$('#result').hidden=true;$('#empty-result').hidden=false;$('#result-tag').textContent='한마디 준비 중';$('#audio-status').textContent='';}
+function clearResult(){current=null;$('#audio-help').hidden=true;$('#phrase-audio').hidden=true;$('#result').hidden=true;$('#empty-result').hidden=false;$('#result-tag').textContent='한마디 준비 중';$('#audio-status').textContent='';}
 function edited(){cancelTranslation();stopSound();clearResult();updateCount();externalLink(input.value.trim());setPhase('idle');}
-function audioFailure(message){if(current?.id)$('#phrase-audio').hidden=false;$('#audio-status').textContent=message;$('#mic-stage').classList.remove('speaking');}
-function nativeSpeak(text,rate,token,testing=false){
- $('#phrase-audio').hidden=!current?.id;
- if(token!==soundNumber)return;
- if(!synth||!window.SpeechSynthesisUtterance){audioFailure('이 브라우저에는 읽기 기능이 없어요. 여행 카드의 음성이나 Google 번역을 이용해 주세요.');return;}
- const voices=synth.getVoices();const japanese=voices.filter(v=>/^ja(?:[-_]|$)/i.test(v.lang));
- if(voices.length&&!japanese.length){audioFailure('일본어 목소리가 설치되어 있지 않아요. 오른쪽 위 ? → 음성 설정을 확인해 주세요. 여행 카드 14개는 바로 들을 수 있어요.');return;}
- const u=new SpeechSynthesisUtterance(text);utterance=u;u.lang='ja-JP';u.rate=rate;u.pitch=1;u.volume=1;
- if(japanese.length)u.voice=japanese.find(v=>/Google|Kyoko|O-Ren|Nanami/i.test(v.name))||japanese[0];
- let started=false;
- soundTimer=setTimeout(()=>{if(token!==soundNumber)return;synth.cancel();audioFailure('자동 재생이 시작되지 않았어요. ‘다시 듣기’를 누르거나 ?에서 일본어 음성을 확인해 주세요.');},8000);
- u.onstart=()=>{if(token!==soundNumber)return;started=true;clearTimeout(soundTimer);$('#audio-status').textContent=testing?'일본어 테스트 음성을 재생하고 있어요.':'일본어로 읽고 있어요.';$('#mic-stage').classList.add('speaking');soundTimer=setTimeout(()=>{if(token===soundNumber){stopSound();audioFailure('읽기가 오래 걸려 멈췄어요. 문장을 짧게 나눠 다시 들어보세요.');}},90000);};
- u.onend=()=>{if(token!==soundNumber)return;clearTimeout(soundTimer);$('#mic-stage').classList.remove('speaking');$('#audio-status').textContent=started?'다시 듣거나, 크게 보여줄 수 있어요.':'소리가 안 났다면 ‘다시 듣기’를 눌러 주세요.';};
- u.onerror=e=>{if(token!==soundNumber||e.error==='interrupted'||e.error==='canceled')return;clearTimeout(soundTimer);audioFailure(e.error==='not-allowed'?'재생 버튼을 한 번 눌러 주세요. 휴대전화가 자동 읽기를 잠시 막았어요.':'일본어 음성을 읽지 못했어요. 미디어 음량과 ?의 일본어 음성 설정을 확인해 주세요.');};
- try{synth.resume();synth.speak(u);}catch{clearTimeout(soundTimer);audioFailure('읽기를 시작하지 못했어요. ‘다시 듣기’를 눌러 주세요.');}
-}
-function speak(item=current,slow=false,testing=false){
- if(!item)return;cancelRecognition();stopSound();const token=soundNumber;const rate=slow?.72:.92;$('#audio-status').textContent='음성을 준비하고 있어요.';
- if(item.id&&!testing){
-  const player=$('#phrase-audio');player.hidden=true;player.src='../tokyo/assets/audio/'+item.id+'.mp3';audio=player;player.playbackRate=slow?.78:1;player.preservesPitch=true;
-  const fallback=()=>{if(token!==soundNumber)return;clearTimeout(soundTimer);player.onerror=null;player.pause();nativeSpeak(item.ja,rate,token);};
-  player.onended=()=>{if(token!==soundNumber)return;clearTimeout(soundTimer);$('#mic-stage').classList.remove('speaking');$('#audio-status').textContent='한마디를 다시 듣거나, 크게 보여줘도 좋아.';};
-  player.onerror=fallback;soundTimer=setTimeout(fallback,8000);
-  const promise=player.play();if(promise)promise.then(()=>{if(token!==soundNumber)return;clearTimeout(soundTimer);$('#audio-status').textContent='일본어로 읽고 있어요.';$('#mic-stage').classList.add('speaking');}).catch(e=>{if(token!==soundNumber)return;clearTimeout(soundTimer);if(e.name==='NotAllowedError')audioFailure('‘다시 듣기’를 한 번 눌러 주세요. 자동 재생이 차단되어 있어요.');else fallback();});
- }else nativeSpeak(item.ja,rate,token,testing);
+const speechPlayer=new HajunSpeechPlayer({element:$('#phrase-audio'),onStatus:({state,message})=>{
+ $('#audio-status').textContent=message;
+ $('#mic-stage').classList.toggle('speaking',state==='playing');
+ $('#replay').classList.toggle('needs-tap',state==='blocked');
+ if($('#voice-test-status'))$('#voice-test-status').textContent=message;
+}});
+function speak(item=current,slow=false){
+ if(!item)return;cancelRecognition();$('#audio-help').hidden=false;$('#phrase-audio').hidden=false;speechPlayer.play(item,{slow});
 }
 function displayResult(item,play=true,remember=true){
- current={...item};$('#phrase-audio').hidden=true;$('#empty-result').hidden=true;$('#result').hidden=false;$('#source-line').textContent=item.ko;$('#japanese').textContent=item.ja;$('#reading').textContent=item.reading||'';$('#reading').hidden=!item.reading;$('#result-note').textContent=item.id?'준비된 여행 문장 · 한글은 발음 도움용이에요.':'MyMemory 자동 번역 · 뜻이 맞는지 확인해 주세요.';$('#result-tag').textContent=item.id?'여행 카드':'자유 번역';$('#audio-status').textContent='';externalLink(item.ko);setPhase('ready');
+ current={...item};$('#audio-help').hidden=true;$('#phrase-audio').hidden=true;$('#empty-result').hidden=true;$('#result').hidden=false;$('#source-line').textContent=item.ko;$('#japanese').textContent=item.ja;$('#reading').textContent=item.reading||'';$('#reading').hidden=!item.reading;$('#result-note').textContent=item.id?'준비된 여행 문장 · 한글은 발음 도움용이에요.':'MyMemory 자동 번역 · 뜻이 맞는지 확인해 주세요.';$('#result-tag').textContent=item.id?'여행 카드':'자유 번역';$('#audio-status').textContent='';externalLink(item.ko);setPhase('ready');
  if(remember){count++;$('#talk-count').textContent=`오늘 ${count}번의 한마디를 전했어 ✦`;history=[{...item},...history.filter(h=>h.ko!==item.ko)].slice(0,6);renderHistory();}
  if(play)speak(item);
  if(innerWidth<621)$('#result-heading').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'});
@@ -93,13 +76,13 @@ function renderPhrases(){
  $('#phrases').replaceChildren();PHRASES.filter(p=>category==='전체'||p.cat===category).forEach(p=>{const b=document.createElement('button');b.className='phrase';b.setAttribute('aria-label',p.ko+' 일본어 듣기');const emoji=document.createElement('span');emoji.className='phrase-emoji';emoji.textContent=p.emoji;emoji.setAttribute('aria-hidden','true');const ko=document.createElement('strong');ko.textContent=p.ko;const ja=document.createElement('span');ja.className='phrase-ja';ja.lang='ja';ja.textContent=p.ja;b.append(emoji,ko,ja);b.insertAdjacentHTML('beforeend',icon('volume'));b.onclick=()=>{cancelRecognition();cancelTranslation();stopSound();input.value=p.ko;updateCount();displayResult(p,true);if(innerWidth<621)$('#result-heading').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'});};$('#phrases').append(b);});
 }
 function renderHistory(){$('#history-section').hidden=history.length===0;$('#history').replaceChildren();history.forEach(item=>{const b=document.createElement('button');const ko=document.createElement('strong');ko.textContent=item.ko;const ja=document.createElement('span');ja.lang='ja';ja.textContent=item.ja;b.append(ko,ja);b.onclick=()=>{cancelRecognition();cancelTranslation();stopSound();input.value=item.ko;updateCount();displayResult(item,true,false);};$('#history').append(b);});}
-function updateVoiceInfo(){const voices=synth?.getVoices()||[];const ja=voices.filter(v=>/^ja(?:[-_]|$)/i.test(v.lang));$('#voice-info').textContent=ja.length?'일본어 목소리: '+ja.map(v=>v.name).join(', '):'일본어 음성 목록을 아직 확인하지 못했어요. 테스트 버튼을 눌러 주세요.';}
+function updateVoiceInfo(){$('#voice-info').textContent='온라인 일본어 음성을 사용해요. 일본어 목소리를 따로 설치하지 않아도 돼요.';}
 function help(){cancelRecognition();if(phase==='listening')setPhase('idle');updateVoiceInfo();$('#help-dialog').showModal();}
 $('#next-talk').onclick=()=>{startRecognition();$('#mic').scrollIntoView({behavior:'smooth',block:'center'});};
 $('#mic').onclick=startRecognition;$('#translate').onclick=translate;input.addEventListener('input',edited);input.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key==='Enter'){e.preventDefault();void translate();}});
 $('#clear').onclick=()=>{cancelRecognition();input.value='';edited();input.focus();};
 $('#replay').onclick=()=>speak();$('#slow').onclick=()=>speak(current,true);$('#stop').onclick=()=>{stopSound();$('#audio-status').textContent='소리를 멈췄어요.';};
-$('#help').onclick=help;$('#privacy').onclick=help;$('#voice-test').onclick=()=>{speak({ja:'こんにちは。日本語の音声テストです。'},false,true);$('#voice-info').textContent='“곤니치와”로 시작하는 일본어가 들리는지 확인해 주세요.';};
+$('#help').onclick=help;$('#privacy').onclick=help;$('#voice-test').onclick=()=>{speak({ja:'こんにちは。日本語の音声テストです。'});$('#voice-info').textContent='“곤니치와”로 시작하는 일본어가 들리는지 확인해 주세요.';};
 $('#large').onclick=()=>{if(!current)return;$('#large-japanese').textContent=current.ja;$('#large-korean').textContent=current.ko;$('#large-dialog').showModal();};$('#large-play').onclick=()=>speak();
 document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>b.closest('dialog').close());
 document.querySelectorAll('dialog').forEach(d=>{d.addEventListener('click',e=>{if(e.target===d){const r=d.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)d.close();}});d.addEventListener('close',()=>stopSound());});
