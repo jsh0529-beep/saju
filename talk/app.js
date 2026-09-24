@@ -18,10 +18,11 @@ function externalLink(text){$('#external').href='https://translate.google.com/?s
 function stopSound(){soundNumber++;clearTimeout(soundTimer);if(audio){audio.onended=null;audio.onerror=null;audio.pause();audio=null;}if(synth)synth.cancel();utterance=null;$('#mic-stage').classList.remove('speaking');}
 function cancelTranslation(){requestNumber++;if(controller){controller.abort();controller=null;}}
 function cancelRecognition(){clearTimeout(recognitionTimer);if(recognition){const previous=recognition;recognition=null;previous.onend=null;previous.onresult=null;previous.onerror=null;try{previous.abort();}catch{}}input.readOnly=false;}
-function clearResult(){current=null;$('#result').hidden=true;$('#empty-result').hidden=false;$('#result-tag').textContent='한마디 준비 중';$('#audio-status').textContent='';}
+function clearResult(){current=null;$('#phrase-audio').hidden=true;$('#result').hidden=true;$('#empty-result').hidden=false;$('#result-tag').textContent='한마디 준비 중';$('#audio-status').textContent='';}
 function edited(){cancelTranslation();stopSound();clearResult();updateCount();externalLink(input.value.trim());setPhase('idle');}
-function audioFailure(message){$('#audio-status').textContent=message;$('#mic-stage').classList.remove('speaking');}
+function audioFailure(message){if(current?.id)$('#phrase-audio').hidden=false;$('#audio-status').textContent=message;$('#mic-stage').classList.remove('speaking');}
 function nativeSpeak(text,rate,token,testing=false){
+ $('#phrase-audio').hidden=!current?.id;
  if(token!==soundNumber)return;
  if(!synth||!window.SpeechSynthesisUtterance){audioFailure('이 브라우저에는 읽기 기능이 없어요. 여행 카드의 음성이나 Google 번역을 이용해 주세요.');return;}
  const voices=synth.getVoices();const japanese=voices.filter(v=>/^ja(?:[-_]|$)/i.test(v.lang));
@@ -38,7 +39,7 @@ function nativeSpeak(text,rate,token,testing=false){
 function speak(item=current,slow=false,testing=false){
  if(!item)return;cancelRecognition();stopSound();const token=soundNumber;const rate=slow?.72:.92;$('#audio-status').textContent='음성을 준비하고 있어요.';
  if(item.id&&!testing){
-  const player=new Audio('../tokyo/assets/audio/'+item.id+'.mp3');audio=player;player.playbackRate=slow?.78:1;player.preservesPitch=true;
+  const player=$('#phrase-audio');player.hidden=true;player.src='../tokyo/assets/audio/'+item.id+'.mp3';audio=player;player.playbackRate=slow?.78:1;player.preservesPitch=true;
   const fallback=()=>{if(token!==soundNumber)return;clearTimeout(soundTimer);player.onerror=null;player.pause();nativeSpeak(item.ja,rate,token);};
   player.onended=()=>{if(token!==soundNumber)return;clearTimeout(soundTimer);$('#mic-stage').classList.remove('speaking');$('#audio-status').textContent='한마디를 다시 듣거나, 크게 보여줘도 좋아.';};
   player.onerror=fallback;soundTimer=setTimeout(fallback,8000);
@@ -46,9 +47,10 @@ function speak(item=current,slow=false,testing=false){
  }else nativeSpeak(item.ja,rate,token,testing);
 }
 function displayResult(item,play=true,remember=true){
- current={...item};$('#empty-result').hidden=true;$('#result').hidden=false;$('#source-line').textContent=item.ko;$('#japanese').textContent=item.ja;$('#reading').textContent=item.reading||'';$('#reading').hidden=!item.reading;$('#result-note').textContent=item.id?'준비된 여행 문장 · 한글은 발음 도움용이에요.':'MyMemory 자동 번역 · 뜻이 맞는지 확인해 주세요.';$('#result-tag').textContent=item.id?'여행 카드':'자유 번역';$('#audio-status').textContent='';externalLink(item.ko);setPhase('ready');
+ current={...item};$('#phrase-audio').hidden=true;$('#empty-result').hidden=true;$('#result').hidden=false;$('#source-line').textContent=item.ko;$('#japanese').textContent=item.ja;$('#reading').textContent=item.reading||'';$('#reading').hidden=!item.reading;$('#result-note').textContent=item.id?'준비된 여행 문장 · 한글은 발음 도움용이에요.':'MyMemory 자동 번역 · 뜻이 맞는지 확인해 주세요.';$('#result-tag').textContent=item.id?'여행 카드':'자유 번역';$('#audio-status').textContent='';externalLink(item.ko);setPhase('ready');
  if(remember){count++;$('#talk-count').textContent=`오늘 ${count}번의 한마디를 전했어 ✦`;history=[{...item},...history.filter(h=>h.ko!==item.ko)].slice(0,6);renderHistory();}
  if(play)speak(item);
+ if(innerWidth<621)$('#result-heading').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'});
 }
 function decodeEntities(text){return String(text).replace(/&(?:amp|lt|gt|quot|apos|#39|#34|#x[0-9a-f]+|#\d+);/gi,e=>{const named={'&amp;':'&','&lt;':'<','&gt;':'>','&quot;':'"','&apos;':"'",'&#39;':"'",'&#34;':'"'};if(named[e])return named[e];const n=e[2].toLowerCase()==='x'?parseInt(e.slice(3,-1),16):parseInt(e.slice(2,-1),10);return n>0&&n<=0x10ffff?String.fromCodePoint(n):e;});}
 function validateTranslation(data,original){
@@ -93,6 +95,7 @@ function renderPhrases(){
 function renderHistory(){$('#history-section').hidden=history.length===0;$('#history').replaceChildren();history.forEach(item=>{const b=document.createElement('button');const ko=document.createElement('strong');ko.textContent=item.ko;const ja=document.createElement('span');ja.lang='ja';ja.textContent=item.ja;b.append(ko,ja);b.onclick=()=>{cancelRecognition();cancelTranslation();stopSound();input.value=item.ko;updateCount();displayResult(item,true,false);};$('#history').append(b);});}
 function updateVoiceInfo(){const voices=synth?.getVoices()||[];const ja=voices.filter(v=>/^ja(?:[-_]|$)/i.test(v.lang));$('#voice-info').textContent=ja.length?'일본어 목소리: '+ja.map(v=>v.name).join(', '):'일본어 음성 목록을 아직 확인하지 못했어요. 테스트 버튼을 눌러 주세요.';}
 function help(){cancelRecognition();if(phase==='listening')setPhase('idle');updateVoiceInfo();$('#help-dialog').showModal();}
+$('#next-talk').onclick=()=>{startRecognition();$('#mic').scrollIntoView({behavior:'smooth',block:'center'});};
 $('#mic').onclick=startRecognition;$('#translate').onclick=translate;input.addEventListener('input',edited);input.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key==='Enter'){e.preventDefault();void translate();}});
 $('#clear').onclick=()=>{cancelRecognition();input.value='';edited();input.focus();};
 $('#replay').onclick=()=>speak();$('#slow').onclick=()=>speak(current,true);$('#stop').onclick=()=>{stopSound();$('#audio-status').textContent='소리를 멈췄어요.';};

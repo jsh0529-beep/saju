@@ -1,8 +1,8 @@
 'use strict';
-const CACHE='hajun-talk-v1';
+const CACHE='hajun-talk-v2';
 const ROOT=new URL('./',self.location.href);
 const AUDIO=['this','water','price','card','thanks','excuse','slow','toilet','hotel','elevator','rest','arm','lost','ambulance'];
-const CORE=['./','index.html','style.css?v=1','app.js?v=1','phrases.js?v=1','manifest.webmanifest','icon.svg','../tokyo/assets/tokyo-diorama.webp',...AUDIO.map(x=>'../tokyo/assets/audio/'+x+'.mp3')].map(x=>new URL(x,ROOT).href);
+const CORE=['./','index.html','style.css?v=2','app.js?v=2','phrases.js?v=1','manifest.webmanifest','icon.svg','../tokyo/assets/tokyo-diorama.webp',...AUDIO.map(x=>'../tokyo/assets/audio/'+x+'.mp3')].map(x=>new URL(x,ROOT).href);
 self.addEventListener('install',event=>{event.waitUntil((async()=>{const cache=await caches.open(CACHE);await Promise.allSettled(CORE.map(x=>cache.add(new Request(x,{cache:'reload'}))));await self.skipWaiting();})());});
 self.addEventListener('activate',event=>{event.waitUntil((async()=>{for(const key of await caches.keys())if(key.startsWith('hajun-talk-')&&key!==CACHE)await caches.delete(key);await self.clients.claim();})());});
 async function notifyReady(source){const cache=await caches.open(CACHE);const present=await Promise.all(CORE.map(x=>cache.match(x)));source?.postMessage({type:present.every(Boolean)?'OFFLINE_READY':'OFFLINE_PARTIAL'});}
