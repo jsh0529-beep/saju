@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>하준톡 · 한국어로 말하고 일본어로 전하기</title>
+  <meta name="description" content="하준이의 작은 일본어 통역기. 한국어로 말하면 일본어로 번역하고 읽어줘요.">
+  <meta name="theme-color" content="#5146e5"><meta name="robots" content="noindex,nofollow"><meta name="referrer" content="no-referrer">
+  <meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="하준톡">
+  <link rel="icon" href="./icon.svg" type="image/svg+xml"><link rel="manifest" href="./manifest.webmanifest">
+  <link rel="apple-touch-icon" href="../tokyo/assets/icon-192.png">
+  <link rel="stylesheet" href="./style.css?v=1"><script src="./phrases.js?v=1" defer></script><script src="./app.js?v=1" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">통역기로 이동</a>
+  <header class="topbar"><a class="brand" href="./"><span class="brand-icon" aria-hidden="true">h<span>·</span></span><span>하준톡<small>HAJUN TALK</small></span></a><div class="top-actions"><span id="connection" class="connection">여행 통역기</span><button id="help" class="icon-button" aria-label="사용 방법과 음성 설정"><span data-icon="help"></span></button></div></header>
+  <main id="main">
+    <div class="page-title"><div><p class="eyebrow">A LITTLE TALK, A BIG ADVENTURE</p><h1>말해봐, 하준아<span>!</span></h1><p class="subtitle">한국어 한마디가 일본어로 바뀌는 순간.</p></div><a class="trip-link" href="../tokyo/">도쿄 여행 앱 <span data-icon="arrow"></span></a></div>
+    <div class="workspace">
+      <section class="talk-panel" aria-label="한국어 말하기">
+        <div class="language-route"><span><span class="flag">🇰🇷</span> 한국어</span><span class="route-arrow" data-icon="arrow"></span><span><span class="flag">🇯🇵</span> 日本語</span></div>
+        <div class="mic-stage" id="mic-stage"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><span class="stage-spark spark-one" aria-hidden="true">✦</span><span class="stage-spark spark-two" aria-hidden="true">✧</span><button class="mic" id="mic" aria-label="한국어로 말하기" aria-pressed="false"><span data-icon="mic"></span><span class="wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span></button></div>
+        <div class="mic-copy"><h2 id="mic-title">누르고 한국어로 말해봐</h2><p id="status" role="status" aria-live="polite">말이 끝나면 일본어로 읽어줄게.</p></div>
+        <div class="input-box"><div class="input-heading"><label for="korean">내가 한 말</label><button id="clear" class="text-button">지우기</button></div><textarea id="korean" rows="2" maxlength="150" placeholder="말하거나 직접 입력해도 좋아.&#10;예: 이 장난감은 얼마인가요?" spellcheck="false"></textarea><div class="input-bottom"><span id="char-count">0 / 150</span><button id="translate" class="translate-button">일본어로 말하기 <span data-icon="arrow"></span></button></div></div>
+        <p class="privacy-line">음성 인식·자유 번역에는 인터넷이 필요해요. <button id="privacy" class="inline-button">이용 안내</button></p>
+      </section>
+      <div class="right-column">
+        <section class="result-panel" aria-labelledby="result-heading"><div class="panel-heading"><span class="eyebrow" id="result-heading">JAPANESE VOICE</span><span class="result-tag" id="result-tag">한마디 준비 중</span></div><div id="empty-result" class="empty-result"><span class="hello-bubble" lang="ja">こんにちは！</span><h2>일본어로 전해줄게</h2><p>왼쪽 마이크를 누르거나<br>아래 여행 카드를 골라봐.</p></div><div id="result" hidden><p class="source-line" id="source-line"></p><p id="japanese" class="japanese" lang="ja"></p><p id="reading" class="reading"></p><p id="result-note" class="result-note"></p><div class="result-actions"><button id="replay" class="play-button"><span data-icon="volume"></span> 다시 듣기</button><button id="slow" class="small-button">천천히</button><button id="large" class="icon-button" aria-label="일본어 크게 보여주기"><span data-icon="expand"></span></button></div></div><div class="result-footer"><label class="auto-label"><input type="checkbox" id="autoplay" checked><span>번역 후 자동 읽기</span></label><button id="stop" class="text-button">소리 멈춤</button></div><p id="audio-status" class="audio-status" role="status" aria-live="polite"></p><a id="external" class="external" href="https://translate.google.com/?sl=ko&tl=ja&op=translate" target="_blank" rel="noopener noreferrer" hidden>Google 번역에서 이 문장 확인 ↗</a></section>
+        <section class="travel-card"><img src="../tokyo/assets/tokyo-diorama.webp" width="1536" height="1024" alt="도쿄타워와 전철, 후지산이 있는 입체 여행 일러스트"><div class="travel-shade"></div><div class="travel-copy"><span class="travel-badge">TOKYO TALK CLUB</span><h2>오늘도 한마디,<br>세상이 조금 더 가까이.</h2><span class="talk-count" id="talk-count">첫 번째 한마디를 기다리는 중 ✦</span></div></section>
+      </div>
+    </div>
+    <section class="phrase-section" aria-labelledby="phrase-heading"><div class="section-heading"><div><p class="eyebrow">POCKET PHRASES</p><h2 id="phrase-heading">급할 땐, 톡 누르기</h2></div><span class="section-note">준비된 일본어 음성 14개</span></div><div id="categories" class="categories" aria-label="여행 카드 분류"></div><div id="phrases" class="phrases"></div><p id="offline-note" class="offline-note">여행 카드를 한 번 누르면 바로 일본어로 읽어줘요.</p></section>
+    <section class="history-section" id="history-section" hidden><div class="section-heading"><h2>방금 나눈 한마디</h2><button id="clear-history" class="text-button">기록 지우기</button></div><div id="history" class="history"></div><p class="offline-note">최근 6개만 이 화면에 남아요. 새로고침하면 사라져요.</p></section>
+    <footer><span>MADE FOR HAJUN <b>✦</b> LET’S TALK IN TOKYO</span><button id="install" class="text-button">홈 화면에 추가</button></footer>
+  </main>
+  <dialog id="help-dialog" aria-labelledby="help-title"><button class="dialog-close icon-button" data-close aria-label="닫기">×</button><p class="eyebrow">READY TO TALK?</p><h2 id="help-title">처음엔 이렇게 해봐</h2><ol><li><b>Chrome에서 열기</b><p>갤럭시에서는 Chrome으로 열고 마이크 사용을 허용해 주세요. 앱 안에서 열린 창은 음성 인식이 제한될 수 있어요.</p></li><li><b>짧게 한 문장씩 말하기</b><p>말을 마치면 자동 번역해요. 잘못 들었으면 ‘내가 한 말’을 고쳐 다시 번역해요. 한 번에 150자까지 입력할 수 있어요.</p></li><li><b>일본어 목소리 확인하기</b><p>여행 카드는 준비된 음성으로 재생해요. 자유 문장은 휴대전화의 일본어 음성을 사용해요.</p><button id="voice-test" class="play-button"><span data-icon="volume"></span> 자유 문장 음성 테스트</button><p id="voice-info"></p><p>자유 문장만 소리가 안 나면 휴대전화 설정에서 ‘텍스트 읽어주기’ 또는 ‘음성 데이터’를 검색해 일본어 음성을 설치해 주세요. 미디어 음량도 확인해 주세요.</p></li></ol><div class="notice"><b>인터넷과 번역 안내</b><p>음성은 브라우저의 음성 인식 서비스로, 자유 문장은 MyMemory 번역 서비스로 전송돼요. 앱에서 녹음 파일이나 대화 기록을 서버에 저장하지 않아요. 민감한 정보는 말하거나 입력하지 마세요.</p><p>자유 번역은 자동 번역이며 틀릴 수 있어요. 무료 서비스의 일일 사용량 제한이나 연결 오류가 생기면 준비된 카드를 쓰거나 Google 번역으로 이어갈 수 있어요.</p><p>오프라인 준비가 완료되면 여행 카드와 준비된 음성을 사용할 수 있어요. 자유 음성 인식·번역은 인터넷이 필요해요.</p><a href="https://mymemory.translated.net/doc/usagelimits.php" target="_blank" rel="noopener noreferrer">번역 서비스 이용 한도 ↗</a></div></dialog>
+  <dialog id="large-dialog" class="large-dialog" aria-labelledby="large-title"><button class="dialog-close icon-button" data-close aria-label="닫기">×</button><p id="large-title">お伝えしたいこと</p><p id="large-japanese" lang="ja"></p><p id="large-korean"></p><button id="large-play" class="play-button"><span data-icon="volume"></span> 일본어로 듣기</button></dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div><noscript><p>하준톡을 사용하려면 브라우저에서 자바스크립트를 켜 주세요.</p></noscript>
+</body>
+</html>
