@@ -8,6 +8,19 @@
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%232462ef'/%3E%3Cpath d='M19 18v28m25-28v28M19 32h25' stroke='white' stroke-width='7'/%3E%3Ccircle cx='48' cy='15' r='6' fill='%23ffbd55'/%3E%3C/svg%3E">
   <link rel="manifest" href="./manifest.webmanifest"><link rel="apple-touch-icon" href="./assets/icon-192.png">
   <link rel="stylesheet" href="./style.css?v=20260920-audio1"><script src="./places-data.js" defer></script><script src="./app.js?v=20260922-itinerary" defer></script>
+
+  <style>
+    .hajun-talk-entry{display:flex;align-items:center;gap:14px;margin:0 0 24px;padding:17px 20px;border-radius:20px;background:#5146e5;color:#fff;text-decoration:none;box-shadow:0 8px 24px #5146e51f;min-height:76px}
+    .hajun-talk-entry:hover{background:#4035c7}
+    .hajun-talk-entry:focus-visible{outline:3px solid #ffbd55;outline-offset:4px}
+    .hajun-talk-entry .talk-mic{display:flex;align-items:center;justify-content:center;width:44px;height:44px;flex-shrink:0;border-radius:14px;background:#ffffff22}
+    .hajun-talk-entry .talk-mic svg{width:26px;height:26px}
+    .hajun-talk-entry .talk-label{display:flex;flex-direction:column;gap:4px;min-width:0}
+    .hajun-talk-entry strong{font-size:18px;line-height:1.35;font-weight:800}
+    .hajun-talk-entry .talk-label small{font-size:14px;line-height:1.5;color:#f0eeff}
+    .hajun-talk-entry .talk-arrow{margin-left:auto;flex-shrink:0}
+    @media(max-width:600px){.hajun-talk-entry{gap:12px;padding:15px 16px;margin-bottom:18px;border-radius:17px}.hajun-talk-entry strong{font-size:17px}.hajun-talk-entry .talk-label small{font-size:13px}}
+  </style>
 </head>
 <body>
   <a class="skip" href="#main">본문으로 건너뛰기</a>
@@ -22,6 +35,7 @@
     <main id="main">
       <section id="view-trip" class="view" aria-labelledby="trip-heading">
         <div class="page-heading"><div><p class="eyebrow">TOKYO, HERE WE COME</p><h1 id="trip-heading">하준이의 도쿄 여행<span class="orange-dot">.</span></h1></div><span class="date-pill"><span data-icon="calendar"></span> 9.25 금 — 9.29 화</span></div>
+        <a class="hajun-talk-entry" href="../talk/" aria-label="하준톡 열기 · 한국어로 말하면 일본어로 통역"><span class="talk-mic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="13" rx="4"/><path d="M5 10v2a7 7 0 0 0 14 0v-2M12 19v3m-4 0h8"/></svg></span><span class="talk-label"><strong>하준톡</strong><small>한국어로 말하면 일본어로 읽어줘요</small></span><span class="talk-arrow" data-icon="arrow" aria-hidden="true"></span></a>
         <div class="home-grid">
           <div class="main-column">
             <div class="hero-card"><img src="./assets/tokyo-diorama.webp" alt="도쿄타워와 전철, 후지산을 표현한 입체 여행 일러스트" width="1536" height="1024"><div class="hero-wash"></div><div class="hero-copy"><span class="trip-count" id="trip-count">4박 5일의 작은 모험</span><h2>오늘은 어디로<br>가볼까, 하준아?</h2><p>천천히 둘러봐도 충분히 즐거워.</p><button class="button navy" data-action="hotel"><span data-icon="home"></span> 우리 호텔 찾기</button></div><span class="art-label">TOKYO · 2026</span></div>
