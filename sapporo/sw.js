@@ -1,5 +1,5 @@
 'use strict';
-const CACHE='siyoon-sapporo-static-v2';
+const CACHE='siyoon-sapporo-static-v3';
 const BASE=new URL('./',self.location.href);
 const CORE=['./','./index.html','./style.css','./data.js','./app.js','./manifest.webmanifest','./icon.svg','./icon-192.png','./icon-512.png','./otaru.jpg'].map(p=>new URL(p,BASE).href);
 self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(CORE.map(url=>new Request(url,{cache:'reload'})))).then(()=>self.skipWaiting())));
