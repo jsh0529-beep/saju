@@ -1,0 +1,7 @@
+'use strict';
+const CACHE='siyoon-sapporo-static-v1';
+const BASE=new URL('./',self.location.href);
+const CORE=['./','./index.html','./style.css','./data.js','./app.js','./manifest.webmanifest','./icon.svg','./otaru.jpg'].map(p=>new URL(p,BASE).href);
+self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(CORE))));
+self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith('siyoon-sapporo-static-')&&k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
+self.addEventListener('fetch',e=>{if(e.request.method!=='GET')return;const u=new URL(e.request.url);if(u.origin!==BASE.origin||!u.pathname.startsWith(BASE.pathname))return;if(e.request.mode==='navigate'){e.respondWith((async()=>{const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),5000);try{const r=await fetch(e.request,{signal:controller.signal});if(r.ok){const c=await caches.open(CACHE);await c.put(new URL('./index.html',BASE).href,r.clone());return r;}throw new Error('response');}catch{return(await caches.match(new URL('./index.html',BASE).href))||Response.error();}finally{clearTimeout(timer);}})());return;}if(CORE.includes(u.href)){e.respondWith(caches.match(e.request).then(cached=>cached||fetch(e.request).then(async r=>{if(r.ok){const c=await caches.open(CACHE);await c.put(e.request,r.clone());}return r;})));}});
