@@ -1,1 +1,32 @@
-{"id":"./","name":"윤시윤의 삿포로 여행","short_name":"삿포로 여행","description":"10월 9~11일 가을 여행 수첩","lang":"ko","start_url":"./","scope":"./","display":"standalone","background_color":"#f5f7f7","theme_color":"#163341","icons":[{"src":"./icon-192.png","sizes":"192x192","type":"image/png","purpose":"any"},{"src":"./icon-512.png","sizes":"512x512","type":"image/png","purpose":"any"}]}
+{
+  "id": "./",
+  "name": "윤시윤의 삿포로 여행",
+  "short_name": "삿포로 여행",
+  "description": "10월 9~11일 가을 여행 수첩",
+  "lang": "ko",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f5f7f7",
+  "theme_color": "#163341",
+  "icons": [
+    {
+      "src": "./icon-autumn-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icon-autumn-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icon-maskable-autumn-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
