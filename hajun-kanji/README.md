@@ -8,7 +8,7 @@
 - 복습 간격: 1/3/7/14/30일; 오류 시 10분 뒤 재등장
 - 한자 4개부터 열리는 4쌍 카드 기억 게임
 - 자유 그리기(획순 안내 또는 자동 채점 기능은 아님)
-- D1 진도 저장. 현재 비공개 단일 학습자 공간으로 모든 접근자가 하준이의 같은 진도를 사용
+- 로그인 없는 공개 앱. 방문자별 D1 진도 저장: 256비트 임의 쿠키의 해시로 기록을 구분. 같은 브라우저는 같은 진도를 사용하며 쿠키 삭제/만료 또는 기기 변경 시 새 진도로 시작. 기존 소유자의 진도는 인증된 소유자 접속에서만 유지
 - 브라우저 일본어 TTS. 일본어 음성 미설치 시 안내, 한글 발음은 보조 힌트
 
 ## Content
@@ -29,6 +29,12 @@ TypeScript 검사 및 Worker 빌드. 60개 고유 한자, 코스 구분, 단어�
 
 Three original built-in-generated adventure scenes (forest, sky and Japanese town), plus a native SVG 山 favicon and PNG icons at 32/180/192/512px. The prompt set is in `public/images/prompts.json`. The scene illustrations provide an adventure setting and are not kanji-origin diagrams. Native text remains separate from generated pictures.
 
-Live app: https://hajun-kanji-quest.soraguide.chatgpt.site (account access required).
+Live app: https://hajun-kanji-quest.soraguide.chatgpt.site (public; no sign-in required).
 
-The GitHub copy is application source, not a static GitHub Pages export. Learning records stay in the private live app's database and are not uploaded to GitHub. The source requires a Cloudflare Workers/D1-compatible runtime. The `.openai/hosting.json` deployment identity is omitted in the GitHub copy; configure a deployment identity for your own environment before publishing separately.
+The GitHub copy is application source, not a static GitHub Pages export. Learning records stay in the live app's database, are isolated per visitor, and are not uploaded to GitHub. The source requires a Cloudflare Workers/D1-compatible runtime. The `.openai/hosting.json` deployment identity is omitted in the GitHub copy; configure a deployment identity for your own environment before publishing separately.
+
+Public-access verification: `node scripts/check-progress.mjs` checks independent visitors, reload persistence, duplicate submissions, legacy-owner isolation, cookie flags and cross-origin rejection against SQLite.
+
+## Public visitor isolation
+
+The original `kanji_cards` and `mission_events` tables remain available only to the original owner through dispatch-verified identity headers. Anonymous and other visitors use `visitor_cards` / `visitor_events` with compound learner keys. A Secure/HttpOnly/SameSite cookie authorizes access to the visitor’s own records; only its SHA-256 digest is used in the database. No progress identifiers are accepted from query parameters or request bodies. The identity-header trust boundary is Sites dispatch; a self-hosted deployment must strip client-supplied identity headers and supply verified ones, or disable the legacy-owner branch.
