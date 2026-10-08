@@ -1,0 +1,22 @@
+name: Tokyo travel profiles
+on:
+  pull_request:
+    paths: ['tokyo/**', '.github/workflows/tokyo-tests.yml']
+  push:
+    paths: ['tokyo/**', '.github/workflows/tokyo-tests.yml']
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: tokyo/package-lock.json
+      - run: npm ci
+        working-directory: tokyo
+      - run: npm test
+        working-directory: tokyo
