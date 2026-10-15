@@ -1,6 +1,6 @@
 'use strict';
 // Official destination/store pages checked 2026-09-20. Hours, prices and availability are not live.
-window.TOKYO_PLACES = [
+export default [
  {id:'dome',name:'도쿄돔시티',en:'TOKYO DOME CITY',area:'도쿄돔·스이도바시',category:'관광·전망',kind:'복합 문화 공간',icon:'home',color:'blue',desc:'호텔 주변에서 상점과 풍경을 구경하고 식사하기 좋은 출발점이에요.',tip:'도착한 날 가볍게 둘러보기',query:'Tokyo Dome City Tokyo',url:'https://www.tokyo-dome.co.jp/travel/'},
  {id:'laqua',name:'라쿠아 숍 & 레스토랑',en:'LAQUA',area:'도쿄돔·스이도바시',category:'캐릭터·쇼핑',kind:'쇼핑 · 식사',icon:'bag',color:'orange',desc:'도쿄돔시티의 상점과 레스토랑을 한곳에서 살펴봐요. 멀리 이동하기 싫은 날 골라보세요.',tip:'매장별 영업시간 확인',query:'LaQua shops restaurants Tokyo',url:'https://www.laqua.jp/shops-restaurants/'},
  {id:'koishikawa',name:'고이시카와 고라쿠엔',en:'KOISHIKAWA KORAKUEN',area:'도쿄돔·스이도바시',category:'관광·전망',kind:'일본 정원',icon:'mountain',color:'green',desc:'연못과 나무가 어우러진 일본 정원이에요. 보고 싶은 구간을 정해 천천히 걸어봐요.',tip:'호텔 주변의 정원 산책 · 입장 안내 확인',query:'小石川後楽園 Tokyo',url:'https://www.tokyo-park.or.jp/park/koishikawakorakuen/'},
