@@ -1,5 +1,9 @@
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
 const recipes=require('../recipes.js'),E=require('../engine.js');
+const crypto=require('node:crypto');
+const photoHashes=new Set();
+for(const r of recipes){assert.equal(r.image,'recipes/'+r.id);const image=fs.readFileSync(path.join(__dirname,'../assets',r.image+'.webp'));assert.equal(image.toString('ascii',8,12),'WEBP');photoHashes.add(crypto.createHash('sha256').update(image).digest('hex'));}
+assert.equal(photoHashes.size,recipes.length,'Every recipe must have its own distinct photo');
 const prefs={maxTime:15,son:1,husband:1,allergens:[],dislike:''};
 assert.equal(recipes.length,84);assert.equal(new Set(recipes.map(r=>r.id)).size,84);
 for(const r of recipes){assert.ok(r.ingredients.length>=4);assert.ok(r.steps.length>=3);assert.ok(r.time<=15);assert.ok(fs.existsSync(path.join(__dirname,'../assets',r.image+'.webp')));r.ingredients.forEach(i=>assert.ok(i.qty>0));}

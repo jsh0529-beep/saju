@@ -1,0 +1,761 @@
+{
+  "description": "One individually generated cooking example for each recipe. AI illustrations, not photographs of an actual prepared serving.",
+  "images": [
+    {
+      "id": "b1",
+      "title": "달걀 토스트와 방울토마토",
+      "file": "b1.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: actual recipe photo in a Korean family meal-planning webapp. Create a realistic photograph of ONLY the exact finished meal below, showing one modest serving. Match its ingredients AND preparation: fried rice must be dry mixed fried rice, porridge must show thick cooked grains, soups must have broth, toast must match open or closed form specified. Modest Korean home meal on plain cream ceramic plate or bowl, ivory tabletop, soft natural daylight, high three-quarter overhead camera. Landscape 3:2. Keep main dish whole and centered with wide margins for responsive crop. Rice on the side ONLY if this recipe explicitly includes rice served alongside soup or main. No people, hands, text, watermark, garnish, herbs, side dishes, or extra ingredients that are absent from recipe. No decorative food props. {\"title\":\"달걀 토스트와 방울토마토\",\"ingredients\":[\"통밀식빵\",\"달걀\",\"방울토마토\",\"우유\",\"식용유\"],\"preparation\":[\"토마토를 씻고 식빵을 마른 팬이나 토스터에 굽습니다.\",\"팬에 기름을 두르고 푼 달걀을 저어 흐르는 부분 없이 익힙니다.\",\"식빵에 달걀을 올리고 토마토와 우유를 함께 냅니다.\"]}",
+      "sha256": "61e0e71d582a67d112d553715ef51b1b68288b74bc38853121ccd9aab033bc6b",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "b2",
+      "title": "바나나 오트 요거트볼",
+      "file": "b2.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: actual recipe photo in a Korean family meal-planning webapp. Create a realistic photograph of ONLY the exact finished meal below, showing one modest serving. Match its ingredients AND preparation: fried rice must be dry mixed fried rice, porridge must show thick cooked grains, soups must have broth, toast must match open or closed form specified. Modest Korean home meal on plain cream ceramic plate or bowl, ivory tabletop, soft natural daylight, high three-quarter overhead camera. Landscape 3:2. Keep main dish whole and centered with wide margins for responsive crop. Rice on the side ONLY if this recipe explicitly includes rice served alongside soup or main. No people, hands, text, watermark, garnish, herbs, side dishes, or extra ingredients that are absent from recipe. No decorative food props. {\"title\":\"바나나 오트 요거트볼\",\"ingredients\":[\"플레인 그릭요거트\",\"바로 먹는 오트밀\",\"바나나\",\"사과\"],\"preparation\":[\"바나나를 썰고 사과는 씻어 작게 깍둑 썹니다.\",\"두 그릇에 요거트와 바로 먹을 수 있는 오트밀을 나눠 담습니다.\",\"과일을 올립니다. 단맛은 과일로 더하고 설탕은 넣지 않습니다.\"]}",
+      "sha256": "2186a820db8d9d9f5c409d19f067240d8135fe31f992276356686ad5b32ecd27",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "b3",
+      "title": "두부 달걀 채소죽",
+      "file": "b3.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: actual recipe photo in a Korean family meal-planning webapp. Create a realistic photograph of ONLY the exact finished meal below, showing one modest serving. Match its ingredients AND preparation: fried rice must be dry mixed fried rice, porridge must show thick cooked grains, soups must have broth, toast must match open or closed form specified. Modest Korean home meal on plain cream ceramic plate or bowl, ivory tabletop, soft natural daylight, high three-quarter overhead camera. Landscape 3:2. Keep main dish whole and centered with wide margins for responsive crop. Rice on the side ONLY if this recipe explicitly includes rice served alongside soup or main. No people, hands, text, watermark, garnish, herbs, side dishes, or extra ingredients that are absent from recipe. No decorative food props. {\"title\":\"두부 달걀 채소죽\",\"ingredients\":[\"즉석 잡곡밥\",\"두부\",\"달걀\",\"냉동 다진 채소\",\"물\",\"간장\"],\"preparation\":[\"냄비에 밥·물·다진 채소를 넣고 끓입니다.\",\"두부를 으깨 넣고 중불에서 3~4분 저으며 끓입니다.\",\"푼 달걀을 넣고 완전히 익을 때까지 끓인 뒤 간장으로 약하게 간합니다.\"]}",
+      "sha256": "6f8335e6a222edb91fb6e061ab0fdc22691a6583b7d9305667b184d7ed073430",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "b4",
+      "title": "달걀 오이 샌드위치",
+      "file": "b4.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: actual recipe photo in a Korean family meal-planning webapp. Create a realistic photograph of ONLY the exact finished meal below, showing one modest serving. Match its ingredients AND preparation: fried rice must be dry mixed fried rice, porridge must show thick cooked grains, soups must have broth, toast must match open or closed form specified. Modest Korean home meal on plain cream ceramic plate or bowl, ivory tabletop, soft natural daylight, high three-quarter overhead camera. Landscape 3:2. Keep main dish whole and centered with wide margins for responsive crop. Rice on the side ONLY if this recipe explicitly includes rice served alongside soup or main. No people, hands, text, watermark, garnish, herbs, side dishes, or extra ingredients that are absent from recipe. No decorative food props. {\"title\":\"달걀 오이 샌드위치\",\"ingredients\":[\"통밀식빵\",\"시판 완숙달걀\",\"오이\",\"플레인 그릭요거트\"],\"preparation\":[\"완숙달걀을 포크로 으깨고 요거트와 섞습니다.\",\"씻은 오이를 얇게 썰어 물기를 닦습니다.\",\"식빵 사이에 달걀과 오이를 채웁니다. 완숙달걀은 바로 먹는 제품을 사용합니다.\"]}",
+      "sha256": "545ecace8dcdbd3a7085d20a8a68de083e41687a19881efb71b0866daf3172ba",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "b5",
+      "title": "고구마와 달걀 아침접시",
+      "file": "b5.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: actual recipe photo in a Korean family meal-planning webapp. Create a realistic photograph of ONLY the exact finished meal below, showing one modest serving. Match its ingredients AND preparation: fried rice must be dry mixed fried rice, porridge must show thick cooked grains, soups must have broth, toast must match open or closed form specified. Modest Korean home meal on plain cream ceramic plate or bowl, ivory tabletop, soft natural daylight, high three-quarter overhead camera. Landscape 3:2. Keep main dish whole and centered with wide margins for responsive crop. Rice on the side ONLY if this recipe explicitly includes rice served alongside soup or main. No people, hands, text, watermark, garnish, herbs, side dishes, or extra ingredients that are absent from recipe. No decorative food props. {\"title\":\"고구마와 달걀 아침접시\",\"ingredients\":[\"시판 익힌 고구마\",\"시판 완숙달걀\",\"우유\",\"방울토마토\"],\"preparation\":[\"이미 익힌 고구마만 포장 표시대로 데웁니다. 생고구마는 별도 조리 시간이 필요합니다.\",\"완숙달걀 껍질을 벗기고 토마토를 씻습니다.\",\"고구마·달걀·토마토를 나누고 우유를 곁들입니다.\"]}",
+      "sha256": "47a9073740124047c6629de9b9ebeeb9df14cee62f05d5a4db0783a1c4acbdde",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "b6",
+      "title": "사과 치즈 토스트",
+      "file": "b6.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: actual recipe photo in a Korean family meal-planning webapp. Create a realistic photograph of ONLY the exact finished meal below, showing one modest serving. Match its ingredients AND preparation: fried rice must be dry mixed fried rice, porridge must show thick cooked grains, soups must have broth, toast must match open or closed form specified. Modest Korean home meal on plain cream ceramic plate or bowl, ivory tabletop, soft natural daylight, high three-quarter overhead camera. Landscape 3:2. Keep main dish whole and centered with wide margins for responsive crop. Rice on the side ONLY if this recipe explicitly includes rice served alongside soup or main. No people, hands, text, watermark, garnish, herbs, side dishes, or extra ingredients that are absent from recipe. No decorative food props. {\"title\":\"사과 치즈 토스트\",\"ingredients\":[\"통밀식빵\",\"슬라이스 치즈\",\"사과\",\"우유\"],\"preparation\":[\"사과를 씻어 얇게 썹니다.\",\"식빵을 토스터에 굽고 치즈와 사과를 올립니다.\",\"우유와 함께 냅니다. 잼 없이 사과로 맛을 더합니다.\"]}",
+      "sha256": "a1b45af8cf32bb91b1cb369adaa675e3b6c5b19d9e7b640803b551d8949b4c4e",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "b7",
+      "title": "시금치 달걀 볶음밥",
+      "file": "b7.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: actual recipe photo in a Korean family meal-planning webapp. Create a realistic photograph of ONLY the exact finished meal below, showing one modest serving. Match its ingredients AND preparation: fried rice must be dry mixed fried rice, porridge must show thick cooked grains, soups must have broth, toast must match open or closed form specified. Modest Korean home meal on plain cream ceramic plate or bowl, ivory tabletop, soft natural daylight, high three-quarter overhead camera. Landscape 3:2. Keep main dish whole and centered with wide margins for responsive crop. Rice on the side ONLY if this recipe explicitly includes rice served alongside soup or main. No people, hands, text, watermark, garnish, herbs, side dishes, or extra ingredients that are absent from recipe. No decorative food props. {\"title\":\"시금치 달걀 볶음밥\",\"ingredients\":[\"즉석 잡곡밥\",\"달걀\",\"냉동 시금치\",\"당근\",\"식용유\",\"간장\"],\"preparation\":[\"당근을 잘게 썰고 기름 두른 팬에서 시금치와 함께 익힙니다.\",\"달걀을 넣어 완전히 익도록 볶습니다.\",\"데운 밥과 간장을 넣고 전체가 뜨겁도록 볶습니다.\"]}",
+      "sha256": "35d6f4c577194d2be4b5bfafc800ea4c302b58bacac3ee976126286eec4eade6",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "b8",
+      "title": "참치 오이 주먹밥",
+      "file": "b8.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: actual recipe photo in a Korean family meal-planning webapp. Create a realistic photograph of ONLY the exact finished meal below, showing one modest serving. Match its ingredients AND preparation: fried rice must be dry mixed fried rice, porridge must show thick cooked grains, soups must have broth, toast must match open or closed form specified. Modest Korean home meal on plain cream ceramic plate or bowl, ivory tabletop, soft natural daylight, high three-quarter overhead camera. Landscape 3:2. Keep main dish whole and centered with wide margins for responsive crop. Rice on the side ONLY if this recipe explicitly includes rice served alongside soup or main. No people, hands, text, watermark, garnish, herbs, side dishes, or extra ingredients that are absent from recipe. No decorative food props. {\"title\":\"참치 오이 주먹밥\",\"ingredients\":[\"즉석 잡곡밥\",\"참치 통조림(물에 담긴 것)\",\"오이\",\"김\",\"참기름\"],\"preparation\":[\"밥을 데우고 참치 물기를 뺍니다. 오이는 잘게 썹니다.\",\"밥에 참치·오이·잘게 부순 김·참기름을 섞습니다.\",\"한입 크기로 뭉칩니다. 손 대신 깨끗한 숟가락이나 위생장갑을 사용합니다.\"]}",
+      "sha256": "ac37810bd49e4b41e43643cfca06616c4a98323c8128255c23c96fd4c7889b00",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "b9",
+      "title": "우유 달걀 오트죽",
+      "file": "b9.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: actual recipe photo in a Korean family meal-planning webapp. Create a realistic photograph of ONLY the exact finished meal below, showing one modest serving. Match its ingredients AND preparation: fried rice must be dry mixed fried rice, porridge must show thick cooked grains, soups must have broth, toast must match open or closed form specified. Modest Korean home meal on plain cream ceramic plate or bowl, ivory tabletop, soft natural daylight, high three-quarter overhead camera. Landscape 3:2. Keep main dish whole and centered with wide margins for responsive crop. Rice on the side ONLY if this recipe explicitly includes rice served alongside soup or main. No people, hands, text, watermark, garnish, herbs, side dishes, or extra ingredients that are absent from recipe. No decorative food props. {\"title\":\"우유 달걀 오트죽\",\"ingredients\":[\"오트밀\",\"우유\",\"물\",\"달걀\",\"바나나\"],\"preparation\":[\"냄비에 오트밀·우유·물을 넣고 약불로 저으며 끓입니다.\",\"오트밀이 부드러워지면 푼 달걀을 넣고 완전히 익힙니다.\",\"두 그릇에 나누고 바나나는 따로 곁들입니다.\"]}",
+      "sha256": "4ba25e146950a983ade2d18a4ba4e0819528bbaa29e39b024e08f2c9f16bc9c0",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "b10",
+      "title": "병아리콩 치즈 샌드",
+      "file": "b10.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: actual recipe photo in a Korean family meal-planning webapp. Create a realistic photograph of ONLY the exact finished meal below, showing one modest serving. Match its ingredients AND preparation: fried rice must be dry mixed fried rice, porridge must show thick cooked grains, soups must have broth, toast must match open or closed form specified. Modest Korean home meal on plain cream ceramic plate or bowl, ivory tabletop, soft natural daylight, high three-quarter overhead camera. Landscape 3:2. Keep main dish whole and centered with wide margins for responsive crop. Rice on the side ONLY if this recipe explicitly includes rice served alongside soup or main. No people, hands, text, watermark, garnish, herbs, side dishes, or extra ingredients that are absent from recipe. No decorative food props. {\"title\":\"병아리콩 치즈 샌드\",\"ingredients\":[\"통밀식빵\",\"익힌 병아리콩 통조림\",\"슬라이스 치즈\",\"오이\",\"올리브유\"],\"preparation\":[\"익힌 병아리콩을 헹궈 물기를 빼고 포크로 으깹니다.\",\"오이를 잘게 썰어 병아리콩·올리브유와 섞습니다.\",\"식빵에 치즈와 콩을 채워 반으로 자릅니다.\"]}",
+      "sha256": "e06862e4260dd99585e44a4d56da8615be0e1b5cb2046a60415b24ee81bb8055",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "b11",
+      "title": "닭고기 채소 아침밥",
+      "file": "b11.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: actual recipe photo in a Korean family meal-planning webapp. Create a realistic photograph of ONLY the exact finished meal below, showing one modest serving. Match its ingredients AND preparation: fried rice must be dry mixed fried rice, porridge must show thick cooked grains, soups must have broth, toast must match open or closed form specified. Modest Korean home meal on plain cream ceramic plate or bowl, ivory tabletop, soft natural daylight, high three-quarter overhead camera. Landscape 3:2. Keep main dish whole and centered with wide margins for responsive crop. Rice on the side ONLY if this recipe explicitly includes rice served alongside soup or main. No people, hands, text, watermark, garnish, herbs, side dishes, or extra ingredients that are absent from recipe. No decorative food props. {\"title\":\"닭고기 채소 아침밥\",\"ingredients\":[\"즉석 잡곡밥\",\"시판 완전조리 닭가슴살\",\"냉동 다진 채소\",\"식용유\",\"간장\"],\"preparation\":[\"완전히 조리된 닭가슴살을 작게 찢습니다. 생닭은 사용하지 않습니다.\",\"팬에 기름을 두르고 냉동 채소를 익힙니다.\",\"밥·닭고기·간장을 넣어 볶고 전체 중심 75℃에서 1분 이상 충분히 데웁니다.\"]}",
+      "sha256": "4b1bd3c19e194c7546e62f2d53e4ad7c110044915010c4356b8962c3e3fcd0f1",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "b12",
+      "title": "과일 통곡물 시리얼",
+      "file": "b12.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: actual recipe photo in a Korean family meal-planning webapp. Create a realistic photograph of ONLY the exact finished meal below, showing one modest serving. Match its ingredients AND preparation: fried rice must be dry mixed fried rice, porridge must show thick cooked grains, soups must have broth, toast must match open or closed form specified. Modest Korean home meal on plain cream ceramic plate or bowl, ivory tabletop, soft natural daylight, high three-quarter overhead camera. Landscape 3:2. Keep main dish whole and centered with wide margins for responsive crop. Rice on the side ONLY if this recipe explicitly includes rice served alongside soup or main. No people, hands, text, watermark, garnish, herbs, side dishes, or extra ingredients that are absent from recipe. No decorative food props. {\"title\":\"과일 통곡물 시리얼\",\"ingredients\":[\"무가당 통곡물 시리얼\",\"우유\",\"플레인 그릭요거트\",\"바나나\"],\"preparation\":[\"시리얼을 두 그릇에 나눕니다.\",\"바나나를 썰어 올리고 먹기 직전에 우유를 붓습니다.\",\"요거트는 따로 곁들입니다. 시리얼은 당류 함량을 비교해 고릅니다.\"]}",
+      "sha256": "60e6229e045e83059171336b0d6b8db006291436393dde341df42dfa24107edd",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "d1",
+      "title": "닭고기 브로콜리 덮밥",
+      "file": "d1.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset: accurate food photo for Korean recipe webapp. Dish: 닭고기 브로콜리 덮밥. Chicken broccoli rice bowl. Small fully cooked white chicken-breast chunks, tender green broccoli florets and thin orange carrot slices, lightly soy-coated, arranged ON multigrain rice. Chicken is small pale golden bite-size pieces, not beef, no sesame or herbs. Actual recipe ingredient list: 즉석 잡곡밥, 생 닭가슴살, 냉동 브로콜리, 당근, 간장, 식용유, 물. Modest realistic Korean home meal, one complete serving in cream ceramic dishware on warm ivory tabletop. Soft natural daylight, realistic food texture, high three-quarter overhead camera view. Landscape 3:2. Keep entire main dish centered with generous margins so responsive crops preserve the meal. No people, hands, text, logo, watermark or decorative extra food. Never add unlisted ingredients.",
+      "sha256": "012ac2a32d65d871f2bc17517c911e81b45217d9ef653ebf2e612e8208f4f3a9",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "d2",
+      "title": "두부 버섯 채소덮밥",
+      "file": "d2.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset: accurate food photo for Korean recipe webapp. Dish: 두부 버섯 채소덮밥. Tofu mushroom vegetable rice bowl. Golden seared tofu CUBES, thin king-oyster mushroom slices, zucchini half-moons and orange carrot strips ON multigrain rice. Very light soy seasoning, no egg, meat, scallions or sesame. Actual recipe ingredient list: 즉석 잡곡밥, 두부, 새송이버섯, 애호박, 당근, 간장, 식용유. Modest realistic Korean home meal, one complete serving in cream ceramic dishware on warm ivory tabletop. Soft natural daylight, realistic food texture, high three-quarter overhead camera view. Landscape 3:2. Keep entire main dish centered with generous margins so responsive crops preserve the meal. No people, hands, text, logo, watermark or decorative extra food. Never add unlisted ingredients.",
+      "sha256": "1c435c5ce505174357b5bd6d190b2dcbb1fbecb05b130e486815005a8b186a33",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "d3",
+      "title": "소고기 숙주 덮밥",
+      "file": "d3.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset: accurate food photo for Korean recipe webapp. Dish: 소고기 숙주 덮밥. Beef bean-sprout rice bowl. Thin folded brown cooked beef slices, cooked mung bean sprouts with tiny pale heads, translucent sliced onion, all lightly soy-coated ON multigrain rice. No egg, sesame, scallion, broccoli or chicken. Actual recipe ingredients: 즉석 잡곡밥, 얇게 썬 소고기, 숙주, 양파, 간장, 식용유. Modest realistic Korean home meal, one complete serving in cream ceramic dishware on warm ivory tabletop. Soft natural daylight, realistic food texture, high three-quarter overhead view. Landscape 3:2. Keep entire main dish centered with generous margins for responsive crops. No people, hands, text, logo, watermark, decorative extra food or unlisted ingredients.",
+      "sha256": "9bbd48788391429ba5e24fb16dc041111c5670f0f4ea2e4787279ab8e9c46f67",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "d4",
+      "title": "순두부 달걀국과 잡곡밥",
+      "file": "d4.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset: accurate food photo for Korean recipe webapp. Dish: 순두부 달걀국과 잡곡밥. Mild soft-tofu egg soup and a separate small bowl of multigrain rice. Clear pale broth with generous irregular cloud-soft tofu chunks, fully cooked wisps of beaten egg, zucchini half-moons, thin king-oyster mushrooms. Not red or spicy. No scallion or additional garnishes. Actual recipe ingredients: 즉석 잡곡밥, 순두부, 달걀, 애호박, 새송이버섯, 물, 간장. Modest realistic Korean home meal, one complete serving in cream ceramic dishware on warm ivory tabletop. Soft natural daylight, realistic food texture, high three-quarter overhead view. Landscape 3:2. Keep entire main dish centered with generous margins for responsive crops. No people, hands, text, logo, watermark, decorative extra food or unlisted ingredients.",
+      "sha256": "03e043447aef290b224021e7195aad7c9bd8973de3603dccfb0a63788719dafd",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "d5",
+      "title": "달걀 양배추 볶음밥",
+      "file": "d5.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset: accurate food photo for Korean recipe webapp. Dish: 달걀 양배추 볶음밥. Egg cabbage fried rice. A shallow bowl of multigrain fried rice mixed thoroughly with fully cooked yellow scrambled-egg pieces, finely cut tender pale cabbage and small carrot strips. No meat, peas, broccoli, sesame or scallions. Actual recipe ingredients: 즉석 잡곡밥, 달걀, 양배추, 당근, 식용유, 간장. Modest realistic Korean home meal, one complete serving in cream ceramic dishware on warm ivory tabletop. Soft natural daylight, realistic food texture, high three-quarter overhead view. Landscape 3:2. Keep entire main dish centered with generous margins for responsive crops. No people, hands, text, logo, watermark, decorative extra food or unlisted ingredients.",
+      "sha256": "0281958b990dd3f303966b14592a7d600ef7103dd559fd226158ad6806b0ca29",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "d6",
+      "title": "참치 두부 채소비빔밥",
+      "file": "d6.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset: accurate food photo for Korean recipe webapp. Dish: 참치 두부 채소비빔밥. Tuna tofu vegetable bibimbap. Multigrain rice topped with separate visible patches of flaked canned tuna, soft white tofu small chunks, finely chopped cucumber and carrot, tiny glossy soy and sesame-oil sheen. No egg, kimchi, gochujang or sesame seeds. Actual recipe ingredients: 즉석 잡곡밥, 참치 통조림(물에 담긴 것), 두부, 오이, 당근, 참기름, 간장. Modest realistic Korean home meal, one complete serving in cream ceramic dishware on warm ivory tabletop. Soft natural daylight, realistic food texture, high three-quarter overhead view. Landscape 3:2. Keep entire main dish centered with generous margins for responsive crops. No people, hands, text, logo, watermark, decorative extra food or unlisted ingredients.",
+      "sha256": "c8b7c503484624ca4eb2bf6657df57347e9f6f8c7d2ffbce3d76407a0ced8f61",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "d7",
+      "title": "닭고기 양배추 볶음",
+      "file": "d7.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset: accurate food photo for Korean recipe webapp. Dish: 닭고기 양배추 볶음. Chicken cabbage stir-fry with SEPARATE bowl of multigrain rice. White cooked chicken-breast bite-sized strips and generous tender light-green cabbage and translucent onion. Glossy light soy sauce, no red spice, broccoli, garnish or sesame. Actual recipe ingredients: 즉석 잡곡밥, 생 닭가슴살, 양배추, 양파, 간장, 식용유, 물. Modest realistic Korean home meal, one complete serving in cream ceramic dishware on warm ivory tabletop. Soft natural daylight, realistic food texture, high three-quarter overhead view. Landscape 3:2. Keep entire main dish centered with generous margins for responsive crops. No people, hands, text, logo, watermark, decorative extra food or unlisted ingredients.",
+      "sha256": "a8eb6d79c9d1c54a46b5be668a2483c2c69f0a4013988888368a0e09f9f58116",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "d8",
+      "title": "새우 채소 달걀볶음밥",
+      "file": "d8.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset: accurate food photo for Korean recipe webapp. Dish: 새우 채소 달걀볶음밥. Shrimp vegetable egg fried rice. Fully cooked pink curled peeled shrimp, yellow scrambled egg and small mixed diced carrot/green vegetable pieces mixed into multigrain fried rice. No broccoli florets, meat, scallion garnish or sauce pools. Actual recipe ingredients: 즉석 잡곡밥, 해동한 손질 새우, 달걀, 냉동 다진 채소, 식용유, 간장. Modest realistic Korean home meal, one complete serving in cream ceramic dishware on warm ivory tabletop. Soft natural daylight, realistic food texture, high three-quarter overhead view. Landscape 3:2. Keep entire main dish centered with generous margins for responsive crops. No people, hands, text, logo, watermark, decorative extra food or unlisted ingredients.",
+      "sha256": "f53bd257ee05701880af284d1a29edf196816d87151c066b26d1b64db4103573",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "d9",
+      "title": "연어 브로콜리 한 접시",
+      "file": "d9.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset: accurate food photo for Korean recipe webapp. Dish: 연어 브로콜리 한 접시. Cooked salmon broccoli dinner plate with multigrain rice and cherry tomatoes. One clearly recognizable coral-orange salmon FILLET, fully cooked flaky fish with lightly browned surface, tender green broccoli and fresh bright red cherry tomatoes beside compact mound of multigrain rice. No chicken, lemon, herbs or sesame. Actual recipe ingredients: 즉석 잡곡밥, 해동한 연어, 냉동 브로콜리, 방울토마토, 올리브유. Modest realistic Korean home meal, one complete serving in cream ceramic dishware on warm ivory tabletop. Soft natural daylight, realistic food texture, high three-quarter overhead view. Landscape 3:2. Keep entire main dish centered with generous margins for responsive crops. No people, hands, text, logo, watermark, decorative extra food or unlisted ingredients.",
+      "sha256": "a0f4b0550e2e06b4d79449f2dc3ce036abc7abc42ebbe46dbf71c7859d92c6da",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "d10",
+      "title": "병아리콩 토마토 볶음밥",
+      "file": "d10.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset: accurate food photo for Korean recipe webapp. Dish: 병아리콩 토마토 볶음밥. Chickpea tomato fried rice. Beige round chickpeas, softened halved cherry tomatoes and translucent sliced onion mixed through multigrain rice, light olive oil sheen. No egg, meat, peas, herbs or extra garnish. Actual recipe ingredients: 즉석 잡곡밥, 익힌 병아리콩 통조림, 방울토마토, 양파, 올리브유. Modest realistic Korean home meal, one complete serving in cream ceramic dishware on warm ivory tabletop. Soft natural daylight, realistic food texture, high three-quarter overhead view. Landscape 3:2. Keep entire main dish centered with generous margins for responsive crops. No people, hands, text, logo, watermark, decorative extra food or unlisted ingredients.",
+      "sha256": "2f98358c4fc3c257b50658ab619992eab9a24c99a37059bc254402a959b1fc38",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "d11",
+      "title": "완두콩 닭고기 볶음밥",
+      "file": "d11.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset: accurate food photo for Korean recipe webapp. Dish: 완두콩 닭고기 볶음밥. Pea chicken fried rice. Shredded fully cooked white chicken breast, plentiful round green peas and tiny mixed diced carrot vegetables stirred through multigrain fried rice. No large chicken steak, broccoli florets, egg or garnish. Actual recipe ingredients: 즉석 잡곡밥, 시판 완전조리 닭가슴살, 냉동 완두콩, 냉동 다진 채소, 식용유, 간장. Modest realistic Korean home meal, one complete serving in cream ceramic dishware on warm ivory tabletop. Soft natural daylight, realistic food texture, high three-quarter overhead view. Landscape 3:2. Keep entire main dish centered with generous margins for responsive crops. No people, hands, text, logo, watermark, decorative extra food or unlisted ingredients.",
+      "sha256": "2d935e253f26ff478eb7a8a9c30feb7e99092bb8da4b4f6866f8f0269e9b4c29",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "d12",
+      "title": "두부 양배추 따뜻한 덮밥",
+      "file": "d12.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset: accurate food photo for Korean recipe webapp. Dish: 두부 양배추 따뜻한 덮밥. Warm tofu cabbage rice bowl. Small soft tofu chunks, finely sliced pale-green tender cabbage and king-oyster mushroom strips lightly soy seasoned on multigrain rice. No egg, carrots, broccoli, sesame or garnish. Actual recipe ingredients: 즉석 잡곡밥, 두부, 양배추, 새송이버섯, 식용유, 간장. Modest realistic Korean home meal, one complete serving in cream ceramic dishware on warm ivory tabletop. Soft natural daylight, realistic food texture, high three-quarter overhead view. Landscape 3:2. Keep entire main dish centered with generous margins for responsive crops. No people, hands, text, logo, watermark, decorative extra food or unlisted ingredients.",
+      "sha256": "3ed598c435f25ab6cb3bce580b623f8422309df9d11859cac4abb078dd392d05",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "b13",
+      "title": "콩나물 달걀국밥",
+      "file": "b13.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: actual recipe photo in a Korean family meal-planning webapp. Create a realistic photograph of ONLY the exact finished meal below, showing one modest serving. Match its ingredients AND preparation: fried rice must be dry mixed fried rice, porridge must show thick cooked grains, soups must have broth, toast must match open or closed form specified. Modest Korean home meal on plain cream ceramic plate or bowl, ivory tabletop, soft natural daylight, high three-quarter overhead camera. Landscape 3:2. Keep main dish whole and centered with wide margins for responsive crop. Rice on the side ONLY if this recipe explicitly includes rice served alongside soup or main. No people, hands, text, watermark, garnish, herbs, side dishes, or extra ingredients that are absent from recipe. No decorative food props. {\"title\":\"콩나물 달걀국밥\",\"ingredients\":[\"즉석 잡곡밥\",\"콩나물\",\"달걀\",\"대파\",\"물\",\"간장\"],\"preparation\":[\"콩나물을 씻고 대파를 잘게 썹니다. 냄비에 물·콩나물을 넣고 뚜껑을 열어 끓입니다.\",\"끓기 시작하면 5분 더 익히고 푼 달걀·대파·간장을 넣습니다.\",\"달걀 중심 75℃에서 1분 이상 익힌 뒤 데운 밥에 국과 건더기를 나눠 담습니다.\"]}",
+      "sha256": "21054141761f21b2007b33a45ac4af120bc41879b617d73cf4986e5b189bb4dc",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "b14",
+      "title": "소고기 미역국밥",
+      "file": "b14.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: one menu photo for a Korean family recipe web app. Generate a realistic, appetizing home-cooked meal photograph of exactly \"소고기 미역국밥\". Ingredients: 즉석 잡곡밥, 얇게 썬 소고기, 불린 자른 미역, 참기름, 간장, 물. Preparation: 미리 불린 미역의 물기를 빼고 소고기를 작게 자릅니다. 미역 불리는 시간은 조리 시간에서 제외합니다. 냄비에 참기름을 두르고 소고기를 볶다가 미역·물을 넣어 끓입니다. 소고기 중심 75℃에서 1분 이상 익도록 끓이고 간장으로 간해 데운 밥과 냅니다.. The central dish MUST visibly be Korean miyeok-guk: dark green softened seaweed ribbons and small slices of cooked beef in a translucent brown broth. Small bowl of cooked multigrain rice alongside. Absolutely no bean sprouts, no egg ribbons, no tofu. One modest serving on a cream ceramic bowl, warm ivory tabletop, gentle daylight, high three-quarter overhead view. Landscape 3:2 framing, full main bowl centered with room at edges for responsive cropping. Simple everyday Korean home meal, natural food texture, no decorative unrelated foods, no raw ingredients, no people, no hands, no lettering, no watermark.",
+      "sha256": "53f141ec6f96b2947afa2d9a63e262533a81e5830d8d2d25b90e3e60d85f5c09",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "b15",
+      "title": "두부 애호박 된장국과 밥",
+      "file": "b15.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: actual recipe photo in a Korean family meal-planning webapp. Create a realistic photograph of ONLY the exact finished meal below, showing one modest serving. Match its ingredients AND preparation: fried rice must be dry mixed fried rice, porridge must show thick cooked grains, soups must have broth, toast must match open or closed form specified. Modest Korean home meal on plain cream ceramic plate or bowl, ivory tabletop, soft natural daylight, high three-quarter overhead camera. Landscape 3:2. Keep main dish whole and centered with wide margins for responsive crop. Rice on the side ONLY if this recipe explicitly includes rice served alongside soup or main. No people, hands, text, watermark, garnish, herbs, side dishes, or extra ingredients that are absent from recipe. No decorative food props. {\"title\":\"두부 애호박 된장국과 밥\",\"ingredients\":[\"즉석 잡곡밥\",\"두부\",\"애호박\",\"양파\",\"된장\",\"물\"],\"preparation\":[\"애호박·양파는 3mm 두께로 썰고 두부는 작은 깍둑 모양으로 자릅니다.\",\"끓는 물에 된장을 풀고 애호박·양파를 넣어 4~5분 끓입니다.\",\"두부를 넣어 속까지 뜨겁게 끓이고 데운 밥과 함께 냅니다.\"]}",
+      "sha256": "1d783578858b42324e4cb6931931901e40701931e01f06f4b4f1fe64f1b17fc4",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "b16",
+      "title": "닭고기 채소 누룽지탕",
+      "file": "b16.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: actual recipe photo in a Korean family meal-planning webapp. Create a realistic photograph of ONLY the exact finished meal below, showing one modest serving. Match its ingredients AND preparation: fried rice must be dry mixed fried rice, porridge must show thick cooked grains, soups must have broth, toast must match open or closed form specified. Modest Korean home meal on plain cream ceramic plate or bowl, ivory tabletop, soft natural daylight, high three-quarter overhead camera. Landscape 3:2. Keep main dish whole and centered with wide margins for responsive crop. Rice on the side ONLY if this recipe explicitly includes rice served alongside soup or main. No people, hands, text, watermark, garnish, herbs, side dishes, or extra ingredients that are absent from recipe. No decorative food props. {\"title\":\"닭고기 채소 누룽지탕\",\"ingredients\":[\"얇은 즉석 누룽지\",\"시판 완전조리 닭가슴살\",\"냉동 다진 채소\",\"물\",\"간장\"],\"preparation\":[\"5분 안에 끓이는 얇은 즉석 누룽지를 준비하고 완전조리 닭가슴살을 잘게 찢습니다.\",\"냄비에 물·누룽지·냉동 채소를 넣고 제품 표시 시간대로 끓입니다.\",\"닭고기와 간장을 넣고 닭고기 포장에 적힌 가열 조건에 맞춰 속까지 뜨겁게 데웁니다.\"]}",
+      "sha256": "49a1cd5150b9a6c7528e62630f088421efca6edb9ca9725c611220258b19d435",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "b17",
+      "title": "참치 당근죽",
+      "file": "b17.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: actual recipe photo in a Korean family meal-planning webapp. Create a realistic photograph of ONLY the exact finished meal below, showing one modest serving. Match its ingredients AND preparation: fried rice must be dry mixed fried rice, porridge must show thick cooked grains, soups must have broth, toast must match open or closed form specified. Modest Korean home meal on plain cream ceramic plate or bowl, ivory tabletop, soft natural daylight, high three-quarter overhead camera. Landscape 3:2. Keep main dish whole and centered with wide margins for responsive crop. Rice on the side ONLY if this recipe explicitly includes rice served alongside soup or main. No people, hands, text, watermark, garnish, herbs, side dishes, or extra ingredients that are absent from recipe. No decorative food props. {\"title\":\"참치 당근죽\",\"ingredients\":[\"즉석 잡곡밥\",\"참치 통조림(물에 담긴 것)\",\"당근\",\"애호박\",\"물\",\"참기름\",\"간장\"],\"preparation\":[\"당근·애호박은 잘게 다지고 참치는 물기를 뺍니다.\",\"냄비에 밥·물·채소를 넣고 저으며 6~7분 끓입니다.\",\"참치·참기름·간장을 넣고 전체가 뜨거워질 때까지 저어 끓입니다.\"]}",
+      "sha256": "9b83dfe0d4409d7135739c584890281232c9db8824c10598563e37505a228633",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "b18",
+      "title": "완숙달걀 김 주먹밥과 오이",
+      "file": "b18.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: actual recipe photo in a Korean family meal-planning webapp. Create a realistic photograph of ONLY the exact finished meal below, showing one modest serving. Match its ingredients AND preparation: fried rice must be dry mixed fried rice, porridge must show thick cooked grains, soups must have broth, toast must match open or closed form specified. Modest Korean home meal on plain cream ceramic plate or bowl, ivory tabletop, soft natural daylight, high three-quarter overhead camera. Landscape 3:2. Keep main dish whole and centered with wide margins for responsive crop. Rice on the side ONLY if this recipe explicitly includes rice served alongside soup or main. No people, hands, text, watermark, garnish, herbs, side dishes, or extra ingredients that are absent from recipe. No decorative food props. {\"title\":\"완숙달걀 김 주먹밥과 오이\",\"ingredients\":[\"즉석 잡곡밥\",\"시판 완숙달걀\",\"김\",\"오이\",\"참기름\"],\"preparation\":[\"밥을 포장 표시대로 데우고 바로 먹는 완숙달걀을 잘게 으깹니다.\",\"밥에 달걀·잘게 부순 김·참기름을 섞고 한입 크기로 뭉칩니다.\",\"오이를 씻어 막대 모양으로 썰어 주먹밥과 함께 냅니다.\"]}",
+      "sha256": "c87958421ec13acf919a9f0a0d0ef061ba0d0acd5a5d26f68d24bd5a142b0f0d",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "b19",
+      "title": "두부 오이 김쌈밥",
+      "file": "b19.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: actual recipe photo in a Korean family meal-planning webapp. Create a realistic photograph of ONLY the exact finished meal below, showing one modest serving. Match its ingredients AND preparation: fried rice must be dry mixed fried rice, porridge must show thick cooked grains, soups must have broth, toast must match open or closed form specified. Modest Korean home meal on plain cream ceramic plate or bowl, ivory tabletop, soft natural daylight, high three-quarter overhead camera. Landscape 3:2. Keep main dish whole and centered with wide margins for responsive crop. Rice on the side ONLY if this recipe explicitly includes rice served alongside soup or main. No people, hands, text, watermark, garnish, herbs, side dishes, or extra ingredients that are absent from recipe. No decorative food props. {\"title\":\"두부 오이 김쌈밥\",\"ingredients\":[\"즉석 잡곡밥\",\"두부\",\"김\",\"오이\",\"당근\",\"간장\",\"참기름\"],\"preparation\":[\"두부는 전자레인지용 그릇에 담아 포장 안내대로 충분히 가열한 뒤 물기를 뺍니다.\",\"오이·당근을 가늘게 썰고 김은 손바닥 크기로 자릅니다.\",\"데운 밥·두부·채소를 김에 싸서 간장과 참기름을 섞은 양념을 조금씩 찍어 먹습니다.\"]}",
+      "sha256": "b2216afe08b96dc00c075dab3b693ba54f01d9fc0ae648599f0abe67978096d0",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "b20",
+      "title": "들깨 버섯 두부죽",
+      "file": "b20.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: actual recipe photo in a Korean family meal-planning webapp. Create a realistic photograph of ONLY the exact finished meal below, showing one modest serving. Match its ingredients AND preparation: fried rice must be dry mixed fried rice, porridge must show thick cooked grains, soups must have broth, toast must match open or closed form specified. Modest Korean home meal on plain cream ceramic plate or bowl, ivory tabletop, soft natural daylight, high three-quarter overhead camera. Landscape 3:2. Keep main dish whole and centered with wide margins for responsive crop. Rice on the side ONLY if this recipe explicitly includes rice served alongside soup or main. No people, hands, text, watermark, garnish, herbs, side dishes, or extra ingredients that are absent from recipe. No decorative food props. {\"title\":\"들깨 버섯 두부죽\",\"ingredients\":[\"즉석 잡곡밥\",\"두부\",\"새송이버섯\",\"당근\",\"들깻가루\",\"물\",\"간장\"],\"preparation\":[\"버섯·당근을 잘게 다지고 두부를 포크로 으깹니다.\",\"냄비에 밥·물·채소를 넣고 중불로 저으며 7~8분 끓입니다.\",\"두부·들깻가루·간장을 넣고 2~3분 더 저으며 끓입니다.\"]}",
+      "sha256": "99dbba1f2c7ae9917b74de54bc23ef7b42190662ca7e04696e1c1b6951c6e7c9",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "b21",
+      "title": "감자 달걀국과 밥",
+      "file": "b21.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: actual recipe photo in a Korean family meal-planning webapp. Create a realistic photograph of ONLY the exact finished meal below, showing one modest serving. Match its ingredients AND preparation: fried rice must be dry mixed fried rice, porridge must show thick cooked grains, soups must have broth, toast must match open or closed form specified. Modest Korean home meal on plain cream ceramic plate or bowl, ivory tabletop, soft natural daylight, high three-quarter overhead camera. Landscape 3:2. Keep main dish whole and centered with wide margins for responsive crop. Rice on the side ONLY if this recipe explicitly includes rice served alongside soup or main. No people, hands, text, watermark, garnish, herbs, side dishes, or extra ingredients that are absent from recipe. No decorative food props. {\"title\":\"감자 달걀국과 밥\",\"ingredients\":[\"즉석 잡곡밥\",\"감자\",\"달걀\",\"양파\",\"대파\",\"물\",\"간장\"],\"preparation\":[\"감자는 껍질을 벗겨 3mm 두께로 썰고 양파·대파도 얇게 썹니다.\",\"냄비에 물·감자·양파를 넣고 감자가 부드러워질 때까지 끓입니다.\",\"푼 달걀·대파·간장을 넣어 달걀 중심 75℃에서 1분 이상 익힌 뒤 데운 밥과 냅니다.\"]}",
+      "sha256": "8ee2555cab9986a0223d77eed13cdc8a868167848f811bb471711dbddbf5bcf0",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "b22",
+      "title": "양배추 달걀찜과 밥",
+      "file": "b22.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: actual recipe photo in a Korean family meal-planning webapp. Create a realistic photograph of ONLY the exact finished meal below, showing one modest serving. Match its ingredients AND preparation: fried rice must be dry mixed fried rice, porridge must show thick cooked grains, soups must have broth, toast must match open or closed form specified. Modest Korean home meal on plain cream ceramic plate or bowl, ivory tabletop, soft natural daylight, high three-quarter overhead camera. Landscape 3:2. Keep main dish whole and centered with wide margins for responsive crop. Rice on the side ONLY if this recipe explicitly includes rice served alongside soup or main. No people, hands, text, watermark, garnish, herbs, side dishes, or extra ingredients that are absent from recipe. No decorative food props. {\"title\":\"양배추 달걀찜과 밥\",\"ingredients\":[\"즉석 잡곡밥\",\"달걀\",\"양배추\",\"당근\",\"물\",\"간장\"],\"preparation\":[\"양배추·당근을 아주 잘게 다져 달걀·물·간장과 섞습니다.\",\"넓고 얕은 전자레인지용 그릇 두 개에 절반 이하 높이로 나눠 담고 전용 덮개를 느슨하게 덮습니다.\",\"각 그릇을 700W 기준 3분씩 가열한 뒤 30초씩 추가해 가운데까지 굳히고, 중심 75℃에서 1분 이상 익힙니다.\",\"1분 두었다가 뜨거운 증기에 주의해 꺼내고 데운 밥과 냅니다.\"]}",
+      "sha256": "69dc363b9c83b39564e398036d765b858d56221ec85ab69f98533525547e5665",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "b23",
+      "title": "애호박 두부전과 밥",
+      "file": "b23.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: actual recipe photo in a Korean family meal-planning webapp. Create a realistic photograph of ONLY the exact finished meal below, showing one modest serving. Match its ingredients AND preparation: fried rice must be dry mixed fried rice, porridge must show thick cooked grains, soups must have broth, toast must match open or closed form specified. Modest Korean home meal on plain cream ceramic plate or bowl, ivory tabletop, soft natural daylight, high three-quarter overhead camera. Landscape 3:2. Keep main dish whole and centered with wide margins for responsive crop. Rice on the side ONLY if this recipe explicitly includes rice served alongside soup or main. No people, hands, text, watermark, garnish, herbs, side dishes, or extra ingredients that are absent from recipe. No decorative food props. {\"title\":\"애호박 두부전과 밥\",\"ingredients\":[\"즉석 잡곡밥\",\"두부\",\"달걀\",\"애호박\",\"밀가루\",\"식용유\",\"간장\"],\"preparation\":[\"두부는 물기를 꼭 짜서 으깨고 애호박은 가늘게 채 썹니다.\",\"두부·애호박·달걀·밀가루·간장을 섞어 반죽합니다.\",\"기름 두른 넓은 팬에 두께 5mm로 작게 펴고 앞뒤로 구워 달걀 반죽 중심 75℃에서 1분 이상 익힙니다.\",\"데운 밥과 함께 냅니다. 팬이 작으면 나눠 부치느라 시간이 더 걸립니다.\"]}",
+      "sha256": "8567a7100776c93679ae5682b7a1dcaf582eeb7d0f31f80470ee002d7e2684d7",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "b24",
+      "title": "채소 달걀 떡국",
+      "file": "b24.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: actual recipe photo in a Korean family meal-planning webapp. Create a realistic photograph of ONLY the exact finished meal below, showing one modest serving. Match its ingredients AND preparation: fried rice must be dry mixed fried rice, porridge must show thick cooked grains, soups must have broth, toast must match open or closed form specified. Modest Korean home meal on plain cream ceramic plate or bowl, ivory tabletop, soft natural daylight, high three-quarter overhead camera. Landscape 3:2. Keep main dish whole and centered with wide margins for responsive crop. Rice on the side ONLY if this recipe explicitly includes rice served alongside soup or main. No people, hands, text, watermark, garnish, herbs, side dishes, or extra ingredients that are absent from recipe. No decorative food props. {\"title\":\"채소 달걀 떡국\",\"ingredients\":[\"냉장 떡국떡\",\"달걀\",\"애호박\",\"당근\",\"김\",\"물\",\"간장\"],\"preparation\":[\"별도 불림이 필요 없는 냉장 떡국떡을 준비하고 애호박·당근을 얇게 썹니다.\",\"냄비에 물·채소를 넣어 끓이고 떡을 넣어 제품 표시 시간대로 부드럽게 익힙니다.\",\"푼 달걀과 간장을 넣어 달걀 중심 75℃에서 1분 이상 익힌 뒤 김을 부숴 올립니다.\"]}",
+      "sha256": "8e3d201618a00bea6d2d9468e53ae1a16dc521a23a25ab103c81d23314c5cadb",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "b25",
+      "title": "북어 두부 무국밥",
+      "file": "b25.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: actual recipe photo in a Korean family meal-planning webapp. Create a realistic photograph of ONLY the exact finished meal below, showing one modest serving. Match its ingredients AND preparation: fried rice must be dry mixed fried rice, porridge must show thick cooked grains, soups must have broth, toast must match open or closed form specified. Modest Korean home meal on plain cream ceramic plate or bowl, ivory tabletop, soft natural daylight, high three-quarter overhead camera. Landscape 3:2. Keep main dish whole and centered with wide margins for responsive crop. Rice on the side ONLY if this recipe explicitly includes rice served alongside soup or main. No people, hands, text, watermark, garnish, herbs, side dishes, or extra ingredients that are absent from recipe. No decorative food props. {\"title\":\"북어 두부 무국밥\",\"ingredients\":[\"즉석 잡곡밥\",\"북어채\",\"두부\",\"무\",\"대파\",\"물\",\"간장\"],\"preparation\":[\"북어채를 물에 가볍게 적셔 잘게 자르고 잔가시를 확인합니다. 무는 2mm 두께로, 두부는 작게 썹니다.\",\"냄비에 물·무·북어를 넣어 끓이고 무가 투명해질 때까지 익힙니다.\",\"두부·대파·간장을 넣고 북어 중심 85℃에서 1분 이상 충분히 끓인 뒤 데운 밥과 냅니다.\"]}",
+      "sha256": "bb18f764f5164c1adef83fac0d4e26dfa1d1934297ebe93c02e61eaf18bde826",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "b26",
+      "title": "연두부 간장밥과 토마토",
+      "file": "b26.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: actual recipe photo in a Korean family meal-planning webapp. Create a realistic photograph of ONLY the exact finished meal below, showing one modest serving. Match its ingredients AND preparation: fried rice must be dry mixed fried rice, porridge must show thick cooked grains, soups must have broth, toast must match open or closed form specified. Modest Korean home meal on plain cream ceramic plate or bowl, ivory tabletop, soft natural daylight, high three-quarter overhead camera. Landscape 3:2. Keep main dish whole and centered with wide margins for responsive crop. Rice on the side ONLY if this recipe explicitly includes rice served alongside soup or main. No people, hands, text, watermark, garnish, herbs, side dishes, or extra ingredients that are absent from recipe. No decorative food props. {\"title\":\"연두부 간장밥과 토마토\",\"ingredients\":[\"즉석 잡곡밥\",\"연두부\",\"방울토마토\",\"김\",\"간장\",\"참기름\"],\"preparation\":[\"밥을 포장 표시대로 데우고 토마토를 씻어 반으로 자릅니다.\",\"바로 먹을 수 있는 연두부의 물기를 빼고 밥 위에 숟가락으로 떠 올립니다.\",\"부순 김·간장·참기름을 나눠 넣고 토마토를 곁들입니다.\"]}",
+      "sha256": "d84a51f1b26f8a141212923183f09fa341d854fb5a449d94023e85437a2d51a5",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "b27",
+      "title": "단호박 우유죽과 완숙달걀",
+      "file": "b27.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: actual recipe photo in a Korean family meal-planning webapp. Create a realistic photograph of ONLY the exact finished meal below, showing one modest serving. Match its ingredients AND preparation: fried rice must be dry mixed fried rice, porridge must show thick cooked grains, soups must have broth, toast must match open or closed form specified. Modest Korean home meal on plain cream ceramic plate or bowl, ivory tabletop, soft natural daylight, high three-quarter overhead camera. Landscape 3:2. Keep main dish whole and centered with wide margins for responsive crop. Rice on the side ONLY if this recipe explicitly includes rice served alongside soup or main. No people, hands, text, watermark, garnish, herbs, side dishes, or extra ingredients that are absent from recipe. No decorative food props. {\"title\":\"단호박 우유죽과 완숙달걀\",\"ingredients\":[\"시판 익힌 단호박\",\"우유\",\"오트밀\",\"시판 완숙달걀\",\"물\"],\"preparation\":[\"껍질과 씨를 제거한 익힌 단호박을 으깹니다. 생단호박은 별도 익히는 시간이 필요합니다.\",\"냄비에 단호박·우유·물·오트밀을 넣고 약불에서 제품 표시 시간대로 저으며 끓입니다.\",\"바로 먹는 완숙달걀 껍질을 벗겨 죽과 함께 냅니다.\"]}",
+      "sha256": "ece62226e18612f76220eeeecb0cd8fb5f74e29ac74bd225a8d4345f67fb504e",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "b28",
+      "title": "시금치 두부 된장국과 밥",
+      "file": "b28.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: actual recipe photo in a Korean family meal-planning webapp. Create a realistic photograph of ONLY the exact finished meal below, showing one modest serving. Match its ingredients AND preparation: fried rice must be dry mixed fried rice, porridge must show thick cooked grains, soups must have broth, toast must match open or closed form specified. Modest Korean home meal on plain cream ceramic plate or bowl, ivory tabletop, soft natural daylight, high three-quarter overhead camera. Landscape 3:2. Keep main dish whole and centered with wide margins for responsive crop. Rice on the side ONLY if this recipe explicitly includes rice served alongside soup or main. No people, hands, text, watermark, garnish, herbs, side dishes, or extra ingredients that are absent from recipe. No decorative food props. {\"title\":\"시금치 두부 된장국과 밥\",\"ingredients\":[\"즉석 잡곡밥\",\"냉동 시금치\",\"두부\",\"된장\",\"물\",\"다진 마늘\"],\"preparation\":[\"냄비에 물을 끓이고 된장을 풉니다. 두부는 작은 깍둑 모양으로 썹니다.\",\"냉동 시금치·두부·다진 마늘을 넣어 시금치 포장에 적힌 시간대로 충분히 끓입니다.\",\"건더기까지 뜨겁게 익으면 데운 밥과 함께 냅니다.\"]}",
+      "sha256": "66d4e3f9833fbc328dc17ad814f8ab0d2f84dc20a6df683f78cfe09fd91a5524",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "b29",
+      "title": "소고기 무채죽",
+      "file": "b29.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: actual recipe photo in a Korean family meal-planning webapp. Create a realistic photograph of ONLY the exact finished meal below, showing one modest serving. Match its ingredients AND preparation: fried rice must be dry mixed fried rice, porridge must show thick cooked grains, soups must have broth, toast must match open or closed form specified. Modest Korean home meal on plain cream ceramic plate or bowl, ivory tabletop, soft natural daylight, high three-quarter overhead camera. Landscape 3:2. Keep main dish whole and centered with wide margins for responsive crop. Rice on the side ONLY if this recipe explicitly includes rice served alongside soup or main. No people, hands, text, watermark, garnish, herbs, side dishes, or extra ingredients that are absent from recipe. No decorative food props. {\"title\":\"소고기 무채죽\",\"ingredients\":[\"즉석 잡곡밥\",\"다진 소고기\",\"무\",\"당근\",\"물\",\"참기름\",\"간장\"],\"preparation\":[\"무·당근을 가늘고 짧게 채 썰고 냄비에 참기름을 두릅니다.\",\"다진 소고기를 덩어리 없이 풀어 볶다가 채소·밥·물을 넣습니다.\",\"저으며 끓여 무를 부드럽게 익히고 고기 중심 75℃에서 1분 이상 익힌 뒤 간장을 넣습니다.\"]}",
+      "sha256": "18355c59697f0679a30e07834c234e0d17efc3a50a50bdf179e7b101fe10e346",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "b30",
+      "title": "달걀 맛살 꼬마김밥",
+      "file": "b30.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: actual recipe photo in a Korean family meal-planning webapp. Create a realistic photograph of ONLY the exact finished meal below, showing one modest serving. Match its ingredients AND preparation: fried rice must be dry mixed fried rice, porridge must show thick cooked grains, soups must have broth, toast must match open or closed form specified. Modest Korean home meal on plain cream ceramic plate or bowl, ivory tabletop, soft natural daylight, high three-quarter overhead camera. Landscape 3:2. Keep main dish whole and centered with wide margins for responsive crop. Rice on the side ONLY if this recipe explicitly includes rice served alongside soup or main. No people, hands, text, watermark, garnish, herbs, side dishes, or extra ingredients that are absent from recipe. No decorative food props. {\"title\":\"달걀 맛살 꼬마김밥\",\"ingredients\":[\"즉석 잡곡밥\",\"시판 완숙달걀\",\"바로 먹는 게맛살\",\"김\",\"오이\",\"당근\",\"참기름\"],\"preparation\":[\"밥을 데워 참기름을 섞고 완숙달걀을 으깹니다. 오이·당근은 가늘게 채 썹니다.\",\"김을 반으로 잘라 밥을 얇게 펴고 달걀·맛살·채소를 올립니다.\",\"짧게 말아 먹기 좋은 크기로 자릅니다. 바로 먹는 완전조리 맛살을 사용합니다.\"]}",
+      "sha256": "a10ca7041dbd86bd2e056a27c06a78c366a17b8867bbda2b381c5ab2599aec97",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "b31",
+      "title": "토마토 달걀 덮밥",
+      "file": "b31.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: actual recipe photo in a Korean family meal-planning webapp. Create a realistic photograph of ONLY the exact finished meal below, showing one modest serving. Match its ingredients AND preparation: fried rice must be dry mixed fried rice, porridge must show thick cooked grains, soups must have broth, toast must match open or closed form specified. Modest Korean home meal on plain cream ceramic plate or bowl, ivory tabletop, soft natural daylight, high three-quarter overhead camera. Landscape 3:2. Keep main dish whole and centered with wide margins for responsive crop. Rice on the side ONLY if this recipe explicitly includes rice served alongside soup or main. No people, hands, text, watermark, garnish, herbs, side dishes, or extra ingredients that are absent from recipe. No decorative food props. {\"title\":\"토마토 달걀 덮밥\",\"ingredients\":[\"즉석 잡곡밥\",\"달걀\",\"토마토\",\"양파\",\"식용유\",\"간장\"],\"preparation\":[\"토마토는 한입 크기, 양파는 얇게 썰고 달걀을 풉니다.\",\"기름 두른 팬에 양파·토마토를 넣어 토마토가 부드러워질 때까지 볶습니다.\",\"달걀·간장을 넣어 저으며 달걀 중심 75℃에서 1분 이상 익히고 데운 밥 위에 올립니다.\"]}",
+      "sha256": "1451b49c95b885654283c4a14e13bf98ff1d3b9d11f129e2eb5d734e483799ba",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "b32",
+      "title": "검은콩 두유 오트죽과 사과",
+      "file": "b32.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: actual recipe photo in a Korean family meal-planning webapp. Create a realistic photograph of ONLY the exact finished meal below, showing one modest serving. Match its ingredients AND preparation: fried rice must be dry mixed fried rice, porridge must show thick cooked grains, soups must have broth, toast must match open or closed form specified. Modest Korean home meal on plain cream ceramic plate or bowl, ivory tabletop, soft natural daylight, high three-quarter overhead camera. Landscape 3:2. Keep main dish whole and centered with wide margins for responsive crop. Rice on the side ONLY if this recipe explicitly includes rice served alongside soup or main. No people, hands, text, watermark, garnish, herbs, side dishes, or extra ingredients that are absent from recipe. No decorative food props. {\"title\":\"검은콩 두유 오트죽과 사과\",\"ingredients\":[\"오트밀\",\"무가당 두유\",\"시판 익힌 검은콩\",\"사과\",\"물\"],\"preparation\":[\"설탕과 간장이 첨가되지 않은 완전히 익힌 검은콩을 준비합니다. 사과는 씻어 얇게 썹니다.\",\"냄비에 오트밀·두유·물·콩을 넣고 약불로 저으며 오트밀 제품 표시 시간대로 끓입니다.\",\"콩까지 뜨겁게 데워지면 두 그릇에 나누고 사과를 곁들입니다.\"]}",
+      "sha256": "5d48378d8d9d9e3fe1ea1bf23f544a0f632be87499850a27ebd28d8cce24d292",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "d13",
+      "title": "돼지고기 숙주볶음과 밥",
+      "file": "d13.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset: accurate food photo for Korean recipe webapp. Dish: 돼지고기 숙주볶음과 밥. Pork mung-bean sprout stir-fry and separate multigrain rice. Thin folded slices of fully cooked lean pork shoulder, cooked mung bean sprouts and translucent onion strips, glossy mild soy-garlic coating. No red spice, egg, sesame or garnish. Actual recipe ingredients: 즉석 잡곡밥, 얇게 썬 돼지고기 앞다리살, 숙주, 양파, 간장, 다진 마늘, 식용유. Modest realistic Korean home meal, one complete serving in cream ceramic dishware on warm ivory tabletop. Soft natural daylight, realistic food texture, high three-quarter overhead view. Landscape 3:2. Keep entire main dish centered with generous margins for responsive crops. No people, hands, text, logo, watermark, decorative extra food or unlisted ingredients.",
+      "sha256": "bb3e036f5bee5b0d0ddda12ba9a6ae61abd22c7fc7b88b1e56ccf9c5ea45bd38",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "d14",
+      "title": "간장 닭갈비와 밥",
+      "file": "d14.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset: accurate food photo for Korean recipe webapp. Dish: 간장 닭갈비와 밥. Mild soy chicken dakgalbi and separate multigrain rice. Bite-size cooked chicken-breast pieces sautéed with tender cabbage, onion and visible dark-green perilla-leaf strips. Brown soy-garlic sauce, NOT red spicy dakgalbi. No rice cakes, sweet potato or sesame. Actual recipe ingredients: 즉석 잡곡밥, 시판 완전조리 닭가슴살, 양배추, 깻잎, 양파, 간장, 다진 마늘, 식용유, 물. Modest realistic Korean home meal, one complete serving in cream ceramic dishware on warm ivory tabletop. Soft natural daylight, realistic food texture, high three-quarter overhead view. Landscape 3:2. Keep entire main dish centered with generous margins for responsive crops. No people, hands, text, logo, watermark, decorative extra food or unlisted ingredients.",
+      "sha256": "130ad71c2c4415ce998c2cc50c1ee1576ceb16542c7ff7fcb9a61b44db93fdc0",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "d15",
+      "title": "참치 애호박 고추장찌개와 밥",
+      "file": "d15.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset: accurate food photo for Korean recipe webapp. Dish: 참치 애호박 고추장찌개와 밥. Tuna zucchini gochujang stew with separate multigrain rice. A soup bowl of moderately red-orange broth, visible canned tuna flakes, soft tofu cubes, thin zucchini half-moons and onion. No meat chunks, shrimp, egg or scallion garnish. Actual recipe ingredients: 즉석 잡곡밥, 참치 통조림(물에 담긴 것), 두부, 애호박, 양파, 고추장, 다진 마늘, 물. Modest realistic Korean home meal, one complete serving in cream ceramic dishware on warm ivory tabletop. Soft natural daylight, realistic food texture, high three-quarter overhead view. Landscape 3:2. Keep entire main dish centered with generous margins for responsive crops. No people, hands, text, logo, watermark, decorative extra food or unlisted ingredients.",
+      "sha256": "408b78fa5588b5c21f1c96769f3182722a7d38818aee6229af6062dc7fddce2a",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "d16",
+      "title": "버섯 소불고기와 밥",
+      "file": "d16.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset: accurate food photo for Korean recipe webapp. Dish: 버섯 소불고기와 밥. Mushroom beef bulgogi with separate multigrain rice. Thin crinkled brown cooked beef slices and king-oyster mushroom strips, onion strips and thin carrot strips, light glossy brown soy-garlic sauce. No ground beef, noodles, scallion or sesame seeds. Actual recipe ingredients: 즉석 잡곡밥, 얇게 썬 소고기, 새송이버섯, 양파, 당근, 간장, 다진 마늘, 참기름, 물. Modest realistic Korean home meal, one complete serving in cream ceramic dishware on warm ivory tabletop. Soft natural daylight, realistic food texture, high three-quarter overhead view. Landscape 3:2. Keep entire main dish centered with generous margins for responsive crops. No people, hands, text, logo, watermark, decorative extra food or unlisted ingredients.",
+      "sha256": "416b5c7f20af8e50022eec0978697c7611270c9e10848e14996ad4723d1901df",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "d17",
+      "title": "두부 간장조림과 오이밥상",
+      "file": "d17.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset: accurate food photo for Korean recipe webapp. Dish: 두부 간장조림과 오이밥상. Soy-braised tofu with cucumber and separate multigrain rice. Several flat rectangular tofu slices about1cm thick, lightly golden edges, braised with onion strips in light brown soy-garlic sauce. Fresh cucumber sticks to side. No red sauce, egg, scallion or sesame. Actual recipe ingredients: 즉석 잡곡밥, 두부, 양파, 오이, 간장, 다진 마늘, 식용유, 물. Modest realistic Korean home meal, one complete serving in cream ceramic dishware on warm ivory tabletop. Soft natural daylight, realistic food texture, high three-quarter overhead view. Landscape 3:2. Keep entire main dish centered with generous margins for responsive crops. No people, hands, text, logo, watermark, decorative extra food or unlisted ingredients.",
+      "sha256": "fd332b71746f4d899080919df13621d024cdb01c7b667886ff19ecd37ec0f2f9",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "d18",
+      "title": "고등어구이와 양배추찜 정식",
+      "file": "d18.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset: accurate food photo for Korean recipe webapp. Dish: 고등어구이와 양배추찜 정식. Grilled mackerel and steamed cabbage dinner plate, with multigrain rice and cherry tomatoes. One unmistakable mackerel fillet, silver-blue patterned skin and browned golden edges, not salmon or chicken. Tender folded pale cabbage and fresh cherry tomatoes on plate, rice in small separate bowl. No lemon, parsley or sesame. Actual recipe ingredients: 즉석 잡곡밥, 시판 완전조리 순살 고등어구이, 양배추, 방울토마토, 물. Modest realistic Korean home meal, one complete serving in cream ceramic dishware on warm ivory tabletop. Soft natural daylight, realistic food texture, high three-quarter overhead view. Landscape 3:2. Keep entire main dish centered with generous margins for responsive crops. No people, hands, text, logo, watermark, decorative extra food or unlisted ingredients.",
+      "sha256": "ae877265f3b29858cf1cc0168469b312a30ee0dc4a70fd69c3c7d322ddce8916",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "d19",
+      "title": "콩나물 달걀 비빔밥",
+      "file": "d19.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset: accurate food photo for Korean recipe webapp. Dish: 콩나물 달걀 비빔밥. Soy-seasoned soybean-sprout egg bibimbap. Multigrain rice topped with cooked soybean sprouts bearing distinctive yellow heads, fully cooked SCRAMBLED egg pieces, thin cooked carrot strips and crumbled dried dark seaweed. No fried egg with runny yolk, red sauce, spinach or sesame. Actual recipe ingredients: 즉석 잡곡밥, 콩나물, 달걀, 당근, 김, 간장, 참기름, 식용유, 물. Modest realistic Korean home meal, one complete serving in cream ceramic dishware on warm ivory tabletop. Soft natural daylight, realistic food texture, high three-quarter overhead view. Landscape 3:2. Keep entire main dish centered with generous margins for responsive crops. No people, hands, text, logo, watermark, decorative extra food or unlisted ingredients.",
+      "sha256": "6983f109d97d6a7d7bcce37486e6dc179b0ca5edc9632440966f6b2483bf9a10",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "d20",
+      "title": "시금치 두부 나물비빔밥",
+      "file": "d20.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset: accurate food photo for Korean recipe webapp. Dish: 시금치 두부 나물비빔밥. Spinach tofu namul bibimbap. Multigrain rice with white tofu small cubes, cooked dark-green spinach, thin orange carrot strips and king-oyster mushroom strips arranged naturally on top, lightly soy and sesame-oil seasoned. No egg, red sauce, sprouts or sesame seeds. Actual recipe ingredients: 즉석 잡곡밥, 두부, 냉동 시금치, 당근, 새송이버섯, 간장, 참기름, 식용유. Modest realistic Korean home meal, one complete serving in cream ceramic dishware on warm ivory tabletop. Soft natural daylight, realistic food texture, high three-quarter overhead view. Landscape 3:2. Keep entire main dish centered with generous margins for responsive crops. No people, hands, text, logo, watermark, decorative extra food or unlisted ingredients.",
+      "sha256": "71ddae4956d265738db31becc26b6bcb8af3472bedceec480966c329268fc436",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "d21",
+      "title": "닭고기 양배추 쌈밥",
+      "file": "d21.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset: accurate food photo for Korean recipe webapp. Dish: 닭고기 양배추 쌈밥. Chicken cabbage ssam rice wraps. Several tender pale steamed cabbage leaves visibly folded around multigrain rice, sliced fully cooked white chicken breast and cucumber batons, at least two open wraps showing filling. Small plain dish of brown doenjang paste alongside. No lettuce, red sauce, pork or sesame. Actual recipe ingredients: 즉석 잡곡밥, 시판 완전조리 닭가슴살, 양배추, 오이, 된장, 참기름, 물. Modest realistic Korean home meal, one complete serving in cream ceramic dishware on warm ivory tabletop. Soft natural daylight, realistic food texture, high three-quarter overhead view. Landscape 3:2. Keep entire main dish centered with generous margins for responsive crops. No people, hands, text, logo, watermark, decorative extra food or unlisted ingredients.",
+      "sha256": "a946f831437b68bc41a34ba51f3339a474a9dd0f09360fb31444081f795bb5dd",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "d22",
+      "title": "참치 두부 쌈장과 상추쌈밥",
+      "file": "d22.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset: accurate food photo for Korean recipe webapp. Dish: 참치 두부 쌈장과 상추쌈밥. Tuna tofu lettuce ssam rice wraps. Fresh green lettuce cups hold multigrain rice, chunky pale tuna and mashed tofu ssamjang lightly tan with doenjang, and cucumber sticks. Show recognizable lettuce leaves and chunky tuna-tofu mixture. No chicken, pork, kimchi, red sauce or sesame. Actual recipe ingredients: 즉석 잡곡밥, 참치 통조림(물에 담긴 것), 두부, 상추, 오이, 된장, 참기름. Modest realistic Korean home meal, one complete serving in cream ceramic dishware on warm ivory tabletop. Soft natural daylight, realistic food texture, high three-quarter overhead view. Landscape 3:2. Keep entire main dish centered with generous margins for responsive crops. No people, hands, text, logo, watermark, decorative extra food or unlisted ingredients.",
+      "sha256": "17dad1fbf82a43af187a66c36b08d3be94dce6e636cb45351a67d719f3716c1f",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "d23",
+      "title": "소고기 버섯 배추전골과 밥",
+      "file": "d23.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset: accurate food photo for Korean recipe webapp. Dish: 소고기 버섯 배추전골과 밥. Beef mushroom napa-cabbage hotpot and separate multigrain rice. Wide cream bowl of clear light-brown broth with thin folded cooked beef slices, napa cabbage pieces with white stalks and pale-green tops, king-oyster mushroom slices and tofu cubes. All cooked. No red sauce, fish or scallion garnish. Actual recipe ingredients: 즉석 잡곡밥, 얇게 썬 소고기, 배추, 새송이버섯, 두부, 물, 간장, 다진 마늘. Modest realistic Korean home meal, one complete serving in cream ceramic dishware on warm ivory tabletop. Soft natural daylight, realistic food texture, high three-quarter overhead view. Landscape 3:2. Keep entire main dish centered with generous margins for responsive crops. No people, hands, text, logo, watermark, decorative extra food or unlisted ingredients.",
+      "sha256": "34f82543112e12e556cb388e2393dbc5a48379738bb3bf02f9bcb2ff3345a3d6",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "d24",
+      "title": "순살 대구 두부 맑은탕과 밥",
+      "file": "d24.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset: accurate food photo for Korean recipe webapp. Dish: 순살 대구 두부 맑은탕과 밥. Clear cod tofu soup with separate multigrain rice. Clear pale broth featuring opaque flaky white boneless COD pieces, tofu cubes, thin white radish slices, soybean sprouts with yellow heads and chopped scallion. No salmon, shellfish, red spice or garnish beyond ingredients. Actual recipe ingredients: 즉석 잡곡밥, 해동한 순살 대구, 두부, 무, 콩나물, 대파, 물, 간장, 다진 마늘. Modest realistic Korean home meal, one complete serving in cream ceramic dishware on warm ivory tabletop. Soft natural daylight, realistic food texture, high three-quarter overhead view. Landscape 3:2. Keep entire main dish centered with generous margins for responsive crops. No people, hands, text, logo, watermark, decorative extra food or unlisted ingredients.",
+      "sha256": "015da58440ddd58d7b8342167414be414bc42734fec27219d67930416be9b9da",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "d25",
+      "title": "참치 김치 달걀볶음밥",
+      "file": "d25.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset: accurate food photo for Korean recipe webapp. Dish: 참치 김치 달걀볶음밥. Tuna kimchi egg fried rice. Reddish-orange multigrain fried rice with flaked canned tuna, small cooked kimchi and cabbage pieces, and yellow fully scrambled egg folded INTO the rice. No whole fried egg on top, sesame seeds, scallion or seaweed. Actual recipe ingredients: 즉석 잡곡밥, 참치 통조림(물에 담긴 것), 달걀, 배추김치, 양배추, 식용유. Modest realistic Korean home meal, one complete serving in cream ceramic dishware on warm ivory tabletop. Soft natural daylight, realistic food texture, high three-quarter overhead view. Landscape 3:2. Keep entire main dish centered with generous margins for responsive crops. No people, hands, text, logo, watermark, decorative extra food or unlisted ingredients.",
+      "sha256": "b4c3fef76a810cad16c38f0e4153bd2c36daf7a2aa67e4c46e2ae70ae2278714",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "d26",
+      "title": "두부 채소 강된장 비빔밥",
+      "file": "d26.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: recipe card photograph. Create one accurate finished Korean home meal photo of \"두부 채소 강된장 비빔밥\". Exact ingredients: 즉석 잡곡밥, 두부, 애호박, 양파, 새송이버섯, 상추, 된장, 물, 다진 마늘. Preparation: 애호박·양파·버섯을 잘게 썰고 두부를 으깹니다. 상추를 씻어 물기를 뺍니다. 팬에 물·된장·마늘·채소를 넣고 5~6분 끓입니다. 두부를 넣고 속까지 뜨겁게 익히면서 자작하게 졸입니다. 밥에 찢은 상추와 강된장을 나눠 올려 비빕니다.. The main subject is a multigrain rice bowl with torn fresh green lettuce and a generous moist thick mound of gang-doenjang, a light-brown soybean paste mixture containing crumbled tofu, finely diced zucchini, onion and king oyster mushrooms. Distinct rice grains and lettuce visible around edges, soft crumbled tofu and tiny vegetable pieces visible within the thick bean paste. Not a soup, no noodles, no red gochujang, no eggs, no meat, no unlisted garnish. One modest serving in a cream ceramic bowl, ivory tabletop, soft natural daylight, realistic home cooking. High three-quarter overhead view, landscape 3:2 framing, whole bowl fully visible and centered with generous margins. No people, hands, text, logos or watermark.",
+      "sha256": "10bd5e0a79383f35b358aeb09f87c02b25f768b133269e4a17b3b3f7e4eb86d6",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "d27",
+      "title": "애호박 새우 달걀전과 밥",
+      "file": "d27.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: recipe card photograph. Create one accurate finished Korean home meal photo. Landscape 3:2 composition, high three-quarter overhead camera, soft natural daylight, ivory tabletop, cream ceramic dishes, realistic modest home portions. Main dish fully visible centered with generous margins for responsive crop. No people, hands, text, labels, logos, watermark, unnecessary props or unlisted extra food/garnish. Small thin golden Korean zucchini, chopped-shrimp and egg pancakes (ae-hobak saeu dalgyal jeon), shredded green zucchini visible throughout egg batter, small pink-white chopped shrimp pieces, six little round pancakes, bowl of multigrain rice beside. No whole decorative shrimp.\nExact recipe title: 애호박 새우 달걀전과 밥\nIngredients: 즉석 잡곡밥, 해동한 손질 새우, 달걀, 애호박, 밀가루, 식용유, 간장\nMethod: 냉장실에서 미리 해동한 새우를 잘게 다지고 애호박을 가늘게 채 썹니다. 해동 시간은 별도입니다. 새우·애호박·달걀·밀가루·간장을 섞습니다. 기름 두른 넓은 팬에 5mm 두께로 작게 펴서 앞뒤로 굽고 새우를 포함한 중심 85℃에서 1분 이상 익힙니다. 데운 밥과 함께 냅니다. 팬이 작으면 나눠 굽는 시간이 추가됩니다.",
+      "sha256": "659b1536fb9d8c0aa92c09a9feab06163a08ec1e00d1294ac8acf89443446d95",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "d28",
+      "title": "오징어 부추전과 밥",
+      "file": "d28.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: recipe card photograph. Create one accurate finished Korean home meal photo. Landscape 3:2 composition, high three-quarter overhead camera, soft natural daylight, ivory tabletop, cream ceramic dishes, realistic modest home portions. Main dish fully visible centered with generous margins for responsive crop. No people, hands, text, labels, logos, watermark, unnecessary props or unlisted extra food/garnish. Small thin Korean garlic-chive and chopped-squid pancakes, green short chive strands and orange carrot slivers running through crisp golden batter with small white squid pieces; several small pancakes, bowl of multigrain rice beside. No shrimp, no large scallions.\nExact recipe title: 오징어 부추전과 밥\nIngredients: 즉석 잡곡밥, 해동한 손질 오징어, 부추, 당근, 달걀, 밀가루, 물, 식용유, 간장\nMethod: 미리 냉장 해동한 오징어를 5mm 안팎으로 작게 썹니다. 해동 시간은 별도이며 부추·당근도 짧고 가늘게 썹니다. 오징어·채소·달걀·밀가루·물·간장을 섞습니다. 기름 두른 넓은 팬에 얇고 작게 펴 양면을 굽고 오징어를 포함한 중심 85℃에서 1분 이상 익힙니다. 데운 밥과 함께 냅니다. 한 번에 굽기 어려우면 조리 시간을 늘립니다.",
+      "sha256": "48d95ee307edaa6b6b03ac40c2b5f73f22f436d258b556b6ab7737bed0363df2",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "d29",
+      "title": "닭고기 궁중떡볶이",
+      "file": "d29.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: recipe card photograph. Create one accurate finished Korean home meal photo. Landscape 3:2 composition, high three-quarter overhead camera, soft natural daylight, ivory tabletop, cream ceramic dishes, realistic modest home portions. Main dish fully visible centered with generous margins for responsive crop. No people, hands, text, labels, logos, watermark, unnecessary props or unlisted extra food/garnish. Non-spicy soy-sauce Korean royal rice cake stir-fry with shredded chicken breast, cabbage, onions, carrot strips. The rice cakes MUST be flat oval sliced white tteokguk discs (not long cylinders), glossy light brown sauce. No red sauce, no rice bowl.\nExact recipe: 닭고기 궁중떡볶이\nIngredients: 냉장 떡국떡, 시판 완전조리 닭가슴살, 양배추, 양파, 당근, 간장, 참기름, 물\nMethod: 불림이 필요 없는 냉장 떡국떡과 완전조리 닭가슴살을 준비하고 채소를 얇게 썹니다. 넓은 팬에 물·간장·채소를 넣고 끓이다가 떡을 넣어 제품 표시 시간대로 익힙니다. 잘게 찢은 닭고기를 넣어 포장 표시대로 충분히 데우고 참기름을 넣습니다.",
+      "sha256": "321debc5c463f58e6af7a2f6276ccdfe7898ef19dc5f020279600dc75d7b6c5a",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "d30",
+      "title": "김치 두부 떡국",
+      "file": "d30.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: recipe card photograph. Create one accurate finished Korean home meal photo. Landscape 3:2 composition, high three-quarter overhead camera, soft natural daylight, ivory tabletop, cream ceramic dishes, realistic modest home portions. Main dish fully visible centered with generous margins for responsive crop. No people, hands, text, labels, logos, watermark, unnecessary props or unlisted extra food/garnish. Korean kimchi-tofu ricecake soup: warm red-orange kimchi broth, white flat oval tteokguk rice-cake slices, white tofu cubes, chopped napa kimchi and cabbage, delicate fully cooked egg ribbons. One soup bowl, no rice side.\nExact recipe: 김치 두부 떡국\nIngredients: 냉장 떡국떡, 두부, 달걀, 배추김치, 양배추, 물\nMethod: 김치·양배추를 잘게 썰고 두부를 작게 썹니다. 불림이 필요 없는 냉장 떡국떡을 준비합니다. 냄비에 물·김치·양배추를 넣고 끓이다가 떡과 두부를 넣어 떡을 부드럽게 익힙니다. 푼 달걀을 넣어 중심 75℃에서 1분 이상 완전히 익힙니다. 김치의 간으로 먹습니다.",
+      "sha256": "2fa2c2d54466b25b50df3d8f72974365e7f3abc2fc4c37e0800406b287fd54d7",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "d31",
+      "title": "돼지고기 고추장볶음과 상추밥",
+      "file": "d31.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: recipe card photograph. Create one accurate finished Korean home meal photo. Landscape 3:2 composition, high three-quarter overhead camera, soft natural daylight, ivory tabletop, cream ceramic dishes, realistic modest home portions. Main dish fully visible centered with generous margins for responsive crop. No people, hands, text, labels, logos, watermark, unnecessary props or unlisted extra food/garnish. Korean spicy pork stir-fry (jeyuk bokkeum), thin slices of pork shoulder in red gochujang sauce with cooked cabbage and onion, plate with fresh green lettuce leaves at side, separate small multigrain rice bowl. Red sauced thin sliced pork must be focal.\nExact recipe: 돼지고기 고추장볶음과 상추밥\nIngredients: 즉석 잡곡밥, 얇게 썬 돼지고기 앞다리살, 양파, 양배추, 상추, 고추장, 간장, 다진 마늘, 식용유, 물\nMethod: 2mm 안팎으로 얇은 돼지고기를 준비하고 채소를 썹니다. 상추는 따로 씻어 물기를 뺍니다. 고추장·간장·마늘·물을 섞고 기름 두른 팬에 고기·양파·양배추를 볶습니다. 양념을 넣어 고기를 풀어 가며 볶고 중심 75℃에서 1분 이상 익힙니다. 데운 밥·상추와 함께 냅니다. 생고기용 도구는 세척합니다.",
+      "sha256": "6660976871194832b442ab0369e2c369b8f2e5e534359fa0aee6fe248f4d37ae",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "d32",
+      "title": "닭고기 채소 잔치국수",
+      "file": "d32.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: recipe card photograph. Create one accurate finished Korean home meal photo. Landscape 3:2 composition, high three-quarter overhead camera, soft natural daylight, ivory tabletop, cream ceramic dishes, realistic modest home portions. Main dish fully visible centered with generous margins for responsive crop. No people, hands, text, labels, logos, watermark, unnecessary props or unlisted extra food/garnish. Korean chicken vegetable janchi-guksu, a bowl of very thin somyeon noodles in clear lightly golden broth with shredded white chicken breast, thin zucchini and carrot strips and crumbled dark gim seaweed. Noodles clearly visible, no rice, no eggs.\nExact recipe: 닭고기 채소 잔치국수\nIngredients: 소면, 시판 완전조리 닭가슴살, 애호박, 당근, 김, 물, 간장\nMethod: 물 1L를 끓여 소면을 제품 표시 시간대로 삶아 체에 밭칩니다. 동시에 다른 냄비에 물 800ml를 끓입니다. 국물 냄비에 가늘게 썬 애호박·당근·간장을 넣어 익힙니다. 찢은 완전조리 닭가슴살을 넣고 포장 표시대로 충분히 데웁니다. 면에 닭고기 채소국물을 붓고 김을 부숴 올립니다.",
+      "sha256": "0555ac24d13556f03fd9a89b122146db09443b97ac0f73cfa080f56e7f6b5e01",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "d33",
+      "title": "두부 두유 콩국수",
+      "file": "d33.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: recipe card photograph. Create one accurate finished Korean home meal photo. Landscape 3:2 composition, high three-quarter overhead camera, soft natural daylight, ivory tabletop, cream ceramic dishes, realistic modest home portions. Main dish fully visible centered with generous margins for responsive crop. No people, hands, text, labels, logos, watermark, unnecessary props or unlisted extra food/garnish. Cold Korean tofu-soymilk kongguksu, very thin wheat noodles immersed in smooth opaque creamy off-white soy milk broth, a neat mound of julienned cucumber and sliced fresh red tomato on top. Tofu is fully blended, NOT visible tofu cubes. No egg, no sesame garnish, no rice.\nExact recipe: 두부 두유 콩국수\nIngredients: 소면, 두부, 무가당 두유, 오이, 토마토\nMethod: 소면을 제품 표시 시간대로 삶고 찬물로 헹궈 물기를 뺍니다. 바로 먹을 수 있는 두부와 차게 보관한 무가당 두유를 믹서로 곱게 갑니다. 면에 두부 콩국을 붓고 채 썬 오이·썬 토마토를 올립니다.",
+      "sha256": "83ca19a18f866f7c576a318f96314b09dc96373718d6d5863ea7067de374e95b",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "d34",
+      "title": "소고기 채소 볶음우동",
+      "file": "d34.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: recipe card photograph. Create one accurate finished Korean home meal photo. Landscape 3:2 composition, high three-quarter overhead camera, soft natural daylight, ivory tabletop, cream ceramic dishes, realistic modest home portions. Main dish fully visible centered with generous margins for responsive crop. No people, hands, text, labels, logos, watermark, unnecessary props or unlisted extra food/garnish. Beef vegetable stir-fried udon: thick glossy white udon noodles lightly browned by soy sauce, thin beef slices, cabbage, onion, carrot strips, in a shallow cream bowl. Dry stir-fry NOT soup, no rice, no green garnish.\nExact recipe: 소고기 채소 볶음우동\nIngredients: 냉장 우동면, 얇게 썬 소고기, 양배추, 양파, 당근, 간장, 식용유, 물\nMethod: 별도 삶기 없이 팬에서 익힐 수 있는 냉장 우동면을 준비하고 채소를 가늘게 썹니다. 기름 두른 넓은 팬에서 얇은 소고기와 채소를 볶다가 물·간장·면을 넣습니다. 면을 풀어 제품 표시 시간대로 볶고 소고기 중심 75℃에서 1분 이상 익힙니다.",
+      "sha256": "80ddd6dc4af1b4683e4c617019629c0e37af2642b75ca75e3f32df9eb33b3c27",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "d35",
+      "title": "들깨 버섯 두부우동",
+      "file": "d35.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: recipe card photograph. Create one accurate finished Korean home meal photo. Landscape 3:2 composition, high three-quarter overhead camera, soft natural daylight, ivory tabletop, cream ceramic dishes, realistic modest home portions. Main dish fully visible centered with generous margins for responsive crop. No people, hands, text, labels, logos, watermark, unnecessary props or unlisted extra food/garnish. Korean perilla mushroom tofu udon soup: thick udon noodles in creamy pale tan finely speckled perilla broth, white tofu cubes, sliced king oyster mushrooms, cooked green spinach. No red sauce, no meat, no rice.\nExact recipe: 들깨 버섯 두부우동\nIngredients: 냉장 우동면, 두부, 새송이버섯, 냉동 시금치, 들깻가루, 물, 간장\nMethod: 버섯은 얇게, 두부는 한입 크기로 썹니다. 냄비에 물·간장을 끓이고 버섯·두부·시금치를 넣어 채소 제품의 표시 시간대로 익힙니다. 우동면을 넣어 포장에 적힌 시간대로 끓인 뒤 들깻가루를 풀어 1~2분 더 끓입니다.",
+      "sha256": "687015568ccb8523f44a2c9866e386170f694c46f45ca85b44609e160dce3cdc",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "d36",
+      "title": "돼지고기 채소 짜장밥",
+      "file": "d36.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: recipe card photograph. Create one accurate finished Korean home meal photo. Landscape 3:2 composition, high three-quarter overhead camera, soft natural daylight, ivory tabletop, cream ceramic dishes, realistic modest home portions. Main dish fully visible centered with generous margins for responsive crop. No people, hands, text, labels, logos, watermark, unnecessary props or unlisted extra food/garnish. Korean jjajang rice with minced pork and small diced mixed vegetables and onions in glossy very dark brown-black chunjang bean sauce, ladled over multigrain rice so rice remains visible on one side. Black bean sauce not curry. No noodles, egg, cucumber garnish.\nExact recipe: 돼지고기 채소 짜장밥\nIngredients: 즉석 잡곡밥, 다진 돼지고기, 냉동 다진 채소, 양파, 춘장, 전분가루, 식용유, 물\nMethod: 양파를 작게 썰고 전분가루에 물 30ml를 섞어 둡니다. 팬에 기름을 두르고 돼지고기·양파를 풀어 볶다가 춘장을 넣어 1분 볶습니다. 냉동 채소·남은 물 200ml를 넣고 끓여 고기 중심 75℃에서 1분 이상 익힙니다. 전분물을 다시 저어 조금씩 넣고 걸쭉하게 끓여 데운 밥 위에 올립니다.",
+      "sha256": "e003845d5acd3930d2943b4afb49ad7fb7759aabc9e425dc14823f32f5e8eddc",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "d37",
+      "title": "감자 달걀부침과 토마토 밥상",
+      "file": "d37.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: recipe card photograph. Create one accurate finished Korean home meal photo. Landscape 3:2 composition, high three-quarter overhead camera, soft natural daylight, ivory tabletop, cream ceramic dishes, realistic modest home portions. Main dish fully visible centered with generous margins for responsive crop. No people, hands, text, labels, logos, watermark, unnecessary props or unlisted extra food/garnish. Thin potato-and-egg pan pancake, pale golden omelette with visible overlapping thin cooked potato rounds and fine onion strands, cut into wedges, alongside cherry tomatoes and a small bowl of multigrain rice. No greens or extra garnish.\nExact recipe: 감자 달걀부침과 토마토 밥상\nIngredients: 즉석 잡곡밥, 감자, 달걀, 양파, 방울토마토, 식용유, 간장, 물\nMethod: 감자를 2mm 두께로 썰어 전자레인지용 그릇에 물과 담고 전용 덮개를 느슨하게 덮어 700W 기준 3분 익힙니다. 달걀에 채 썬 양파와 간장을 섞습니다. 팬에 기름을 두르고 익힌 감자를 펼칩니다. 달걀물을 부어 약중불에서 뚜껑을 덮고 굽다가 뒤집어 중심 75℃에서 1분 이상 익힙니다. 데운 밥과 씻은 토마토를 곁들입니다.",
+      "sha256": "e3e112fee9937198b509df6d4e08726ef5c75a8a2fa81e40955fb24038e24009",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "d38",
+      "title": "닭고기 김치 두루치기와 밥",
+      "file": "d38.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: recipe card photograph. Create one accurate finished Korean home meal photo. Landscape 3:2 composition, high three-quarter overhead camera, soft natural daylight, ivory tabletop, cream ceramic dishes, realistic modest home portions. Main dish fully visible centered with generous margins for responsive crop. No people, hands, text, labels, logos, watermark, unnecessary props or unlisted extra food/garnish. Korean chicken kimchi duruchigi, shredded cooked white chicken breast, white tofu cubes, softened napa kimchi and onion stir-braised in a small amount of orange-red kimchi sauce, plated with a separate bowl of multigrain rice. No beef or pork.\nExact recipe: 닭고기 김치 두루치기와 밥\nIngredients: 즉석 잡곡밥, 시판 완전조리 닭가슴살, 두부, 배추김치, 양파, 식용유, 물\nMethod: 김치와 양파를 썰고 완전조리 닭가슴살은 잘게 찢습니다. 두부를 한입 크기로 썹니다. 팬에 기름을 두르고 김치·양파를 볶다가 물·닭고기·두부를 넣습니다. 뚜껑을 덮고 닭고기 포장 표시대로 충분히 데워 두부까지 뜨겁게 익힌 뒤 밥과 냅니다.",
+      "sha256": "4e0532d3553b1e006772394633be6ca926a916fe0a275e3e40f0711580dbd7db",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "d39",
+      "title": "훈제오리 부추찜과 밥",
+      "file": "d39.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: recipe card photograph. Create one accurate finished Korean home meal photo. Landscape 3:2 composition, high three-quarter overhead camera, soft natural daylight, ivory tabletop, cream ceramic dishes, realistic modest home portions. Main dish fully visible centered with generous margins for responsive crop. No people, hands, text, labels, logos, watermark, unnecessary props or unlisted extra food/garnish. Steamed sliced smoked duck with cooked green chives, pale bean sprouts and sliced onions. The meat must look like thin slices of smoked duck breast with brown smoked edges and alternating fat/skin, NOT chicken, in a cream shallow bowl, separate multigrain rice bowl.\nExact recipe: 훈제오리 부추찜과 밥\nIngredients: 즉석 잡곡밥, 시판 완전조리 훈제오리, 숙주, 부추, 양파, 물\nMethod: 완전조리 훈제오리를 준비합니다. 숙주를 씻고 양파는 얇게, 부추는 짧게 썹니다. 넓은 팬에 숙주·양파·물·오리를 넣고 뚜껑을 덮어 제품 표시 시간대로 충분히 데웁니다. 부추를 넣고 1~2분 더 익혀 숙주와 채소까지 완전히 익힌 뒤 데운 밥과 냅니다.",
+      "sha256": "1afc305a9c26899323a1650668d86afa13ad0966c2fc426fdc7b089d18d9359d",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "d40",
+      "title": "꽁치 김치조림과 밥",
+      "file": "d40.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: recipe card photograph. Create one accurate finished Korean home meal photo. Landscape 3:2 composition, high three-quarter overhead camera, soft natural daylight, ivory tabletop, cream ceramic dishes, realistic modest home portions. Main dish fully visible centered with generous margins for responsive crop. No people, hands, text, labels, logos, watermark, unnecessary props or unlisted extra food/garnish. Korean canned Pacific saury and kimchi braise: short cooked sections of slender silver-skinned saury fish with flaky brown flesh, softened kimchi, sliced onions and king oyster mushrooms in red kimchi braising liquid. No whole fish head/tail. Small multigrain rice bowl beside.\nExact recipe: 꽁치 김치조림과 밥\nIngredients: 즉석 잡곡밥, 꽁치 통조림, 배추김치, 양파, 새송이버섯, 물, 다진 마늘\nMethod: 꽁치는 통조림 국물을 빼고 큰 뼈가 있는지 확인합니다. 김치·양파·버섯을 얇게 썹니다. 냄비 바닥에 김치·양파·버섯을 깔고 물·마늘을 넣어 5분 끓입니다. 꽁치를 올려 속까지 뜨겁게 4~5분 더 끓이고 데운 밥과 냅니다.\nCorrection: Edit the referenced meal photo. Change ONLY the fish to unmistakable canned Pacific saury (꽁치), NOT mackerel (고등어). It is a slender small fish: five narrow cylindrical cooked fish sections each about 2.5cm diameter and 4cm long, slender dark silver-blue smooth skin, NO wavy mackerel stripes, delicate flaky brown flesh. The current fish chunks are too broad and thick. Keep the red cooked kimchi, sliced onions, king oyster mushrooms, rice, cream dishes, lighting and composition otherwise unchanged. No text or watermark.",
+      "sha256": "20b51627b46c306fac8a0b7bf23a948f5858cd6f280941eb31114ebda9d1effa",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "d41",
+      "title": "가지 돼지고기 덮밥",
+      "file": "d41.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: recipe card photograph. Create one accurate finished Korean home meal photo. Landscape 3:2 composition, high three-quarter overhead camera, soft natural daylight, ivory tabletop, cream ceramic dishes, realistic modest home portions. Main dish fully visible centered with generous margins for responsive crop. No people, hands, text, labels, logos, watermark, unnecessary props or unlisted extra food/garnish. Eggplant minced-pork rice bowl: soft half-moon eggplant slices with dark purple skins, crumbled cooked minced pork and chopped onions in a light glossy brown soy sauce, on visible multigrain rice. No red chili, no fried egg, no green garnish.\nExact recipe: 가지 돼지고기 덮밥\nIngredients: 즉석 잡곡밥, 다진 돼지고기, 가지, 양파, 간장, 다진 마늘, 식용유, 물\nMethod: 가지는 두께 5mm 반달 모양으로, 양파는 잘게 썹니다. 팬에 기름을 두르고 돼지고기·마늘·양파를 덩어리 없이 풀어 볶습니다. 가지·물·간장을 넣고 뚜껑을 덮어 가지를 부드럽게 익히고 돼지고기 중심 75℃에서 1분 이상 가열합니다. 데운 밥 위에 나눠 올립니다.",
+      "sha256": "55ccfe2be4b825690f9663c144a5880e88fed3d0cc6d53ff6f9f51103ea17f7b",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "d42",
+      "title": "배추 순두부 들깨국과 밥",
+      "file": "d42.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: recipe card photograph. Create one accurate finished Korean home meal photo. Landscape 3:2 composition, high three-quarter overhead camera, soft natural daylight, ivory tabletop, cream ceramic dishes, realistic modest home portions. Main dish fully visible centered with generous margins for responsive crop. No people, hands, text, labels, logos, watermark, unnecessary props or unlisted extra food/garnish. Korean napa cabbage, soft tofu and perilla soup, pale creamy tan broth lightly speckled with ground perilla, irregular delicate soft tofu scoops, cooked napa cabbage strips, delicate fully cooked egg ribbons. Bowl with small side multigrain rice bowl, no chili.\nExact recipe: 배추 순두부 들깨국과 밥\nIngredients: 즉석 잡곡밥, 순두부, 달걀, 배추, 들깻가루, 물, 간장\nMethod: 배추를 1cm 폭으로 썰고 냄비에 물과 넣어 부드러워질 때까지 끓입니다. 순두부를 숟가락으로 떠 넣고 간장을 넣습니다. 푼 달걀을 넣어 중심 75℃에서 1분 이상 익히고 들깻가루를 섞어 한 번 더 끓입니다. 데운 밥과 함께 냅니다.",
+      "sha256": "e752d88e1e80a97d6650e75f514dbf0747b8e4e7b4076624c6d04e2a3e831664",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "d43",
+      "title": "달걀 버섯 간장조림과 밥",
+      "file": "d43.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: recipe card photograph. Create one accurate finished Korean home meal photo. Landscape 3:2 composition, high three-quarter overhead camera, soft natural daylight, ivory tabletop, cream ceramic dishes, realistic modest home portions. Main dish fully visible centered with generous margins for responsive crop. No people, hands, text, labels, logos, watermark, unnecessary props or unlisted extra food/garnish. Soy-braised hard-boiled eggs with king oyster mushrooms, tofu cubes and thin carrot slices, small amount of light brown soy braising sauce. Eggs cut in halves with firm fully set yellow yolks and light brown whites. Small multigrain rice bowl beside. No runny eggs, no garnish.\nExact recipe: 달걀 버섯 간장조림과 밥\nIngredients: 즉석 잡곡밥, 시판 완숙달걀, 두부, 새송이버섯, 당근, 간장, 물\nMethod: 완숙달걀 껍질을 벗기고 버섯·당근을 얇게, 두부를 작게 썹니다. 넓은 팬에 물·간장·당근·버섯을 넣고 4~5분 끓입니다. 두부·달걀을 넣고 굴려 가며 속까지 뜨겁게 데워 자작하게 졸입니다. 달걀을 반으로 잘라 데운 밥·채소·두부와 함께 냅니다.",
+      "sha256": "baeff881eaeb6e2110a47cd2c6d3c0d5cf98b05522a0ea1db5f2c0f5fb5cc4ff",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "d44",
+      "title": "참치 두부 동그랑땡과 밥",
+      "file": "d44.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: recipe card photograph. Create one accurate finished Korean home meal photo. Landscape 3:2 composition, high three-quarter overhead camera, soft natural daylight, ivory tabletop, cream ceramic dishes, realistic modest home portions. Main dish fully visible centered with generous margins for responsive crop. No people, hands, text, labels, logos, watermark, unnecessary props or unlisted extra food/garnish. Tuna tofu donggeurangttaeng: small flattened round pan-fried patties made from mashed tuna and tofu with egg and finely diced orange carrot, golden crust and soft pale inside, beside a mound of raw finely shredded cabbage and a small multigrain rice bowl. No sauce, no greens.\nExact recipe: 참치 두부 동그랑땡과 밥\nIngredients: 즉석 잡곡밥, 참치 통조림(물에 담긴 것), 두부, 달걀, 당근, 밀가루, 양배추, 식용유\nMethod: 참치와 두부는 물기를 꼭 빼고 으깹니다. 당근은 잘게 다지고 양배추는 씻어 가늘게 채 썹니다. 참치·두부·달걀·당근·밀가루를 섞어 반죽합니다. 기름 두른 넓은 팬에 5mm 두께로 작게 펴 앞뒤로 굽고 달걀 반죽 중심 75℃에서 1분 이상 익힙니다. 데운 밥과 양배추를 곁들입니다. 팬이 작으면 나누어 굽는 시간이 추가됩니다.",
+      "sha256": "50a2a06108a016935e8b4c650f1531d0be74b07040c8a139c664f76d9ca0f67a",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "d45",
+      "title": "새우 미역 떡국",
+      "file": "d45.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: recipe card photograph. Create one accurate finished Korean home meal photo. Landscape 3:2 composition, high three-quarter overhead camera, soft natural daylight, ivory tabletop, cream ceramic dishes, realistic modest home portions. Main dish fully visible centered with generous margins for responsive crop. No people, hands, text, labels, logos, watermark, unnecessary props or unlisted extra food/garnish. Shrimp seaweed tteokguk: pale clear broth with many flat white oval ricecake discs, curled pink-white cooked peeled shrimp, dark green wakame seaweed, cooked spinach and fully cooked fine egg ribbons. Single soup bowl, no rice or side dishes.\nExact recipe: 새우 미역 떡국\nIngredients: 냉장 떡국떡, 해동한 손질 새우, 달걀, 불린 자른 미역, 냉동 시금치, 물, 간장\nMethod: 미리 냉장 해동한 새우와 불린 미역, 불림이 필요 없는 냉장 떡국떡을 준비합니다. 해동·미역 불림 시간은 별도입니다. 물에 미역·시금치를 넣어 끓이고 떡·새우를 넣어 제품 표시 시간대로 익힙니다. 새우 중심 85℃에서 1분 이상 익힌 후 푼 달걀과 간장을 넣습니다. 달걀 중심 75℃에서 1분 이상 익혀 두 그릇에 나눕니다.",
+      "sha256": "2952d199026f7f9b53efb96c8d478f04ad25be398fb649fc8ade135bc552c0d7",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "d46",
+      "title": "닭고기 채소 수제비",
+      "file": "d46.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: recipe card photograph. Create one accurate finished Korean home meal photo. Landscape 3:2 composition, high three-quarter overhead camera, soft natural daylight, ivory tabletop, cream ceramic dishes, realistic modest home portions. Main dish fully visible centered with generous margins for responsive crop. No people, hands, text, labels, logos, watermark, unnecessary props or unlisted extra food/garnish. Korean chicken vegetable sujebi: soup with irregular flat hand-torn wheat dough flakes, shredded chicken breast, thin zucchini half-moons, carrot strips and onion in clear light broth. Dough pieces must be irregular flat rustic sheets, NOT long noodles, NOT filled dumplings. No rice.\nExact recipe: 닭고기 채소 수제비\nIngredients: 시판 냉장 수제비, 시판 완전조리 닭가슴살, 애호박, 당근, 양파, 물, 간장\nMethod: 5분 안팎에 익는 시판 냉장 수제비를 준비하고 애호박·당근·양파를 얇게 썹니다. 끓는 물에 채소·간장을 넣고 3분 끓이다가 수제비를 넣어 제품 표시 시간대로 익힙니다. 찢은 완전조리 닭가슴살을 넣어 제품 가열 조건에 맞게 속까지 뜨겁게 데웁니다.",
+      "sha256": "2ef7613f10aec8cb507d8f21421899c6e709fcd60a1653054d2de8551725074d",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "d47",
+      "title": "시래기 두부 된장국과 밥",
+      "file": "d47.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: recipe card photograph. Create one accurate finished Korean home meal photo. Landscape 3:2 composition, high three-quarter overhead camera, soft natural daylight, ivory tabletop, cream ceramic dishes, realistic modest home portions. Main dish fully visible centered with generous margins for responsive crop. No people, hands, text, labels, logos, watermark, unnecessary props or unlisted extra food/garnish. Korean siraegi doenjang soup with tofu: earthy light brown soybean paste broth with abundant cooked dark olive-green radish leaves and thin fibrous stems, white tofu cubes, small onion pieces. A small multigrain rice bowl beside. Not bright fresh spinach, no chili.\nExact recipe: 시래기 두부 된장국과 밥\nIngredients: 즉석 잡곡밥, 시판 삶은 시래기, 두부, 양파, 된장, 다진 마늘, 물\nMethod: 이미 부드럽게 삶은 냉장 시래기를 짧게 자르고 두부·양파를 작게 썹니다. 끓는 물에 된장을 풀고 시래기·양파·마늘을 넣어 5분 끓입니다. 두부를 넣고 건더기 속까지 뜨겁게 끓인 뒤 데운 밥과 냅니다.",
+      "sha256": "b2bc84582614667232b01cefdf4ff7137beda067aaace0f613420ad38a7fccee",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "d48",
+      "title": "오징어 채소볶음과 밥",
+      "file": "d48.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: recipe card photograph. Create one accurate finished Korean home meal photo. Landscape 3:2 composition, high three-quarter overhead camera, soft natural daylight, ivory tabletop, cream ceramic dishes, realistic modest home portions. Main dish fully visible centered with generous margins for responsive crop. No people, hands, text, labels, logos, watermark, unnecessary props or unlisted extra food/garnish. Korean spicy squid vegetable stir-fry: clearly recognizable cooked squid rings and strips and a few curled tentacle sections, with cabbage, onion and carrot slivers in glossy red gochujang sauce; separate small multigrain rice bowl. No shrimp, no beef.\nExact recipe: 오징어 채소볶음과 밥\nIngredients: 즉석 잡곡밥, 해동한 손질 오징어, 양배추, 양파, 당근, 고추장, 간장, 다진 마늘, 식용유, 물\nMethod: 미리 냉장 해동한 오징어를 5mm 폭으로 썹니다. 해동 시간은 별도이며 채소도 가늘게 썹니다. 고추장·간장·마늘·물을 섞고 기름 두른 넓은 팬에 채소를 먼저 볶습니다. 오징어·양념을 넣고 볶아 오징어 중심 85℃에서 1분 이상 익힙니다. 데운 밥과 함께 냅니다. 생오징어용 도구는 세척합니다.",
+      "sha256": "8e4a5179a3b5ca9d41960c75ae621ff3a462c36ba0ae20f5e0b2398afcb48178",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "d49",
+      "title": "대패삼겹 배추찜과 밥",
+      "file": "d49.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: recipe card photograph. Create one accurate finished Korean home meal photo. Landscape 3:2 composition, high three-quarter overhead camera, soft natural daylight, ivory tabletop, cream ceramic dishes, realistic modest home portions. Main dish fully visible centered with generous margins for responsive crop. No people, hands, text, labels, logos, watermark, unnecessary props or unlisted extra food/garnish. Korean thin sliced pork belly and napa cabbage steam: pale fully cooked delicate pork belly ribbons with distinct white fat bands layered loosely over tender napa cabbage and sliced king oyster mushrooms. Small soy-vinegar dipping sauce bowl and multigrain rice beside. Not grilled browned pork, not raw pink.\nExact recipe: 대패삼겹 배추찜과 밥\nIngredients: 즉석 잡곡밥, 해동한 대패삼겹살, 배추, 새송이버섯, 간장, 식초, 물\nMethod: 냉장실에서 미리 해동한 얇은 대패삼겹살을 준비합니다. 해동 시간은 별도이며 배추·버섯을 얇게 썹니다. 넓은 팬에 채소와 물 90ml를 넣고 고기를 겹치지 않게 펼쳐 뚜껑을 덮습니다. 고기를 뒤집어 고르게 익히고 중심 75℃에서 1분 이상 가열합니다. 간장·식초·남은 물 10ml를 섞어 조금씩 찍어 먹고 데운 밥을 곁들입니다.",
+      "sha256": "108b5005113dd2888d7b09f9ae981b62b012cd854a9b9df83c3aa4f7f8dac63c",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "d50",
+      "title": "무생채 달걀 두부비빔밥",
+      "file": "d50.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: recipe card photograph. Create one accurate finished Korean home meal photo. Landscape 3:2 composition, high three-quarter overhead camera, soft natural daylight, ivory tabletop, cream ceramic dishes, realistic modest home portions. Main dish fully visible centered with generous margins for responsive crop. No people, hands, text, labels, logos, watermark, unnecessary props or unlisted extra food/garnish. Korean radish egg tofu bibimbap, multigrain rice topped with distinct portions of very thin julienned raw radish dressed in mild red chili, torn fresh green lettuce, soft fully cooked scrambled eggs mixed with crumbled tofu. No whole fried egg, no mushroom or carrots.\nExact recipe: 무생채 달걀 두부비빔밥\nIngredients: 즉석 잡곡밥, 무, 상추, 달걀, 두부, 고춧가루, 식초, 간장, 참기름, 식용유\nMethod: 무를 아주 가늘게 채 썰어 고춧가루·식초·간장과 버무리고 상추를 씻어 잘게 찢습니다. 기름 두른 팬에 으깬 두부를 먼저 볶다가 달걀을 넣어 저으며 중심 75℃에서 1분 이상 익힙니다. 데운 밥에 무생채·상추·두부 달걀볶음을 올리고 참기름을 넣어 비빕니다.",
+      "sha256": "eb0f81ec12d2f67504e1b4d1b042ae17f137eb3c546bc5aa91e01f604e0dd186",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "d51",
+      "title": "청국장 두부찌개와 밥",
+      "file": "d51.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: recipe card photograph. Create one accurate finished Korean home meal photo. Landscape 3:2 composition, high three-quarter overhead camera, soft natural daylight, ivory tabletop, cream ceramic dishes, realistic modest home portions. Main dish fully visible centered with generous margins for responsive crop. No people, hands, text, labels, logos, watermark, unnecessary props or unlisted extra food/garnish. Korean cheonggukjang tofu stew: rustic tan-brown fermented soybean broth with visible whole golden soybeans, white tofu cubes, sliced green zucchini, onions and king oyster mushrooms. A small multigrain rice bowl beside. No kimchi or red pepper.\nExact recipe: 청국장 두부찌개와 밥\nIngredients: 즉석 잡곡밥, 청국장, 두부, 애호박, 양파, 새송이버섯, 물\nMethod: 애호박·양파·버섯을 얇게 썰고 두부는 작게 자릅니다. 냄비에 물·채소를 넣어 5~6분 끓입니다. 청국장을 풀고 두부를 넣어 청국장 제품의 조리 안내대로 충분히 끓인 뒤 데운 밥과 냅니다.",
+      "sha256": "7e13f29b10f9ad0fd3e829f02439b4e9f07126c3f36b139b994b71f173c1df98",
+      "review": "Recipe ingredients and preparation visually checked"
+    },
+    {
+      "id": "d52",
+      "title": "채소두부 달걀 만둣국",
+      "file": "d52.webp",
+      "generator": "ChatGPT built-in image generation",
+      "prompt": "Use case: photorealistic-natural. Asset type: recipe card photograph. Create one accurate finished Korean home meal photo. Landscape 3:2 composition, high three-quarter overhead camera, soft natural daylight, ivory tabletop, cream ceramic dishes, realistic modest home portions. Main dish fully visible centered with generous margins for responsive crop. No people, hands, text, labels, logos, watermark, unnecessary props or unlisted extra food/garnish. Korean vegetable-tofu mandu soup: small pleated crescent dumplings filled with tofu and vegetables in clear light broth, thin napa cabbage and carrot strips, delicate fully cooked egg ribbons. One dumpling cut open to show vegetable tofu filling. No meat, ricecakes, rice, or noodles.\nExact recipe: 채소두부 달걀 만둣국\nIngredients: 고기 없는 채소두부 냉동만두, 달걀, 배추, 당근, 물, 간장\nMethod: 10분 안에 익는 작은 채소두부 냉동만두를 준비하고 배추·당근을 가늘게 썹니다. 물에 채소·간장을 넣어 끓이고 냉동만두를 넣어 제품 표시 시간대로 중심까지 충분히 익힙니다. 푼 달걀을 넣고 중심 75℃에서 1분 이상 익힙니다. 만두는 반으로 잘라 속이 뜨거운지 확인합니다.",
+      "sha256": "8aaf7b8a062abab20fb00f15a3308172825dcc7ee719de1827e5e7637ec3c19e",
+      "review": "Recipe ingredients and preparation visually checked"
+    }
+  ]
+}
