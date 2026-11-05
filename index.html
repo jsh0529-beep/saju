@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
 <title>월하서재 — 사주 간명소</title>
 <meta property="og:title" content="월하서재 — 사주 간명소">
 <meta property="og:description" content="달빛 아래에서, 당신의 사주를 정성껏 읽어드립니다. 명리 20년 혜윤 선생의 A4 열 장 간명서.">
@@ -328,10 +329,12 @@ header{position:relative}
 <!-- ── 관리자 ── -->
 <section class="card" id="admin">
   <h2>간명서 작성실 (관리자)</h2>
-  <label>Anthropic API 키</label>
-  <input type="password" id="apiKey" placeholder="sk-ant-...">
-  <label>관리 열람 키 (Apps Script의 SECRET 값)</label>
-  <input type="password" id="adminKey" placeholder="열람 키">
+  <label for="apiKey">Anthropic API 키 (이 화면에서 직접 작성할 때만)</label>
+  <input type="password" id="apiKey" placeholder="sk-ant-..." autocomplete="off" spellcheck="false">
+  <label for="adminKey">관리 열람 키 (Apps Script의 SECRET 값)</label>
+  <input type="password" id="adminKey" placeholder="열람 키" autocomplete="off" spellcheck="false">
+  <p class="note">키는 브라우저 저장소에 저장하지 않습니다. 새로고침하거나 작성실을 닫으면 다시 입력해야 합니다. 백그라운드 예약은 API 키 입력 없이 기존 서버에서 처리됩니다.</p>
+  <button class="btn ghost" id="lockAdmin" style="margin-top:14px">키 지우고 작성실 닫기</button>
   <button class="btn ghost" id="listBtn" style="margin-top:14px">신청 목록 불러오기</button>
   <div id="appList"></div>
   <p class="note">이름 클릭 → <b>백그라운드 예약</b> 시 자동 발송 여부 선택. <b>자동 발송</b>이면 집필→PDF→이메일까지 서버가 전부 처리하고 '발송완료'로 표시됩니다. 검토 후 발송을 원하면 '작성완료' 클릭 → 미리보기 → 발송.</p>
@@ -346,7 +349,7 @@ header{position:relative}
   <div id="preview"></div>
   <button class="btn" id="docBtn" style="display:none">간명서 파일 내려받기</button>
   <button class="btn ghost" id="sendBtn" style="display:none">고객 이메일로 간명서 발송</button>
-  <p class="note">달 문양을 다섯 번 누르면 이 작성실이 열리고 닫힙니다. API 키는 이 기기에만 저장됩니다.</p>
+  <p class="note">달 문양을 다섯 번 누르면 이 작성실이 열리고 닫힙니다. 닫으면 입력한 키와 열람 중인 고객 정보를 화면에서 지웁니다. 이미 서버에 예약된 작업은 계속됩니다.</p>
 </section>
 
 <footer>
@@ -386,6 +389,18 @@ function sipseong(day, other){
 
 /* ═══════════ UI 상태 ═══════════ */
 const $=id=>document.getElementById(id);
+// Only application-owned markup may enter an HTML sink. Encode every external
+// value at the output boundary, including fields read back from Apps Script.
+function escapeHTML(value){
+  return String(value??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+}
+function elementClass(value){return ['목','화','토','금','수'].includes(value)?'el-'+value:'';}
+function textNode(tag, text, className){
+  const node=document.createElement(tag);
+  node.textContent=String(text??'');
+  if(className) node.className=className;
+  return node;
+}
 let gender='여', calType='solar', gender2='남', calType2='solar', jasi='ya', mode='samhap', tier='samhap';
 let focusSel=[], sajuData=null, sections=[];
 const TIERS={
@@ -418,12 +433,17 @@ function renderHanChars(){
   const nm=$('name').value.replace(/[^가-힣]/g,'');
   const prev={};
   box.querySelectorAll('input').forEach((inp,i)=>{prev[i]=inp.value;});
-  if(!nm){box.innerHTML='<p class="note" style="margin:4px 0">위 성함 칸에 이름을 쓰면, 글자마다 입력칸이 여기 나타납니다.</p>';return;}
-  box.innerHTML=nm.split('').map((ch,i)=>`
-    <div class="hc">
-      <input type="text" data-i="${i}" value="${(prev[i]||'').replace(/"/g,'')}" placeholder="뜻이나 한자 (예: ${i===0?'베풀':'맑을'})">
-      <span class="ch">${ch}</span>
-    </div>`).join('');
+  box.replaceChildren();
+  if(!nm){
+    const note=textNode('p','위 성함 칸에 이름을 쓰면, 글자마다 입력칸이 여기 나타납니다.','note');
+    note.style.margin='4px 0'; box.append(note); return;
+  }
+  nm.split('').forEach((ch,i)=>{
+    const row=document.createElement('div'); row.className='hc';
+    const input=document.createElement('input'); input.type='text'; input.dataset.i=String(i);
+    input.value=prev[i]||''; input.placeholder=`뜻이나 한자 (예: ${i===0?'베풀':'맑을'})`;
+    row.append(input,textNode('span',ch,'ch')); box.append(row);
+  });
 }
 $('name').addEventListener('input',renderHanChars);
 segInit('genderSeg',v=>gender=v);
@@ -456,15 +476,45 @@ $('focusTags').querySelectorAll('button').forEach(b=>b.onclick=()=>{
   focusSel=[...$('focusTags').querySelectorAll('.on')].map(x=>x.dataset.v);});
 $('noTime').onchange=e=>$('btime').disabled=e.target.checked;
 
-/* 관리자 진입: 달 5회 클릭 */
-function openAdminRestore(){try{$('apiKey').value=localStorage.getItem('mh_key')||'';$('adminKey').value=localStorage.getItem('mh_adm')||'';}catch(e){}}
+/* 관리자 키는 현재 문서의 입력칸에서만 보관. 이전 버전의 저장값은 읽지 않고 삭제. */
+function removeLegacyCredentials(){
+  for(const storageName of ['localStorage','sessionStorage']){
+    for(const key of ['mh_key','mh_adm']){
+      try{window[storageName].removeItem(key);}catch(e){/* Storage may be disabled. */}
+    }
+  }
+}
+let adminRequests=new AbortController();
+async function adminJSON(url, options={}){
+  const signal=adminRequests.signal;
+  const response=await fetch(url,{...options,signal,cache:'no-store',credentials:'omit',referrerPolicy:'no-referrer'});
+  const result=await response.json();
+  if(signal.aborted) throw new DOMException('작성실이 닫혔습니다','AbortError');
+  return result;
+}
+function clearAdminSession(){
+  adminRequests.abort(); adminRequests=new AbortController();
+  $('apiKey').value=''; $('adminKey').value=''; $('pasteBox').value='';
+  removeLegacyCredentials();
+  currentAppId=null; sajuData=null; sections=[]; teaserText='';
+  for(const id of ['appList','preview','boards','teaserBody']) $(id).replaceChildren();
+  for(const id of ['admin','board','preview','prog','docBtn','sendBtn']) $(id).style.display='none';
+  resetApplyUI();
+}
+removeLegacyCredentials();
+$('apiKey').value=''; $('adminKey').value='';
+$('lockAdmin').onclick=clearAdminSession;
+window.addEventListener('pagehide',clearAdminSession);
+window.addEventListener('pageshow',event=>{if(event.persisted)clearAdminSession();});
+/* 관리자 진입: 달 5회 클릭 (표시 전환이며 서버 인증을 대신하지 않음) */
 let moonClicks=0, moonTimer=null;
 $('moon').onclick=()=>{
   moonClicks++; clearTimeout(moonTimer); moonTimer=setTimeout(()=>moonClicks=0,1800);
-  if(moonClicks>=5){moonClicks=0;const a=$('admin');a.style.display=a.style.display==='block'?'none':'block';
-    if(a.style.display==='block'){openAdminRestore(); a.scrollIntoView({behavior:'smooth'});}}
+  if(moonClicks>=5){moonClicks=0;const a=$('admin');
+    if(a.style.display==='block')clearAdminSession();
+    else{a.style.display='block';a.scrollIntoView({behavior:'smooth'});}}
 };
-if(location.hash==='#admin'){$('admin').style.display='block';openAdminRestore();}
+if(location.hash==='#admin'){$('admin').style.display='block';}
 
 /* ═══════════ 만세력 계산 ═══════════ */
 function computeChart(cfg){ // {name,gender,calType,leap,bdRaw,timeStr,timeUnknown} → chart | null(토스트 출력)
@@ -631,47 +681,47 @@ function boardHTML(c, title){
   const pills=order.map(k=>{const p=c.pillars[k];return `
     <div class="pl">
       <div class="lab">${labels[k]}</div>
-      <div class="ss">${p.ssGan}</div>
-      <div class="han el-${p.ganEl}">${p.gan}</div>
-      <div class="ko">${p.ganKo} · ${p.ganEl}</div>
-      <div class="han el-${p.jiEl}">${p.ji}</div>
-      <div class="ko">${p.jiKo} · ${p.jiEl}</div>
-      <div class="ss">${p.ssJi}</div>
-      <div class="hid">장간 ${p.hidden}</div>
+      <div class="ss">${escapeHTML(p.ssGan)}</div>
+      <div class="han ${elementClass(p.ganEl)}">${escapeHTML(p.gan)}</div>
+      <div class="ko">${escapeHTML(p.ganKo)} · ${escapeHTML(p.ganEl)}</div>
+      <div class="han ${elementClass(p.jiEl)}">${escapeHTML(p.ji)}</div>
+      <div class="ko">${escapeHTML(p.jiKo)} · ${escapeHTML(p.jiEl)}</div>
+      <div class="ss">${escapeHTML(p.ssJi)}</div>
+      <div class="hid">장간 ${escapeHTML(p.hidden)}</div>
     </div>`;}).join('');
   const oh=['목','화','토','금','수'].map(e=>
-    `<div class="oh" style="background:${EL_COLOR[e]}">${e}<b>${c.elements[e]}</b></div>`).join('');
+    `<div class="oh" style="background:${EL_COLOR[e]}">${e}<b>${escapeHTML(c.elements[e])}</b></div>`).join('');
   const du=c.daYun.map(d=>
-    `<div class="du"><div class="age">${d.age}세</div><div class="gz">${d.ganzhi}</div><div class="age">${d.ko}</div></div>`).join('');
+    `<div class="du"><div class="age">${escapeHTML(d.age)}세</div><div class="gz">${escapeHTML(d.ganzhi)}</div><div class="age">${escapeHTML(d.ko)}</div></div>`).join('');
   return `<div class="wongook" style="margin-bottom:14px">
-    <div class="wg-title">${title}</div>
+    <div class="wg-title">${escapeHTML(title)}</div>
     <div class="pillars" style="grid-template-columns:repeat(${order.length},1fr)">${pills}</div>
     <div class="ohaeng">${oh}</div>
     <div class="daeun"><div class="daeun-t">大運 · 대운의 흐름</div><div class="daeun-list">${du}</div></div>
-    <div class="birth-line">${c.name} (${c.gender}) · ${c.solarBirth} · ${c.lunarText}${c.corrected?' · 진태양시 보정':''}</div>
+    <div class="birth-line">${escapeHTML(c.name)} (${escapeHTML(c.gender)}) · ${escapeHTML(c.solarBirth)} · ${escapeHTML(c.lunarText)}${c.corrected?' · 진태양시 보정':''}</div>
   </div>`;
 }
 function guaeHTML(s){
   const g=s.guae;
   return `<div class="wongook" style="margin-bottom:14px;text-align:center">
-    <div class="wg-title">天 · 土亭秘訣 ${s.targetYear}년 ${s.targetYear===2026?'병오년':'정미년'}</div>
-    <div style="font-family:'Song Myung',serif;font-size:2.6rem;letter-spacing:.3em;text-indent:.3em;color:#26221A;margin:6px 0 2px">${g['한자']}</div>
-    <div style="font-size:.95rem;color:#6E6350;margin-bottom:10px">제 ${g['번호']} 괘 　(상 ${g['상']} · 중 ${g['중']} · 하 ${g['하']})</div>
-    <div style="font-size:.72rem;color:#9A8E74;border-top:1px dashed #C4B58E;padding-top:10px">태세 ${g['태세']} · 월건 ${g['월건']} · 일진 ${g['일진']}<br>정통 선천수(先天數) 작괘법으로 산출</div>
+    <div class="wg-title">天 · 土亭秘訣 ${escapeHTML(s.targetYear)}년 ${s.targetYear===2026?'병오년':'정미년'}</div>
+    <div style="font-family:'Song Myung',serif;font-size:2.6rem;letter-spacing:.3em;text-indent:.3em;color:#26221A;margin:6px 0 2px">${escapeHTML(g['한자'])}</div>
+    <div style="font-size:.95rem;color:#6E6350;margin-bottom:10px">제 ${escapeHTML(g['번호'])} 괘 　(상 ${escapeHTML(g['상'])} · 중 ${escapeHTML(g['중'])} · 하 ${escapeHTML(g['하'])})</div>
+    <div style="font-size:.72rem;color:#9A8E74;border-top:1px dashed #C4B58E;padding-top:10px">태세 ${escapeHTML(g['태세'])} · 월건 ${escapeHTML(g['월건'])} · 일진 ${escapeHTML(g['일진'])}<br>정통 선천수(先天數) 작괘법으로 산출</div>
   </div>`;
 }
 function nameCardHTML(s){
   const rows=s.nameChars.map(c=>`
     <div style="flex:1;text-align:center">
-      <div style="font-family:'Song Myung',serif;font-size:2rem;color:#26221A">${c['글자']}</div>
-      <div style="font-size:${String(c['한자']).startsWith('훈음')?'.72rem':'1.05rem'};color:#4A4032;margin:2px 0">${c['한자']}</div>
-      <div style="font-size:.72rem;color:#8A7E66">소리 ${c['발음오행']}</div>
-      <div style="font-size:.72rem;color:#6E6350">자원 ${c['자원오행']}</div>
+      <div style="font-family:'Song Myung',serif;font-size:2rem;color:#26221A">${escapeHTML(c['글자'])}</div>
+      <div style="font-size:${String(c['한자']).startsWith('훈음')?'.72rem':'1.05rem'};color:#4A4032;margin:2px 0">${escapeHTML(c['한자'])}</div>
+      <div style="font-size:.72rem;color:#8A7E66">소리 ${escapeHTML(c['발음오행'])}</div>
+      <div style="font-size:.72rem;color:#6E6350">자원 ${escapeHTML(c['자원오행'])}</div>
     </div>`).join('');
   return `<div class="wongook" style="margin-bottom:14px">
     <div class="wg-title">人 · 姓名五行 이름의 오행</div>
     <div style="display:flex;gap:8px;padding:6px 0 10px">${rows}</div>
-    ${s.bongwan?`<div style="text-align:center;font-size:.75rem;color:#8A7E66;border-top:1px dashed #C4B58E;padding-top:8px">뿌리 · ${s.bongwan}</div>`:''}
+    ${s.bongwan?`<div style="text-align:center;font-size:.75rem;color:#8A7E66;border-top:1px dashed #C4B58E;padding-top:8px">뿌리 · ${escapeHTML(s.bongwan)}</div>`:''}
   </div>`;
 }
 function renderBoard(s){
@@ -699,17 +749,17 @@ async function loadTeaser(s){
   const card=$('teaserCard');
   card.style.display='block';
   $('teaserLoading').style.display='block';
-  $('teaserBody').innerHTML='';
+  $('teaserBody').replaceChildren();
   $('teaserShare').style.display='none';
   teaserText='';
   try{
     const r=await fetch(SERVER_URL,{method:'POST',body:JSON.stringify({action:'teaser',data:s})});
     const j=await r.json();
     if(!j.ok||!j.text) throw new Error(j.error||'생성 실패');
-    teaserText=j.text.trim();
+    teaserText=String(j.text).trim();
     $('teaserLoading').style.display='none';
     $('teaserBody').innerHTML=teaserText.split('\n').filter(x=>x.trim())
-      .map(x=>`<p>${x.trim()}</p>`).join('')
+      .map(x=>`<p>${escapeHTML(x.trim())}</p>`).join('')
       + `<p class="cut">여기까지가 첫마디입니다. 이어지는 이야기는 ${sajuData&&sajuData.type==='samhap'?'하늘·땅·이름을 모두 꿴 열여섯 장의 간명서':'정성껏 적은 간명서'}에 담아 보내드립니다.</p>`;
     $('teaserShare').style.display='flex';
   }catch(e){
@@ -819,48 +869,56 @@ async function loadList(){
   if(!SERVER_URL){toast('index.html 상단의 SERVER_URL을 먼저 설정하세요');return;}
   const k=$('adminKey').value.trim();
   if(!k){toast('관리 열람 키를 입력하세요');return;}
-  try{localStorage.setItem('mh_adm',k);}catch(e){}
   $('listBtn').disabled=true;
   try{
-    const r=await fetch(SERVER_URL+'?key='+encodeURIComponent(k));
-    const j=await r.json();
+    const j=await adminJSON(SERVER_URL+'?key='+encodeURIComponent(k));
     if(!j.ok){toast(j.error||'열람 키가 올바르지 않습니다');$('listBtn').disabled=false;return;}
     const box=$('appList');
+    if(!Array.isArray(j.list)) throw new Error('신청 목록 형식이 올바르지 않습니다');
     const all=j.list.slice().reverse();
     const renderItems=(arr)=>arr.map(it=>{
       const st=String(it.status||'');
       const cls=st.startsWith('작성완료')||st.startsWith('발송완료')?'done':'';
       let prod='';
       try{const dd=typeof it.data==='string'?JSON.parse(it.data):it.data; prod=dd.product||(dd.type==='couple'?'궁합 간명':'정식 간명');}catch(e){}
-      return `
-      <div class="app-item" data-id="${it.id}">
-        <span><b>${it.name}</b> 님 · ${it.ts}${prod?' · '+prod:''}</span>
-        <span class="st ${cls}">${st} ▸</span>
-      </div>`;}).join('');
-    if(!all.length){ box.innerHTML='<p class="note">아직 신청 내역이 없습니다.</p>'; }
+      const row=document.createElement('div'); row.className='app-item';
+      row.dataset.id=String(it.id);
+      const details=document.createElement('span');
+      details.append(textNode('b',it.name),document.createTextNode(` 님 · ${it.ts}${prod?' · '+prod:''}`));
+      row.append(details,textNode('span',st+' ▸','st '+cls));
+      return row;
+    });
+    if(!all.length){ box.replaceChildren(textNode('p','아직 신청 내역이 없습니다.','note')); }
     else{
-      box.innerHTML=renderItems(all.slice(0,5))
-        + (all.length>5?`<button class="btn ghost" id="moreBtn" style="margin-top:10px;font-size:.85rem;padding:11px">더보기 (${all.length-5}건)</button>`:'');
-      const mb=document.getElementById('moreBtn');
-      if(mb) mb.onclick=()=>{ box.innerHTML=renderItems(all); bindItems(); };
+      box.replaceChildren(...renderItems(all.slice(0,5)));
+      if(all.length>5){
+        const mb=textNode('button',`더보기 (${all.length-5}건)`,'btn ghost'); mb.id='moreBtn';
+        mb.style.cssText='margin-top:10px;font-size:.85rem;padding:11px';
+        mb.onclick=()=>{box.replaceChildren(...renderItems(all));bindItems();}; box.append(mb);
+      }
     }
     function bindItems(){
     box.querySelectorAll('.app-item').forEach(el=>el.onclick=async()=>{
       if(genRunning){toast('집필이 진행 중입니다. 완료 후 선택해 주세요');return;}
       const it=j.list.find(x=>String(x.id)===String(el.dataset.id));
-      try{sajuData=typeof it.data==='string'?JSON.parse(it.data):it.data;}
+      try{
+        const data=typeof it.data==='string'?JSON.parse(it.data):it.data;
+        renderBoard(data); sajuData=data;
+      }
       catch(e){toast('신청 데이터를 읽지 못했습니다');return;}
       currentAppId=it.id;
+      sections=[]; $('preview').replaceChildren();
+      for(const id of ['preview','docBtn','sendBtn']) $(id).style.display='none';
       const st=String(it.status||'');
-      renderBoard(sajuData);
 
       // ① 작성 완료 → 저장된 간명서 불러와 미리보기·발송
       if(st.startsWith('작성완료')||st.startsWith('발송완료')){
         try{
-          const r=await fetch(SERVER_URL+'?key='+encodeURIComponent($('adminKey').value.trim())+'&action=report&id='+it.id);
-          const jr=await r.json();
+          const jr=await adminJSON(SERVER_URL+'?key='+encodeURIComponent($('adminKey').value.trim())+'&action=report&id='+encodeURIComponent(String(it.id)));
           if(!jr.ok) throw new Error(jr.error||'불러오기 실패');
-          sections=JSON.parse(jr.sections||'[]');
+          const saved=JSON.parse(jr.sections||'[]');
+          if(!Array.isArray(saved)||!saved.every(part=>typeof part==='string')) throw new Error('간명서 형식이 올바르지 않습니다');
+          sections=saved;
           if(sections.length<expectedLen(sajuData)){toast('저장된 간명서가 불완전합니다. 다시 예약해 주세요');return;}
           $('prog').style.display='none';
           renderPreview();
@@ -881,8 +939,7 @@ async function loadList(){
       if(confirm(`${sajuData.name} 님 간명서 —\n\n[확인] 백그라운드 작성 예약 (창을 닫아도 서버가 알아서 집필)\n[취소] 지금 이 화면에서 바로 작성`)){
         const autoSend=confirm(`집필이 끝나면 고객 이메일(${sajuData.email||'없음'})로 PDF까지 자동 발송할까요?\n\n[확인] 자동 발송 — 개입 없이 발송완료까지\n[취소] 작성만 — 검토 후 직접 발송`);
         try{
-          const r=await fetch(SERVER_URL,{method:'POST',body:JSON.stringify({action:'queue',key:$('adminKey').value.trim(),id:it.id,autoSend:autoSend})});
-          const jr=await r.json();
+          const jr=await adminJSON(SERVER_URL,{method:'POST',body:JSON.stringify({action:'queue',key:$('adminKey').value.trim(),id:it.id,autoSend:autoSend})});
           if(!jr.ok) throw new Error(jr.error||'예약 실패');
           toast(autoSend?'예약 완료. 집필이 끝나면 자동으로 발송됩니다 (약 4~6분)':'예약 완료. 3~5분 뒤 목록을 새로고침해 검토·발송하세요');
           loadList();
@@ -898,14 +955,17 @@ async function loadList(){
 }
 async function markDone(id){
   if(!SERVER_URL||!id)return;
-  try{await fetch(SERVER_URL,{method:'POST',body:JSON.stringify({action:'done',key:$('adminKey').value.trim(),id:id,status:'작성완료'})});}catch(e){}
+  try{await adminJSON(SERVER_URL,{method:'POST',body:JSON.stringify({action:'done',key:$('adminKey').value.trim(),id:id,status:'작성완료'})});}catch(e){}
 }
 
 /* ═══════════ 관리자: 신청문 불러오기 ═══════════ */
 $('loadPaste').onclick=()=>{
   const m=$('pasteBox').value.match(/DATA:\s*(\{[\s\S]*\})/);
   if(!m){toast('DATA 항목을 찾지 못했습니다');return;}
-  try{sajuData=JSON.parse(m[1]); renderBoard(sajuData); toast('신청 내용을 불러왔습니다');}
+  try{const data=JSON.parse(m[1]); renderBoard(data); sajuData=data; currentAppId=null; sections=[];
+    $('preview').replaceChildren();
+    for(const id of ['preview','docBtn','sendBtn']) $(id).style.display='none';
+    toast('신청 내용을 불러왔습니다');}
   catch(e){toast('신청문 형식이 올바르지 않습니다');}
 };
 
@@ -924,14 +984,15 @@ const SECTIONS=[
  {t:'애정과 건강, 곁에 두는 사람들', p:'① 애정·혼인운: 인연의 모양, 배우자 궁, 관계에서 반복될 수 있는 패턴(좋은 것과 조심할 것 모두) ② 애정운은 배우자궁인 일지(日支)의 지장간을 반드시 풀어 배우자의 성향과 관계의 속내를 짚습니다 ③ 건강운: 오행상 약한 장부와 나이 들며 살펴야 할 부분(의학적 단정은 피하고 양생의 관점으로) ③ 대인관계: 귀인의 방향과 멀리해야 할 인연의 결. 소제목 3개, 전체 1700~2100자.'},
  {t:'대운의 흐름과 올해, 그리고 당부', p:'① 대운 흐름을 시기별로 짚으며 인생의 큰 물줄기 설명(좋은 대운과 견뎌야 할 대운 모두). 대운·세운의 천간이 원국의 지장간과 같은 글자로 들어올 때는 그 숨은 기운이 밖으로 드러나(투출) 발현되는 시기이므로, 그런 시기가 있으면 반드시 짚어 줍니다 ② 올해 세운 풀이와 상반기·하반기 조언 ③ 개운 처방: 방위, 색, 마음가짐 등 실천 가능한 것 위주 ④ 맺음말: 선생으로서의 진심 어린 당부와 서명(혜윤 드림). 소제목 3개, 전체 1900~2300자.'}
 ];
-async function callClaude(apiKey, sys, user){
+async function callClaude(apiKey, sys, user, signal){
   const body={model:'claude-sonnet-4-6', max_tokens:4000,
     system:sys, messages:[{role:'user',content:user}]};
   const headers={'Content-Type':'application/json'};
   if(apiKey){headers['x-api-key']=apiKey; headers['anthropic-version']='2023-06-01';
     headers['anthropic-dangerous-direct-browser-access']='true';}
-  const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers,body:JSON.stringify(body)});
+  const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers,body:JSON.stringify(body),signal,cache:'no-store',credentials:'omit',referrerPolicy:'no-referrer'});
   const raw=await r.text();
+  if(signal.aborted) throw new DOMException('작성실이 닫혔습니다','AbortError');
   if(!r.ok) throw new Error('API 응답 '+r.status+': '+raw.slice(0,200));
   let data; try{data=JSON.parse(raw);}catch(e){throw new Error('API 응답 해석 실패: '+raw.slice(0,150));}
   if(!data||!Array.isArray(data.content)) throw new Error('API 응답 형식 이상: '+raw.slice(0,150));
@@ -953,8 +1014,7 @@ async function generateReport(){
     toast('API 키 형식이 아닙니다. console.anthropic.com에서 발급한 sk-ant-로 시작하는 키를 넣어주세요');
     $('admin').scrollIntoView({behavior:'smooth'});return;
   }
-  try{localStorage.setItem('mh_key',key);}catch(e){}
-  const s=sajuData;
+  const s=sajuData, signal=adminRequests.signal;
   const dataBlock=`[만세력 데이터 — 이 값만 사용할 것]\n${JSON.stringify({
     이름:s.name, 성별:s.gender, 출생:s.solarBirth, 음력:s.lunarText, 시간모름:s.timeUnknown,
     일간:s.dayMaster, 원국:s.pillars, 오행분포:s.elements, 대운:s.daYun, 올해세운:s.thisYear,
@@ -974,7 +1034,7 @@ async function generateReport(){
       let txt;
       try{
         txt=await callClaude(key, PERSONA,
-          `${dataBlock}${prev}\n\n[이번 장 지시]\n제${i+1}장 「${sec.t}」\n${sec.p}\n앞 장과 내용이 겹치지 않게 하고, 본문만 출력하세요.`);
+          `${dataBlock}${prev}\n\n[이번 장 지시]\n제${i+1}장 「${sec.t}」\n${sec.p}\n앞 장과 내용이 겹치지 않게 하고, 본문만 출력하세요.`,signal);
       }catch(err){ throw new Error(`제${i+1}장 집필 중 — ${err.message}`); }
       secs.push(txt.trim());
     }
@@ -982,14 +1042,25 @@ async function generateReport(){
     $('progFill').style.width='100%'; $('progMsg').textContent='집필 완료 — 파일 내려받기 또는 이메일 발송을 하세요';
     renderPreview(); $('docBtn').style.display='block'; $('sendBtn').style.display='block';
     if(currentAppId) markDone(currentAppId);
-  }catch(e){ $('progMsg').textContent='오류: '+e.message; }
+  }catch(e){ if(!signal.aborted)$('progMsg').textContent='오류: '+e.message; }
+  key=''; $('apiKey').value='';
   genRunning=false;
   $('genBtn').disabled=false;
 }
 function fmtSection(txt){
-  return txt.split('\n').map(l=>{l=l.trim(); if(!l)return'';
-    const m=l.match(/^【(.+?)】$/); if(m)return`<h3>【${m[1]}】</h3>`;
-    return `<p>${l.replace(/^【(.+?)】\s*/, '<b>$1</b> · ')}</p>`;}).join('');
+  // Model output is plain text. Only these locally created headings/paragraphs
+  // provide formatting; no HTML from the model or a saved report is interpreted.
+  const fragment=document.createDocumentFragment();
+  String(txt??'').split('\n').forEach(line=>{
+    const l=line.trim(); if(!l)return;
+    const heading=l.match(/^【(.+?)】$/);
+    if(heading){fragment.append(textNode('h3','【'+heading[1]+'】'));return;}
+    const p=document.createElement('p'), inline=l.match(/^【(.+?)】\s*/);
+    if(inline)p.append(textNode('b',inline[1]),document.createTextNode(' · '+l.slice(inline[0].length)));
+    else p.textContent=l;
+    fragment.append(p);
+  });
+  return fragment;
 }
 function titlesFor(d){
   if(d&&d.type==='samhap')return ['地 · 원국 총평과 타고난 기질','오행의 균형, 그리고 직업과 재물','애정과 건강, 곁에 두는 사람들','人 · 이름의 소임 — 성명과 뿌리','天 · 괘상 총운 — 대운과 올해의 하늘','天 · 열두 달 비결','合 · 천지인을 꿰다 — 처방과 당부'];
@@ -1003,7 +1074,12 @@ function titlesFor(d){
 function expectedLen(d){return titlesFor(d).length;}
 function renderPreview(){
   const titles=titlesFor(sajuData), NUM='一二三四五六七八';
-  $('preview').innerHTML=sections.map((t,i)=>`<h3 style="letter-spacing:.2em">第${NUM[i]||i+1}章 ${titles[i]||''}</h3>`+fmtSection(t)).join('<hr style="border:none;border-top:1px dashed #C4B58E;margin:24px 0">');
+  const preview=$('preview'); preview.replaceChildren();
+  sections.forEach((t,i)=>{
+    if(i){const hr=document.createElement('hr');hr.style.cssText='border:none;border-top:1px dashed #C4B58E;margin:24px 0';preview.append(hr);}
+    const heading=textNode('h3',`第${NUM[i]||i+1}章 ${titles[i]||''}`); heading.style.letterSpacing='.2em';
+    preview.append(heading,fmtSection(t));
+  });
   $('preview').style.display='block';
 }
 
@@ -1022,8 +1098,7 @@ $('docBtn').onclick=async()=>{
   pdfBusy=true;
   const btn=$('docBtn'); btn.disabled=true; btn.textContent='서버에서 문서 생성 중...';
   try{
-    const r=await fetch(SERVER_URL,{method:'POST',body:JSON.stringify(serverPayload('pdfmake'))});
-    const j=await r.json();
+    const j=await adminJSON(SERVER_URL,{method:'POST',body:JSON.stringify(serverPayload('pdfmake'))});
     if(!j.ok) throw new Error(j.error||'PDF 생성 실패');
     const bin=atob(j.b64), arr=new Uint8Array(bin.length);
     for(let i=0;i<bin.length;i++) arr[i]=bin.charCodeAt(i);
@@ -1044,8 +1119,7 @@ $('sendBtn').onclick=async()=>{
   pdfBusy=true;
   const btn=$('sendBtn'); btn.disabled=true; btn.textContent='서버에서 발송 중...';
   try{
-    const r=await fetch(SERVER_URL,{method:'POST',body:JSON.stringify(serverPayload('sendserver'))});
-    const j=await r.json();
+    const j=await adminJSON(SERVER_URL,{method:'POST',body:JSON.stringify(serverPayload('sendserver'))});
     if(!j.ok) throw new Error(j.error||'발송 실패');
     btn.textContent='발송 완료';
     toast(`${sajuData.name} 님께 간명서를 발송했습니다`);

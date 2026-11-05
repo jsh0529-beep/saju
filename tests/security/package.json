@@ -1,0 +1,11 @@
+{
+  "devDependencies": {
+    "@playwright/test": "1.56.1",
+    "lunar-javascript": "1.7.3"
+  },
+  "name": "wolha-security-tests",
+  "private": true,
+  "scripts": {
+    "test": "playwright test"
+  }
+}

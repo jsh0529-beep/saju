@@ -1,0 +1,24 @@
+name: Saju security regression
+on:
+  push:
+    branches: [main]
+    paths: ['index.html', 'tests/security/**', '.github/workflows/saju-security.yml']
+  pull_request:
+    paths: ['index.html', 'tests/security/**', '.github/workflows/saju-security.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  browser-security:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: tests/security/package-lock.json
+      - run: npm ci --prefix tests/security
+      - run: npx --prefix tests/security playwright install --with-deps chromium
+      - run: npm --prefix tests/security test
