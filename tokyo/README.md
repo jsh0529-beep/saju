@@ -1,14 +1,120 @@
-# 하준이의 도쿄 여행
+# 여행 프로필 앱 · 기존 하준이의 도쿄 여행
 
-Public static app: https://jsh0529-beep.github.io/saju/tokyo/
+기존 공개 주소: https://jsh0529-beep.github.io/saju/tokyo/
 
-No login, API key, backend or database required. All app assets use relative paths for subdirectory hosting. Itinerary edits, completion checks, packing, memo and manual exchange-rate preference use browser localStorage (key: hajun-tokyo-trip-v1); no cross-device sync. Existing records from the previous hosting domain do not transfer automatically.
+도쿄 여행 기록을 보존하면서 여행 정보를 입력해 새 여행 안내서를 만들고, 배포용 파일로 재사용할 수 있는 정적 웹 앱입니다. 새 목적지나 예시 숙소를 임의로 넣지 않은 **빈 여행 템플릿**을 제공합니다.
 
-Original Tokyo diorama created with built-in image generation. Other public information sources are available from the app footer. Flight and family plans are distinguished from sightseeing suggestions. No booking reference, passport record or server credential is included. Internet access is required.
+## 화면에서 여행 만들기
 
+1. **새 여행 만들기**를 누릅니다.
+2. 여행명, 도시, 시작일·종료일, 여행지 시간대를 입력합니다. 현지 언어는 목록에서 선택합니다.
+3. 필요한 숙소, 계산할 통화, 장소, 회화, 준비물, 도움 연락처와 참고 링크를 추가합니다. 음성 없이 글씨만 보여주는 회화도 가능합니다.
+4. **여행 저장**을 누르면 여행 전용 주소와 날짜별 일정표가 생깁니다. **일정 추가** 또는 장소의 **일정에 담기**로 내용을 채웁니다.
+5. 직접 만든 여행은 **여행 정보 편집**에서 수정합니다. 기존 도쿄 기본 프로필은 별도로 보존됩니다.
 
-Catalog: 20 sightseeing/shopping destinations and 14 restaurants/cafes. Each entry in places-data.js includes a checked official source and maps query. Search, region and category filters are client-side. Opening hours, prices and availability are not live. Source pages checked 2026-09-20.
+기간은 1~90일, 날짜별 일정은 최대 200개입니다. 월·연도 경계와 윤년을 처리하며 여행지 시간대를 기준으로 날짜와 시계를 표시합니다. 저장 후 기간과 기존 준비물 ID는 기록 보호를 위해 고정됩니다. 다른 기간은 새 여행으로 만드세요. 준비물 이름 수정과 추가는 가능합니다.
 
-Audio fix (2026-09-20): 14 locally hosted Japanese MP3 phrases replace device-dependent Web Speech synthesis. Audio is generated synthetic speech (Google Translate TTS, ja); matching text is in assets/audio/transcripts.json. No runtime TTS service, key, or login is needed. Playback errors have visible status, native audio controls, and a direct audio link. Play starts only on a user gesture and stops when the card closes or changes.
+화면 안내 언어는 한국어이고 **현지 회화 언어·표현·발음·선택적 음성 URL은 여행별 데이터**입니다. UI 전체의 다국어 번역이나 자동 통역은 포함하지 않습니다. 기존 하준톡은 도쿄 프로필에서 계속 열립니다.
 
-Itinerary update (2026-09-22): user-requested sightseeing route change to their existing public trip app. Sep 27: Akihabara and Habikoro. Sep 28: Shibuya Sky, Montbell, Miyashita Park, Tokyo Midtown, BEAMS HOUSE and Tsujihan. Sep 26: four Fuji tour destinations. Existing public flight/hotel details are retained; no new seat assignments, room details, booking identifiers or exact private pickup/check-in times are added. Prior hardcoded return pickup time is removed. A versioned migration replaces old built-in routes while retaining custom events, notes, packing and rate; previous state is backed up locally and same-version edits are preserved.
+## 동행자를 추가해서 일정 구성하기
+
+여행 정보만 있고 아직 일정이 없다면 **동행자와 일정 만들기**를 누릅니다. 나를 포함해 최대 20명의 이름·별명, 연령대, 걷는 속도와 관심사를 입력하고 날짜를 선택하면 일정 초안을 보여줍니다.
+
+- 미취학 아동·시니어 또는 천천히 걷는 동행자가 있으면 방문 후보를 하루 2곳으로 줄이고 휴식을 늘립니다. 보통은 3곳, 모두 활동적인 속도를 선택하면 4곳을 기준으로 식사와 휴식을 배치합니다.
+- 관심사가 일치하는 등록 장소와 같은 지역의 장소를 우선합니다. 이미 일정에 있는 동일 지도 검색어와 이전에 제안한 장소는 중복 선택하지 않습니다.
+- 장소 목록이 비었거나 후보를 모두 사용하면 식사·휴식·산책·전시 등의 기본 활동 틀을 만듭니다. 등록하지 않은 구체적인 목적지·상호·주소를 만들어 넣지 않습니다.
+- 빈 날짜만 기본 선택됩니다. **미리보기 후 선택한 날짜에 추가**해야 일정에 반영하며, 기존 일정·완료 표시·메모를 덮어쓰지 않습니다. 생성한 일정은 일반 일정처럼 수정·삭제할 수 있습니다.
+- 동행자 정보는 개인 기록에 저장하고 백업·복원하지만 **배포용 여행 템플릿에는 포함하지 않습니다**. 동행자 없이 저장한 이전 v2 기록도 계속 읽을 수 있습니다.
+
+현재 자동 구성은 입력 조건과 등록된 장소를 사용하는 규칙 기반 제안입니다. API 비용이나 외부 AI 서비스 전송이 없으며, 실제 이동거리·운영시간·예약 가능 여부를 자동 확인하거나 최적 경로를 보장하지 않습니다. 정확한 시간 대신 오전·점심·오후처럼 조절 가능한 구간으로 구성합니다.
+
+## 배포용 템플릿과 개인 기록
+
+- **여행 가방 → 배포용 여행 템플릿 내보내기**: 현재 일정과 여행 정보, 장소, 회화, 준비물 목록을 JSON 파일로 만듭니다. 동행자 정보, 개인 메모, 완료 체크, 준비물 체크, 개인 환율 값은 제외합니다. 일정 안의 메모는 일정 콘텐츠이므로 포함합니다.
+- 받는 사람은 같은 앱에서 **여행 템플릿 가져오기**를 눌러 파일을 선택합니다. 정보 입력 → 일정 작성 → 파일 내보내기가 재사용·상품 콘텐츠 제작 흐름입니다.
+- 직접 만든 여행의 ID는 템플릿과 기록 백업에서 동일합니다. 기본 도쿄 또는 빈 기본 템플릿을 내보내면 별도 ID의 배포용 사본을 만듭니다. 이 사본은 기존 도쿄 기록과 별개입니다.
+- **기록 내보내기**에는 일정 수정, 동행자 정보, 완료·준비물 체크, 개인 메모와 환율을 담습니다. 새 기기에서는 **템플릿을 먼저 가져오고**, 해당 여행에서 **기록 가져오기**를 실행합니다. 기본 도쿄는 기록만 가져오면 됩니다.
+- 가져오기는 여행 ID, 버전, 날짜와 필드 형식을 검사합니다. 현재 기록을 대체하기 전 요약과 확인을 보여주며, 교체 직전 원본을 기기에 백업합니다. **이전 기록 복원**에서 다시 선택할 수 있습니다. 다른 여행의 기록은 거부합니다.
+- 파일 저장을 지원하지 않는 브라우저에서는 **백업 내용 복사** 또는 **백업 내용 보기**를 사용해 UTF-8 `.json` 파일로 보관할 수 있습니다.
+- 템플릿 파일은 미디어 자체를 포함하지 않고 URL을 참조합니다. 배포 환경에서도 해당 이미지·음성 주소에 접근할 수 있어야 합니다.
+
+직접 만든 여행은 해당 브라우저에만 있습니다. `?trip=...` 주소만 보내면 다른 기기에는 여행 정보가 없으므로 템플릿 파일을 함께 전달해야 합니다. URL만으로 공유할 여행은 아래의 정적 프로필로 등록해 사이트와 함께 배포합니다.
+
+로그인, API 키, 서버, 데이터베이스, 결제, 구매자 접근 제어, 기기 간 자동 동기화는 포함하지 않습니다. 현재 범위는 **판매용 여행 콘텐츠를 입력·제작·배포할 수 있는 템플릿 기반**입니다. 인터넷 연결이 필요하며 브라우저 데이터를 지우기 전에 백업을 내보내세요.
+
+## 기존 도쿄 기록과 링크
+
+- `/tokyo/`와 `#trip`, `#places`, `#phrases`, `#bag`는 계속 도쿄를 엽니다. 다른 여행을 선택해도 기본 주소의 의미는 바뀌지 않습니다.
+- 명시적 도쿄 주소는 `?trip=tokyo-2026#trip`, 빈 템플릿은 `?trip=template#trip`입니다.
+- 2026년 9월 25~29일 일정의 모든 이벤트 ID·내용·지도 검색어, Tokyo Dome Hotel, 장소 34개, 일본어 카드 14개, `../talk/?v=3`, MP3·이미지 URL과 기존 정적 manifest를 유지합니다.
+- 기존 키 **`hajun-tokyo-trip-v1`은 읽기만 하며 변경·삭제하지 않습니다.** 기존 `-before-...` 백업도 남겨 둡니다.
+- 새 저장값이 없을 때만 기존 기록을 `travel-profile-v2:tokyo-2026`으로 복사합니다. 숫자 날짜 인덱스를 실제 날짜 ID로, 준비물 인덱스를 준비물 ID로 옮깁니다. 수정·삭제한 기본 일정, 추가 일정, 완료, 준비물, 메모, 환율을 보존합니다.
+- 이전 일정 버전도 저장된 내용을 그대로 옮깁니다. 이번 리팩터링은 옛 코스를 강제로 교체하지 않습니다. 새 설치에만 현재 도쿄 기본 일정을 적용합니다.
+- 새 키가 있으면 재마이그레이션하지 않습니다. 잘못된 데이터 또는 저장 실패가 발생하면 자동 저장을 중단하고 경고합니다. 읽지 못한 원본은 **기록 내보내기**로 보관할 수 있으며, 손상된 여행 목록도 원본 내보내기를 제공합니다.
+- 원본 키는 구형 앱으로 되돌렸을 때의 복구용입니다. 새 앱의 수정 내용은 구형 앱으로 역동기화하지 않습니다. 최신 기록을 별도로 백업하세요.
+- localStorage는 도메인·프로토콜·포트별로 분리됩니다. 이전 호스팅 도메인에서 자동 이전되지 않습니다. 해당 도메인에서 내보낸 파일을 가져오세요. 구형 앱의 원시 v1 JSON도 도쿄의 **기록 가져오기**에서 지원합니다.
+
+## 파일 구성과 정적 프로필 추가
+
+```text
+tokyo/
+  app.js                       공통 화면 동작, 일정 편집, 음성 재생
+  index.html / style.css        공통 화면 틀
+  lib/
+    profile.js                 날짜·프로필·URL 검증
+    storage.js                 기록 저장·마이그레이션·백업
+    profiles-store.js          사용자 여행 목록·템플릿 입출력
+    editor.js                  여행 정보 입력 화면
+    view-profile.js            여행별 화면·설치 정보
+    planner.js                 동행자 검증·일정 제안 규칙
+    planner-view.js            동행자 입력·미리보기·적용
+  trips/
+    index.js                   기본 여행과 정적 프로필 목록
+    tokyo-2026/
+      profile.js               도시·숙소·언어·환율·항공·출처
+      itinerary.js             날짜별 기본 일정
+      phrases.js               회화와 기존 MP3 경로
+      packing.js               준비물의 안정된 ID와 이름
+    template/profile.js        목적지 없는 재사용 템플릿
+  places-data.js               기존 도쿄 장소 데이터 (ES module)
+  assets/                      기존 이미지·음성, 경로 유지
+  tests/                       저장·날짜·화면 회귀 테스트
+```
+
+코드로 새 여행을 배포하려면 `trips/template/profile.js`를 새 폴더로 복사하고 데이터를 채운 뒤 `trips/index.js`의 `builtInProfiles`에 등록합니다. 화면에서 내보낸 템플릿의 `profile` 객체를 `export default {...};` 형태로 저장해도 됩니다. `legacyStorageKey`는 기존 도쿄에만 사용합니다. 공통 `app.js`를 수정할 필요가 없습니다.
+
+주요 데이터 규칙:
+
+- 프로필 `id`: 고유하고 영구적인 소문자 영문·숫자·하이픈 ID.
+- `days`: 실제 날짜 순. `id`와 `date` 모두 `YYYY-MM-DD`; `short`, `title`, `note`, `events` 포함.
+- 일정: 여행 전체에서 고유한 `id`, `title`, `time`, `note`, `query`, `icon`, `tag`; 선택적 `mode`.
+- 장소: `id`, `name`, `en`(보조 이름), `area`, `category`, `kind`, `icon`, `color`, `desc`, `tip`, `query`, `url`. 공식 URL이 없으면 빈 문자열. 지역·분류 필터는 데이터에서 생성합니다.
+- 회화: 고유 `id`, `category`, `text`(한국어), `translation`(현지어), `reading`, 선택적 `audio`. `language.code`는 언어 태그, `label`은 표시명입니다.
+- 준비물: 고유 `id`, `label`. 사용 시작 후 ID를 변경·삭제하지 마세요.
+- `hotel`, `currency`, `flights`, `hero`, `talk`는 필요 없으면 `null`. 도움 연락처·자료 링크는 빈 배열 가능. 없으면 관련 카드나 기능을 숨깁니다.
+- `currency.from`·`to`는 3자리 통화 코드. `unit`은 입력 환율이 적용되는 현지 통화 단위입니다. 도쿄는 100 JPY당 KRW. 환율 값 자체는 개인 기록입니다.
+
+배포 후 프로필 ID·날짜 ID·준비물 ID를 변경하면 기존 기록과 맞지 않을 수 있습니다. 기간이 다른 여행은 새 ID로 배포하세요. 기본 일정 내용을 바꿔도 이미 저장된 사용자 기록을 덮어쓰지 않습니다. 예상하지 못한 스키마는 가져오기에서 거부하며 데이터를 자동으로 버리지 않습니다.
+
+## 로컬 실행과 검증
+
+ES module을 사용하므로 `file://` 대신 저장소 루트에서 정적 서버를 실행합니다.
+
+```sh
+python -m http.server 8765 --bind 127.0.0.1
+# http://127.0.0.1:8765/tokyo/
+```
+
+Node.js 22 이상에서 테스트:
+
+```sh
+cd tokyo
+npm ci
+npm test
+```
+
+브라우저 실행에는 npm이나 빌드 과정이 필요하지 않습니다. npm 의존성은 테스트용입니다. GitHub Actions에서 같은 테스트를 실행합니다. 기존 GitHub Pages의 `/saju/tokyo/` 경로에 그대로 배포할 수 있습니다.
+
+## 기존 자료 출처
+
+도쿄 공식 정보 확인일은 2026-09-20이며 영업시간·가격·예약 가능 여부는 실시간 정보가 아닙니다. 출처는 도쿄 프로필과 앱 하단에 남겨 두었습니다. 기존 도쿄 그림은 이미지 생성으로 제작됐습니다. 14개 일본어 MP3는 Google Translate TTS로 만든 합성 음성이며 대응 텍스트는 `assets/audio/transcripts.json`에 있습니다. 사용자 동작으로 재생을 시작하며 카드가 바뀌거나 닫히면 중지합니다. 기존 항공편·숙소 계획을 유지하고 예약번호·좌석·객실·인증정보는 추가하지 않았습니다.
